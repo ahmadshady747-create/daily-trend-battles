@@ -2,14 +2,12 @@
 #  requirements.txt  |  Daily Trend Battle Generator
 # =============================================================================
 
-# ── Fix for method_whitelist error ───────────────────────────────────────────
-urllib3==1.26.15
+# ── Pinned HTTP stack to avoid urllib3 v2 breaking pytrends 4.9.2 ───────────
+requests==2.31.0
+urllib3==1.26.19
 
 # ── Core scraping library ────────────────────────────────────────────────────
 pytrends==4.9.2
-
-# ── HTTP transport ───────────────────────────────────────────────────────────
-requests>=2.31.0,<3.0.0
 
 # ── Data handling ────────────────────────────────────────────────────────────
 pandas>=2.0.0,<3.0.0
