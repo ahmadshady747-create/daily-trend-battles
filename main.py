@@ -1,0 +1,911 @@
+#!/usr/bin/env python3
+"""
+=============================================================================
+  Automated Daily Trend Battle Generator  |  main.py
+  JAMstack "A vs B" Viral Comparison Platform
+=============================================================================
+
+  HOW IT FITS INTO THE PIPELINE
+  ─────────────────────────────
+  GitHub Actions triggers this script once per day.
+  The script:
+    1. Fetches top-trending searches from Google Trends (US + EU regions)
+    2. Categorises and scores each trend against Sports, Tech, Economy
+    3. Pairs related trends into head-to-head battle objects
+    4. Writes / overwrites  data.json  in the repo root
+    5. The GitHub Action commits the file → Vercel auto-deploys the site
+
+  VOTING (hybrid static + live)
+  ─────────────────────────────
+  Each battle's  voting_api_key  field is the Firebase Realtime Database path
+  (or CountAPI namespace/key) the frontend should ping for live vote counts.
+  Format:  battles/{category}/{slugA}-vs-{slugB}/{YYYY-MM-DD}
+
+  e.g.  battles/sports/messi-vs-ronaldo/2025-07-14
+
+  RATE-LIMIT PROTECTION
+  ─────────────────────
+  Google Trends enforces aggressive rate limits on automated clients.
+  Every region request sleeps a random interval first. 429 / connection
+  errors trigger extra sleep + exponential back-off before retry.
+
+  DEPENDENCIES  (see requirements.txt)
+  ─────────────────────────────────────
+  pytrends, requests, pandas, lxml
+=============================================================================
+"""
+
+# ── Standard Library ────────────────────────────────────────────────────────
+import hashlib
+import itertools
+import json
+import logging
+import random
+import re
+import time
+from datetime import datetime, timezone
+
+# ── Third-party ─────────────────────────────────────────────────────────────
+from pytrends.request import TrendReq
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  LOGGING SETUP
+# ═══════════════════════════════════════════════════════════════════════════
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s  [%(levelname)-8s]  %(message)s",
+    handlers=[logging.StreamHandler()],
+)
+log = logging.getLogger("battle-generator")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  GLOBAL CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Where to write the daily JSON payload (relative to script location)
+OUTPUT_FILE: str = "data.json"
+
+# Google Trends region identifiers → human-readable label for logging.
+# Only US + major European markets are queried (high-traffic, English-friendly).
+TARGET_REGIONS: dict[str, str] = {
+    "united_states": "US",
+    "united_kingdom": "GB",
+    "germany":        "DE",
+    "france":         "FR",
+}
+
+# Top N trends to pull per region
+TRENDS_PER_REGION: int = 20
+
+# Normal inter-request sleep (seconds) — primary anti-rate-limit guard
+SLEEP_MIN:  float = 5.0
+SLEEP_MAX:  float = 13.0
+
+# Extra sleep injected when a 429 / rate-limit signal is detected
+RL_SLEEP_MIN: float = 45.0
+RL_SLEEP_MAX: float = 100.0
+
+# Max fetch attempts per region before declaring that region unavailable
+MAX_RETRIES: int = 3
+
+# The three battle categories to produce, in display order
+CATEGORIES: list[str] = ["Sports", "Tech", "Economy"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  KEYWORD TAXONOMY
+#  ─────────────────
+#  Each trend string is matched against these lists (lower-case substring
+#  check).  The category with the most keyword hits "wins" the trend.
+# ═══════════════════════════════════════════════════════════════════════════
+
+CATEGORY_KEYWORDS: dict[str, list[str]] = {
+    # ── SPORTS ────────────────────────────────────────────────────────────
+    "Sports": [
+        # Leagues & competitions
+        "nfl", "nba", "mlb", "nhl", "nascar", "mls", "wnba", "ncaa",
+        "premier league", "champions league", "europa league",
+        "bundesliga", "serie a", "la liga", "ligue 1",
+        "super bowl", "world cup", "euro 20", "copa america",
+        "wimbledon", "us open", "french open", "australian open", "grand slam",
+        "masters", "tour de france", "formula 1", "f1", "motogp",
+        "ufc", "boxing", "wwe", "olympics", "paralympics", "commonwealth games",
+        # Generic terms
+        "soccer", "football", "basketball", "baseball", "hockey",
+        "tennis", "golf", "cricket", "rugby", "volleyball",
+        "swimming", "athletics", "cycling", "wrestling", "mma",
+        "sport", "game", "match", "league", "cup", "championship",
+        "tournament", "playoff", "draft", "trade", "transfer",
+        "head coach", "manager fired", "contract extension",
+        # Clubs & franchises
+        "lakers", "celtics", "warriors", "bulls", "nets", "heat",
+        "knicks", "bucks", "suns", "nuggets", "cavaliers", "thunder",
+        "yankees", "dodgers", "red sox", "cubs", "cardinals", "mets",
+        "braves", "astros", "rangers", "phillies",
+        "patriots", "chiefs", "cowboys", "eagles", "49ers", "packers",
+        "ravens", "bills", "bengals", "steelers", "broncos", "raiders",
+        "manchester city", "manchester united", "liverpool", "arsenal",
+        "chelsea", "tottenham", "aston villa", "newcastle", "brighton",
+        "real madrid", "barcelona", "atletico madrid",
+        "psg", "juventus", "ac milan", "inter milan", "napoli",
+        "dortmund", "bayern munich", "leverkusen",
+        # Athletes
+        "lebron", "stephen curry", "giannis", "luka doncic",
+        "nikola jokic", "kevin durant", "jayson tatum",
+        "patrick mahomes", "lamar jackson", "josh allen",
+        "messi", "ronaldo", "mbappe", "haaland", "bellingham", "vinicius",
+        "djokovic", "alcaraz", "medvedev", "sinner",
+        "swiatek", "sabalenka", "gauff",
+        "tiger woods", "rory mcilroy", "scottie scheffler",
+        "tyson fury", "oleksandr usyk", "canelo alvarez",
+        "max verstappen", "lewis hamilton", "charles leclerc", "lando norris",
+    ],
+
+    # ── TECH ──────────────────────────────────────────────────────────────
+    "Tech": [
+        # Big tech companies
+        "google", "apple", "microsoft", "amazon", "meta", "netflix",
+        "nvidia", "amd", "intel", "qualcomm", "arm holdings",
+        "tesla", "spacex", "openai", "anthropic", "deepmind", "mistral",
+        "samsung", "sony", "lg", "huawei", "xiaomi", "oppo",
+        # Social / consumer apps
+        "twitter", "x.com", "tiktok", "instagram", "snapchat", "reddit",
+        "linkedin", "discord", "whatsapp", "telegram", "signal",
+        "youtube", "twitch", "spotify", "uber", "lyft", "airbnb",
+        "zoom", "slack", "notion", "figma", "canva",
+        # Devices & products
+        "iphone", "ipad", "macbook", "airpods", "apple watch", "vision pro",
+        "galaxy", "pixel", "surface", "chromebook",
+        "playstation", "ps5", "xbox series", "nintendo switch",
+        # AI models & tools
+        "chatgpt", "gemini", "claude", "copilot", "gpt-4", "gpt-5",
+        "llama", "mistral", "sora", "midjourney", "dall-e",
+        "stable diffusion", "runway", "perplexity",
+        "ai", "artificial intelligence", "machine learning", "deep learning",
+        "llm", "generative ai", "agi", "neural network",
+        # Technologies
+        "5g", "6g", "cloud computing", "aws", "azure", "gcp",
+        "cybersecurity", "data breach", "ransomware", "phishing", "hack",
+        "vr", "ar", "mixed reality", "virtual reality", "augmented reality",
+        "blockchain", "nft", "web3", "decentralized",
+        "robot", "autonomous vehicle", "self-driving", "ev charging",
+        "semiconductor", "chip shortage", "gpu", "cpu", "processor",
+        "software", "app launch", "startup", "tech layoffs",
+        "streaming service", "gaming", "esports",
+    ],
+
+    # ── ECONOMY ───────────────────────────────────────────────────────────
+    "Economy": [
+        # Crypto
+        "bitcoin", "btc", "ethereum", "eth", "solana", "sol",
+        "cardano", "ada", "dogecoin", "doge", "xrp", "ripple",
+        "binance", "coinbase", "kraken", "crypto",
+        "cryptocurrency", "defi", "staking", "altcoin",
+        "stablecoin", "usdt", "usdc", "web3 finance",
+        # Stock markets
+        "stock", "stocks", "stock market", "wall street", "nyse", "nasdaq",
+        "s&p 500", "sp500", "dow jones", "dow", "ftse 100",
+        "dax", "cac 40", "nikkei", "hang seng",
+        "shares", "equity", "ipo", "earnings", "dividend",
+        "bull market", "bear market", "short selling", "hedge",
+        "rally", "selloff", "market correction", "market crash",
+        # Macro indicators
+        "inflation", "deflation", "recession", "depression", "stagflation",
+        "economy", "gdp", "growth", "economic slowdown",
+        "unemployment", "jobs report", "nonfarm payrolls", "cpi", "pce", "ppi",
+        "federal reserve", "fed rate", "fomc", "ecb rate",
+        "bank of england", "boe",
+        "interest rate", "rate hike", "rate cut",
+        "quantitative easing", "tapering",
+        "bond yield", "treasury yield", "yield curve", "10-year yield",
+        "mortgage rate", "housing market", "home prices",
+        # Commodities
+        "oil price", "crude oil", "brent crude", "wti", "opec",
+        "energy prices", "natural gas", "gas prices",
+        "gold price", "silver price", "platinum", "copper",
+        "commodity", "wheat prices", "corn prices",
+        # Currencies / Forex
+        "dollar index", "usd", "euro", "eur", "pound sterling", "gbp",
+        "japanese yen", "jpy", "swiss franc", "currency",
+        "forex", "exchange rate", "currency devaluation",
+        # Trade & fiscal
+        "tariff", "trade war", "sanctions", "import", "export",
+        "trade deficit", "supply chain", "manufacturing",
+        "tax cut", "tax hike", "government budget", "national debt",
+        "stimulus package", "bailout", "austerity",
+        # Finance sector
+        "bank earnings", "banking crisis", "finance",
+        "hedge fund", "private equity", "venture capital",
+        "merger", "acquisition", "bankruptcy", "chapter 11",
+    ],
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  KNOWN RIVALRIES
+#  ────────────────
+#  Checked first when pairing trends.  Each entry is a tuple of:
+#   (partial_keyword_A, partial_keyword_B, category)
+#  A rivalry is detected when trend_a contains one keyword and trend_b
+#  contains the other (or vice-versa), within the same category.
+# ═══════════════════════════════════════════════════════════════════════════
+
+KNOWN_RIVALRIES: list[tuple[str, str, str]] = [
+    # Sports ──────────────────────────────────────────────────────────────
+    ("laker",      "celtic",        "Sports"),
+    ("laker",      "warrior",       "Sports"),
+    ("lebron",     "curry",         "Sports"),
+    ("lebron",     "jordan",        "Sports"),
+    ("lebron",     "giannis",       "Sports"),
+    ("jokic",      "giannis",       "Sports"),
+    ("luka",       "sga",           "Sports"),
+    ("messi",      "ronaldo",       "Sports"),
+    ("messi",      "mbappe",        "Sports"),
+    ("mbappe",     "haaland",       "Sports"),
+    ("bellingham", "vinicius",      "Sports"),
+    ("real madrid","barcelona",     "Sports"),
+    ("liverpool",  "manchester",    "Sports"),
+    ("arsenal",    "chelsea",       "Sports"),
+    ("dortmund",   "bayern",        "Sports"),
+    ("nfl",        "nba",           "Sports"),
+    ("chiefs",     "eagle",         "Sports"),
+    ("mahomes",    "lamar",         "Sports"),
+    ("djokovic",   "alcaraz",       "Sports"),
+    ("sinner",     "alcaraz",       "Sports"),
+    ("swiatek",    "sabalenka",     "Sports"),
+    ("fury",       "usyk",          "Sports"),
+    ("verstappen", "hamilton",      "Sports"),
+    ("verstappen", "norris",        "Sports"),
+    ("yankee",     "red sox",       "Sports"),
+    ("dodger",     "yankee",        "Sports"),
+    ("mcilroy",    "scheffler",     "Sports"),
+    ("tiger",      "mcilroy",       "Sports"),
+
+    # Tech ────────────────────────────────────────────────────────────────
+    ("iphone",     "android",       "Tech"),
+    ("iphone",     "galaxy",        "Tech"),
+    ("apple",      "google",        "Tech"),
+    ("apple",      "microsoft",     "Tech"),
+    ("apple",      "samsung",       "Tech"),
+    ("nvidia",     "amd",           "Tech"),
+    ("playstation","xbox",          "Tech"),
+    ("ps5",        "xbox",          "Tech"),
+    ("netflix",    "disney",        "Tech"),
+    ("netflix",    "hbo",           "Tech"),
+    ("tiktok",     "instagram",     "Tech"),
+    ("tiktok",     "youtube",       "Tech"),
+    ("chatgpt",    "gemini",        "Tech"),
+    ("chatgpt",    "claude",        "Tech"),
+    ("openai",     "anthropic",     "Tech"),
+    ("openai",     "google",        "Tech"),
+    ("twitter",    "threads",       "Tech"),
+    ("tesla",      "waymo",         "Tech"),
+    ("uber",       "lyft",          "Tech"),
+    ("aws",        "azure",         "Tech"),
+    ("android",    "ios",           "Tech"),
+    ("macbook",    "surface",       "Tech"),
+
+    # Economy ─────────────────────────────────────────────────────────────
+    ("bitcoin",    "gold",          "Economy"),
+    ("bitcoin",    "ethereum",      "Economy"),
+    ("ethereum",   "solana",        "Economy"),
+    ("solana",     "cardano",       "Economy"),
+    ("dogecoin",   "xrp",           "Economy"),
+    ("nasdaq",     "dow",           "Economy"),
+    ("nasdaq",     "s&p",           "Economy"),
+    ("inflation",  "recession",     "Economy"),
+    ("gold",       "silver",        "Economy"),
+    ("dollar",     "euro",          "Economy"),
+    ("dollar",     "yen",           "Economy"),
+    ("pound",      "euro",          "Economy"),
+    ("oil",        "gold",          "Economy"),
+    ("oil",        "natural gas",   "Economy"),
+    ("stock",      "crypto",        "Economy"),
+    ("real estate","stock",         "Economy"),
+    ("fed",        "ecb",           "Economy"),
+    ("rate hike",  "rate cut",      "Economy"),
+]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  FALLBACK BATTLE PAIRS
+#  ──────────────────────
+#  Used when live trends cannot fill a category.
+#  Lists are shuffled at runtime so each run picks a fresh pair.
+# ═══════════════════════════════════════════════════════════════════════════
+
+FALLBACK_BATTLES: dict[str, list[tuple[str, str]]] = {
+    "Sports": [
+        ("LeBron James",           "Michael Jordan"),
+        ("Messi",                  "Ronaldo"),
+        ("Real Madrid",            "Barcelona"),
+        ("Manchester City",        "Arsenal"),
+        ("Novak Djokovic",         "Carlos Alcaraz"),
+        ("Kansas City Chiefs",     "Philadelphia Eagles"),
+        ("LA Lakers",              "Boston Celtics"),
+        ("Tiger Woods",            "Rory McIlroy"),
+        ("Tyson Fury",             "Oleksandr Usyk"),
+        ("Max Verstappen",         "Lewis Hamilton"),
+        ("Mbappé",                 "Erling Haaland"),
+        ("Roger Federer",          "Rafael Nadal"),
+        ("New York Yankees",       "Los Angeles Dodgers"),
+        ("NFL",                    "NBA"),
+        ("Iga Swiatek",            "Aryna Sabalenka"),
+        ("Scottie Scheffler",      "Rory McIlroy"),
+    ],
+    "Tech": [
+        ("iPhone",                 "Android"),
+        ("Apple",                  "Google"),
+        ("ChatGPT",                "Google Gemini"),
+        ("Nvidia",                 "AMD"),
+        ("Netflix",                "Disney+"),
+        ("TikTok",                 "Instagram Reels"),
+        ("PlayStation 5",          "Xbox Series X"),
+        ("OpenAI",                 "Anthropic"),
+        ("Tesla",                  "Waymo"),
+        ("Samsung Galaxy",         "Apple iPhone"),
+        ("Twitter / X",            "Threads"),
+        ("AWS",                    "Microsoft Azure"),
+        ("macOS",                  "Windows 11"),
+        ("Spotify",                "Apple Music"),
+    ],
+    "Economy": [
+        ("Bitcoin",                "Gold"),
+        ("Ethereum",               "Bitcoin"),
+        ("Nasdaq",                 "S&P 500"),
+        ("Inflation",              "Recession"),
+        ("US Dollar",              "Euro"),
+        ("Gold",                   "Silver"),
+        ("Real Estate",            "Stock Market"),
+        ("Federal Reserve",        "European Central Bank"),
+        ("Solana",                 "Ethereum"),
+        ("Oil",                    "Natural Gas"),
+        ("Stock Market",           "Crypto Market"),
+        ("Dogecoin",               "Ripple (XRP)"),
+        ("Rate Hike",              "Rate Cut"),
+        ("Bonds",                  "Equities"),
+    ],
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  CLICKBAIT TITLE TEMPLATES
+#  ──────────────────────────
+#  One template is chosen at random per battle.
+#  {a} = option_a,  {b} = option_b
+# ═══════════════════════════════════════════════════════════════════════════
+
+TITLE_TEMPLATES: dict[str, list[str]] = {
+    "Sports": [
+        "The Ultimate Sports Clash: {a} vs {b} — Who Wins Today?",
+        "Head-to-Head: {a} vs {b} — The Internet Decides!",
+        "Sports Battle of the Day: {a} Takes On {b} — Cast Your Vote!",
+        "{a} vs {b}: The Rivalry Everyone Is Talking About — Pick a Side!",
+        "Fan Vote: {a} or {b}? Only One Can Reign Supreme!",
+        "The Great Sports Debate: Is {a} Better Than {b}? Vote Now!",
+        "{a} vs {b} — Who Would Win? The Numbers Will Shock You!",
+        "The GOAT Question Returns: {a} or {b}? The World Weighs In!",
+        "{a} vs {b}: This Debate Just Got Heated — What's Your Take?",
+    ],
+    "Tech": [
+        "Tech Showdown: {a} vs {b} — Which Reigns Supreme?",
+        "The Big Tech Battle: {a} vs {b} — You Decide the Winner!",
+        "Innovation Clash: {a} Takes On {b} — Cast Your Vote!",
+        "{a} vs {b}: The Tech Question Everyone Is Arguing About!",
+        "Digital Duel of the Day: {a} or {b}? One Click Decides!",
+        "Is {a} Really Better Than {b}? The Internet Weighs In!",
+        "{a} vs {b} — The Battle That's Breaking Tech Twitter Right Now!",
+        "The $1 Trillion Question: {a} or {b}? Vote and Find Out!",
+        "{a} vs {b}: Which One Would You Choose? (No Wrong Answers)",
+    ],
+    "Economy": [
+        "Market Battle: {a} vs {b} — Where Would You Put Your Money?",
+        "Economic Showdown: {a} vs {b} — Which Comes Out on Top?",
+        "Financial Face-Off: {a} Takes On {b} — Vote Now!",
+        "{a} vs {b}: The Big Money Question — What Does the World Think?",
+        "Trending in Finance: {a} or {b}? The Answer Might Surprise You!",
+        "Is {a} a Better Bet Than {b} Right Now? Cast Your Vote!",
+        "{a} vs {b} — The Economic Clash Everyone Is Debating Today!",
+        "Where Are You Putting Your Money? {a} vs {b} — Decide Now!",
+        "{a} vs {b}: Wall Street Is Watching — Which Side Are You On?",
+    ],
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  UTILITY / HELPER FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════════════
+
+def slugify(text: str) -> str:
+    """
+    Return a URL-safe, Firebase-path-safe lowercase slug from any string.
+    Strips special characters and collapses whitespace / hyphens.
+    """
+    text = text.lower().strip()
+    text = re.sub(r"[^\w\s-]", "", text)   # Remove punctuation
+    text = re.sub(r"[\s_]+", "-", text)    # Spaces and underscores → hyphens
+    text = re.sub(r"-{2,}", "-", text)     # Collapse consecutive hyphens
+    text = re.sub(r"^-+|-+$", "", text)    # Strip leading / trailing hyphens
+    return text
+
+
+def generate_battle_id(
+    category: str, option_a: str, option_b: str, date_str: str
+) -> str:
+    """
+    Create a unique, deterministic battle ID.
+    Format:  YYYY-MM-DD-{category_slug}-{8-hex-chars}
+    The hash ensures uniqueness even if options get truncated in the slug.
+    """
+    raw = f"{category}::{option_a}::{option_b}::{date_str}"
+    digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
+    return f"{date_str}-{slugify(category)}-{digest}"
+
+
+def generate_voting_api_key(
+    category: str, option_a: str, option_b: str, date_str: str
+) -> str:
+    """
+    Build the Firebase Realtime Database path (or CountAPI namespace/key)
+    for this battle's live vote tallies.
+
+    Frontend reads this key and does, e.g.:
+      ref(`battles/sports/messi-vs-ronaldo/2025-07-14/votes_a`).transaction(...)
+
+    Slugs are capped so the full path stays well under Firebase's 768-byte limit.
+    """
+    cat_slug = slugify(category)
+    a_slug   = slugify(option_a)[:30]
+    b_slug   = slugify(option_b)[:30]
+    return f"battles/{cat_slug}/{a_slug}-vs-{b_slug}/{date_str}"
+
+
+def generate_battle_title(category: str, option_a: str, option_b: str) -> str:
+    """Select a random clickbait title template and substitute the contestants."""
+    template = random.choice(TITLE_TEMPLATES[category])
+    return template.format(a=option_a, b=option_b)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  TREND FETCHING
+# ═══════════════════════════════════════════════════════════════════════════
+
+def fetch_region_trends(
+    pytrends: TrendReq,
+    country_name: str,
+    geo_label: str,
+) -> list[str]:
+    """
+    Fetch the top trending searches for one region from Google Trends.
+
+    Implements:
+      • Pre-request random sleep  (primary rate-limit guard)
+      • 429 / rate-limit detection → extra-long recovery sleep
+      • Exponential back-off for other transient errors
+      • Up to MAX_RETRIES attempts before giving up on the region
+
+    Returns an ordered list of raw trend strings (may be empty on failure).
+    """
+    for attempt in range(1, MAX_RETRIES + 1):
+        # ── Pre-request sleep ──────────────────────────────────────────────
+        sleep_sec = random.uniform(SLEEP_MIN, SLEEP_MAX)
+        log.info(
+            f"[{geo_label}] Attempt {attempt}/{MAX_RETRIES}  "
+            f"— sleeping {sleep_sec:.1f}s ..."
+        )
+        time.sleep(sleep_sec)
+
+        try:
+            df = pytrends.trending_searches(pn=country_name)
+
+            # Guard against empty or malformed responses
+            if df is None or df.empty:
+                log.warning(f"[{geo_label}] Received empty/null DataFrame.")
+                return []
+
+            trends: list[str] = (
+                df[0]
+                .dropna()
+                .astype(str)
+                .str.strip()
+                .tolist()
+            )[:TRENDS_PER_REGION]
+
+            log.info(f"[{geo_label}] ✓  {len(trends)} trends fetched.")
+            return trends
+
+        except Exception as exc:
+            err_str = str(exc)
+            log.warning(f"[{geo_label}] Attempt {attempt} failed — {exc}")
+
+            # Detect rate-limit signals in error message or HTTP status
+            rate_limit_signals = (
+                "429",
+                "too many requests",
+                "rate limit",
+                "quota",
+                "temporarilyblocked",
+            )
+            if any(sig in err_str.lower() for sig in rate_limit_signals):
+                rl_sleep = random.uniform(RL_SLEEP_MIN, RL_SLEEP_MAX)
+                log.warning(
+                    f"[{geo_label}] Rate limit detected — "
+                    f"extra sleep {rl_sleep:.0f}s before retry ..."
+                )
+                time.sleep(rl_sleep)
+            elif attempt < MAX_RETRIES:
+                # Standard exponential back-off for other errors
+                backoff = random.uniform(8.0, 18.0) * attempt
+                log.info(
+                    f"[{geo_label}] Back-off {backoff:.1f}s before retry ..."
+                )
+                time.sleep(backoff)
+
+    log.error(
+        f"[{geo_label}] All {MAX_RETRIES} attempts failed. "
+        f"Region skipped — moving on."
+    )
+    return []
+
+
+def collect_all_trends(pytrends: TrendReq) -> list[str]:
+    """
+    Aggregate trends from every configured region.
+
+    Scoring:
+      • A trend at rank 1 in a region earns TRENDS_PER_REGION points.
+      • Rank 2 earns TRENDS_PER_REGION-1 points, … rank N earns 1 point.
+      • Scores accumulate across regions, so a trend trending in multiple
+        countries rises to the top regardless of rank in any single one.
+
+    Casing:
+      • The casing provided by Google is preserved; where the same term
+        appears multiple times with different cases, the non-lowercase
+        variant wins (Google usually gives proper-cased values).
+
+    Returns a deduplicated list sorted by descending composite score.
+    """
+    # norm_lower_key → {"score": int, "label": str}
+    registry: dict[str, dict] = {}
+
+    for country_name, geo_label in TARGET_REGIONS.items():
+        regional = fetch_region_trends(pytrends, country_name, geo_label)
+
+        for rank, raw in enumerate(regional):
+            raw = raw.strip()
+            if not raw:
+                continue
+
+            norm  = raw.lower()
+            score = TRENDS_PER_REGION - rank   # higher rank → more points
+
+            if norm not in registry:
+                registry[norm] = {"score": score, "label": raw}
+            else:
+                registry[norm]["score"] += score
+                # Prefer a variant that isn't all-lowercase
+                if raw != raw.lower():
+                    registry[norm]["label"] = raw
+
+    sorted_entries = sorted(
+        registry.values(), key=lambda v: v["score"], reverse=True
+    )
+    final_trends = [e["label"] for e in sorted_entries]
+
+    log.info(
+        f"Aggregated {len(final_trends)} unique trends "
+        f"across {len(TARGET_REGIONS)} regions."
+    )
+    return final_trends
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  CATEGORISATION
+# ═══════════════════════════════════════════════════════════════════════════
+
+def keyword_score(trend_lower: str, keywords: list[str]) -> int:
+    """Count how many category keywords appear as substrings in the trend."""
+    return sum(1 for kw in keywords if kw in trend_lower)
+
+
+def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
+    """
+    Assign every trend to its best-matching category.
+
+    Each trend is assigned to the ONE category whose keyword list produces
+    the highest match count.  Ties go to the category that appears first
+    in CATEGORIES.  Trends with zero matches in any category are silently
+    dropped — they offer no value for battle pairing.
+
+    Input order (= popularity rank) is preserved within each bucket.
+    """
+    buckets: dict[str, list[str]] = {cat: [] for cat in CATEGORIES}
+
+    for trend in all_trends:
+        trend_lower = trend.lower()
+        scores = {
+            cat: keyword_score(trend_lower, kws)
+            for cat, kws in CATEGORY_KEYWORDS.items()
+        }
+        best_cat = max(scores, key=scores.get)
+        if scores[best_cat] > 0:
+            buckets[best_cat].append(trend)
+
+    # Summarise for the log
+    for cat in CATEGORIES:
+        preview = buckets[cat][:5]
+        log.info(
+            f"  {cat:<10}  {len(buckets[cat]):3d} trends matched  "
+            f"— top: {preview}"
+        )
+
+    return buckets
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  RIVALRY DETECTION & BATTLE PAIRING
+# ═══════════════════════════════════════════════════════════════════════════
+
+def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
+    """
+    Return True when (trend_a, trend_b) form a known rivalry in the given
+    category.  The check is order-independent and uses partial substring
+    matching against the KNOWN_RIVALRIES list.
+    """
+    a_lower = trend_a.lower()
+    b_lower = trend_b.lower()
+
+    for kw_x, kw_y, rival_cat in KNOWN_RIVALRIES:
+        if rival_cat != category:
+            continue
+        a_hits_x = kw_x in a_lower
+        a_hits_y = kw_y in a_lower
+        b_hits_x = kw_x in b_lower
+        b_hits_y = kw_y in b_lower
+        if (a_hits_x and b_hits_y) or (a_hits_y and b_hits_x):
+            return True
+    return False
+
+
+def pick_battle_pair(
+    category_trends: list[str],
+    category: str,
+    used_trends: set[str],
+) -> tuple[str, str]:
+    """
+    Select the best (option_a, option_b) pair for one category battle.
+
+    Pairing priority
+    ────────────────
+    1. Known rivalry found among available live trends  ← most engaging
+    2. Top-2 available live trends (no rivalry needed)
+    3. One live trend + the best-fitting fallback partner
+    4. Pure fallback pair (zero live trends for this category)
+
+    Trends already used in a previous battle (same run) are excluded to
+    prevent the same entity appearing in two categories.
+    """
+    available = [t for t in category_trends if t not in used_trends]
+
+    # ── Priority 1 : Rivalry among live trends ─────────────────────────────
+    if len(available) >= 2:
+        for trend_a, trend_b in itertools.combinations(available, 2):
+            if is_rivalry(trend_a, trend_b, category):
+                log.info(
+                    f"[{category}]  🔥 Rivalry detected: "
+                    f"'{trend_a}'  vs  '{trend_b}'"
+                )
+                return trend_a, trend_b
+
+    # ── Priority 2 : Top-2 live trends ─────────────────────────────────────
+    if len(available) >= 2:
+        opt_a, opt_b = available[0], available[1]
+        log.info(
+            f"[{category}]  📊 Top-2 live pair: '{opt_a}'  vs  '{opt_b}'"
+        )
+        return opt_a, opt_b
+
+    # ── Priority 3 : One live trend + fallback partner ──────────────────────
+    if len(available) == 1:
+        live = available[0]
+        live_lower = live.lower()
+        fallbacks = list(FALLBACK_BATTLES[category])
+        random.shuffle(fallbacks)
+
+        for fa, fb in fallbacks:
+            # Pick the fallback side that does NOT overlap with the live trend
+            if fa.lower() not in live_lower and live_lower not in fa.lower():
+                log.info(
+                    f"[{category}]  📡 1 live + fallback: '{live}'  vs  '{fa}'"
+                )
+                return live, fa
+            elif fb.lower() not in live_lower and live_lower not in fb.lower():
+                log.info(
+                    f"[{category}]  📡 1 live + fallback: '{live}'  vs  '{fb}'"
+                )
+                return live, fb
+
+        # Every fallback overlapped (very unlikely) — force the first entry's B side
+        log.warning(
+            f"[{category}]  Could not find clean fallback partner for '{live}'; "
+            f"forcing first fallback B."
+        )
+        return live, FALLBACK_BATTLES[category][0][1]
+
+    # ── Priority 4 : Full fallback ──────────────────────────────────────────
+    fallbacks = list(FALLBACK_BATTLES[category])
+    random.shuffle(fallbacks)
+    opt_a, opt_b = fallbacks[0]
+    log.info(
+        f"[{category}]  🗄️  No live trends — full fallback: "
+        f"'{opt_a}'  vs  '{opt_b}'"
+    )
+    return opt_a, opt_b
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  BATTLE ASSEMBLY
+# ═══════════════════════════════════════════════════════════════════════════
+
+def build_battle(
+    category:      str,
+    option_a:      str,
+    option_b:      str,
+    date_str:      str,
+    timestamp_iso: str,
+) -> dict:
+    """
+    Assemble one battle dictionary that exactly matches the required schema:
+
+    {
+      "id":             "2025-07-14-sports-a1b2c3d4",
+      "category":       "Sports",
+      "battle_title":   "Head-to-Head: Messi vs Ronaldo — The Internet Decides!",
+      "option_a":       "Messi",
+      "option_b":       "Ronaldo",
+      "voting_api_key": "battles/sports/messi-vs-ronaldo/2025-07-14",
+      "timestamp":      "2025-07-14T06:00:00Z"
+    }
+    """
+    return {
+        "id":             generate_battle_id(category, option_a, option_b, date_str),
+        "category":       category,
+        "battle_title":   generate_battle_title(category, option_a, option_b),
+        "option_a":       option_a,
+        "option_b":       option_b,
+        "voting_api_key": generate_voting_api_key(category, option_a, option_b, date_str),
+        "timestamp":      timestamp_iso,
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  MAIN PIPELINE
+# ═══════════════════════════════════════════════════════════════════════════
+
+def main() -> None:
+    log.info("=" * 70)
+    log.info("  Daily Trend Battle Generator  |  Pipeline starting")
+    log.info("=" * 70)
+
+    # ── Timestamps ────────────────────────────────────────────────────────────
+    now_utc       = datetime.now(timezone.utc)
+    date_str      = now_utc.strftime("%Y-%m-%d")
+    timestamp_iso = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    log.info(f"Run date : {date_str}")
+    log.info(f"UTC time : {timestamp_iso}")
+
+    # ── Step 1 : Initialise pytrends ──────────────────────────────────────────
+    log.info("Initialising pytrends client ...")
+    try:
+        # Try modern constructor with retries / back-off built in
+        pytrends = TrendReq(
+            hl="en-US",
+            tz=0,
+            timeout=(10, 35),
+            retries=2,
+            backoff_factor=0.5,
+        )
+    except TypeError:
+        # Older pytrends versions may not support all kwargs
+        log.warning(
+            "Modern TrendReq kwargs unsupported — "
+            "falling back to minimal constructor."
+        )
+        try:
+            pytrends = TrendReq(hl="en-US", tz=0, timeout=(10, 35))
+        except Exception as exc:
+            log.critical(f"Failed to create pytrends client: {exc}")
+            raise SystemExit(1)
+    except Exception as exc:
+        log.critical(f"Unexpected error creating pytrends client: {exc}")
+        raise SystemExit(1)
+
+    log.info("pytrends client ready.")
+
+    # ── Step 2 : Collect & Aggregate Trends ──────────────────────────────────
+    log.info(
+        f"Fetching top-{TRENDS_PER_REGION} trends from "
+        f"{len(TARGET_REGIONS)} regions: {list(TARGET_REGIONS.values())} ..."
+    )
+    all_trends = collect_all_trends(pytrends)
+
+    if not all_trends:
+        log.warning(
+            "Zero trends collected from all regions. "
+            "Every battle will use fallback pairs."
+        )
+
+    # ── Step 3 : Categorise ───────────────────────────────────────────────────
+    log.info(f"Categorising {len(all_trends)} unique trends ...")
+    categorized: dict[str, list[str]] = categorize_trends(all_trends)
+
+    # ── Step 4 : Build 3 Battles ─────────────────────────────────────────────
+    battles:      list[dict] = []
+    used_trends:  set[str]   = set()
+
+    for category in CATEGORIES:
+        log.info(f"{'─' * 55}")
+        log.info(f"  Building {category} battle ...")
+
+        option_a, option_b = pick_battle_pair(
+            category_trends=categorized.get(category, []),
+            category=category,
+            used_trends=used_trends,
+        )
+
+        # Mark both options as used so later categories cannot reuse them
+        used_trends.add(option_a)
+        used_trends.add(option_b)
+
+        battle = build_battle(
+            category=category,
+            option_a=option_a,
+            option_b=option_b,
+            date_str=date_str,
+            timestamp_iso=timestamp_iso,
+        )
+        battles.append(battle)
+
+        log.info(f"  ✓  {option_a}  vs  {option_b}")
+        log.info(f"     title : {battle['battle_title']}")
+        log.info(f"     key   : {battle['voting_api_key']}")
+        log.info(f"     id    : {battle['id']}")
+
+    # ── Step 5 : Write data.json ──────────────────────────────────────────────
+    output_payload = {
+        "generated_at": timestamp_iso,
+        "date":         date_str,
+        "battles":      battles,
+    }
+
+    try:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as fh:
+            json.dump(output_payload, fh, ensure_ascii=False, indent=2)
+        log.info(f"{'─' * 55}")
+        log.info(
+            f"✓  Successfully wrote {len(battles)} battles "
+            f"to '{OUTPUT_FILE}'."
+        )
+    except OSError as exc:
+        log.critical(f"Could not write output file '{OUTPUT_FILE}': {exc}")
+        raise SystemExit(1)
+
+    # ── Pipeline Summary ──────────────────────────────────────────────────────
+    log.info("=" * 70)
+    log.info("  Pipeline complete — today's battles:")
+    log.info("=" * 70)
+    for battle in battles:
+        log.info(
+            f"  [{battle['category']:<8}]  "
+            f"{battle['option_a']:<28}  vs  {battle['option_b']}"
+        )
+    log.info("=" * 70)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Entry-point guard
+# ─────────────────────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    main()
