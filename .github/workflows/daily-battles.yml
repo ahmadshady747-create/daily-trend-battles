@@ -1,6 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator + OG Images + Twitter Auto-Post (Playwright)
+#  Daily Trend Battle Generator + OG Images + Discord Webhook
 # =============================================================================
 
 name: Daily Battle Generator
@@ -44,21 +44,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. Install Playwright browsers ─────────────────────────────────────
-      - name: Install Playwright browsers
-        run: |
-          python -m playwright install chromium
-          python -m playwright install-deps chromium
-
-      # ── 5. Run the battle generator ────────────────────────────────────────
+      # ── 4. Run the battle generator (generates JSON, OG images, posts Discord) ─
       - name: Run main.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: python main.py
 
-      # ── 6. Generate OG images ──────────────────────────────────────────────
-      - name: Generate OG images
-        run: python og_generator.py
-
-      # ── 7. Commit data.json + OG images ────────────────────────────────────
+      # ── 5. Commit data.json + OG images ────────────────────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -66,11 +58,3 @@ jobs:
           git add -f data.json public/og/
           git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || true
           git push origin HEAD || true
-
-      # ── 8. Post to Twitter/X via Playwright ────────────────────────────────
-      - name: Post to Twitter/X
-        env:
-          TWITTER_USERNAME: ${{ secrets.TWITTER_USERNAME }}
-          TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
-          TWITTER_PHONE:    ${{ secrets.TWITTER_PHONE }}
-        run: python twitter_bot.py || true
