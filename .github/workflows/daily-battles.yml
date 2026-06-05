@@ -1,6 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator + OG Images + Twitter Auto-Post
+#  Daily Trend Battle Generator + OG Images + Twitter Auto-Post (Playwright)
 # =============================================================================
 
 name: Daily Battle Generator
@@ -39,20 +39,26 @@ jobs:
           cache-dependency-path: requirements.txt
 
       # ── 3. Install dependencies ────────────────────────────────────────────
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. Run the battle generator ────────────────────────────────────────
+      # ── 4. Install Playwright browsers ─────────────────────────────────────
+      - name: Install Playwright browsers
+        run: |
+          python -m playwright install chromium
+          python -m playwright install-deps chromium
+
+      # ── 5. Run the battle generator ────────────────────────────────────────
       - name: Run main.py
         run: python main.py
 
-      # ── 5. Generate OG images for social sharing ───────────────────────────
+      # ── 6. Generate OG images ──────────────────────────────────────────────
       - name: Generate OG images
         run: python og_generator.py
 
-      # ── 6. Commit data.json + OG images ────────────────────────────────────
+      # ── 7. Commit data.json + OG images ────────────────────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -61,11 +67,10 @@ jobs:
           git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || true
           git push origin HEAD || true
 
-      # ── 7. Post to Twitter/X (optional — requires secrets) ─────────────────
+      # ── 8. Post to Twitter/X via Playwright ────────────────────────────────
       - name: Post to Twitter/X
         env:
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          TWITTER_USERNAME: ${{ secrets.TWITTER_USERNAME }}
+          TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
+          TWITTER_PHONE:    ${{ secrets.TWITTER_PHONE }}
         run: python twitter_bot.py || true
