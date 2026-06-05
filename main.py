@@ -2,7 +2,7 @@
 """
 =============================================================================
   Automated Daily Trend Battle Generator  |  main.py
-  JAMstack "A vs B" Viral Comparison Platform
+  JAMstack "A vs B" Viral Comparison Platform  +  Discord Auto-Poster
 =============================================================================
 """
 
@@ -10,10 +10,13 @@ import hashlib
 import itertools
 import json
 import logging
+import os
 import random
 import re
 import time
 from datetime import datetime, timezone
+
+import requests
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,6 +26,7 @@ logging.basicConfig(
 log = logging.getLogger("battle-generator")
 
 OUTPUT_FILE: str = "data.json"
+OG_DIR: str = "public/og"
 
 TARGET_REGIONS: dict[str, str] = {
     "united_states": "US",
@@ -299,6 +303,7 @@ TITLE_TEMPLATES: dict[str, list[str]] = {
     ],
 }
 
+
 def slugify(text: str) -> str:
     text = text.lower().strip()
     text = re.sub(r"[^\w\s-]", "", text)
@@ -307,10 +312,12 @@ def slugify(text: str) -> str:
     text = re.sub(r"^-+|-+$", "", text)
     return text
 
+
 def generate_battle_id(category: str, option_a: str, option_b: str, date_str: str) -> str:
     raw = f"{category}::{option_a}::{option_b}::{date_str}"
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
     return f"{date_str}-{slugify(category)}-{digest}"
+
 
 def generate_voting_api_key(category: str, option_a: str, option_b: str, date_str: str) -> str:
     cat_slug = slugify(category)
@@ -318,9 +325,11 @@ def generate_voting_api_key(category: str, option_a: str, option_b: str, date_st
     b_slug   = slugify(option_b)[:30]
     return f"battles/{cat_slug}/{a_slug}-vs-{b_slug}/{date_str}"
 
+
 def generate_battle_title(category: str, option_a: str, option_b: str) -> str:
     template = random.choice(TITLE_TEMPLATES[category])
     return template.format(a=option_a, b=option_b)
+
 
 def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str]:
     for attempt in range(1, MAX_RETRIES + 1):
@@ -380,6 +389,7 @@ def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str
     )
     return []
 
+
 def collect_all_trends(pytrends) -> list[str]:
     registry: dict[str, dict] = {}
 
@@ -412,8 +422,10 @@ def collect_all_trends(pytrends) -> list[str]:
     )
     return final_trends
 
+
 def keyword_score(trend_lower: str, keywords: list[str]) -> int:
     return sum(1 for kw in keywords if kw in trend_lower)
+
 
 def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
     buckets: dict[str, list[str]] = {cat: [] for cat in CATEGORIES}
@@ -437,6 +449,7 @@ def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
 
     return buckets
 
+
 def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
     a_lower = trend_a.lower()
     b_lower = trend_b.lower()
@@ -451,6 +464,7 @@ def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
         if (a_hits_x and b_hits_y) or (a_hits_y and b_hits_x):
             return True
     return False
+
 
 def pick_battle_pair(
     category_trends: list[str],
@@ -508,6 +522,7 @@ def pick_battle_pair(
     )
     return opt_a, opt_b
 
+
 def build_battle(
     category:      str,
     option_a:      str,
@@ -524,6 +539,93 @@ def build_battle(
         "voting_api_key": generate_voting_api_key(category, option_a, option_b, date_str),
         "timestamp":      timestamp_iso,
     }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  DISCORD WEBHOOK POSTER
+# ═══════════════════════════════════════════════════════════════════════════
+
+def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
+    """
+    Post today's battles as a rich embed message to Discord via Webhook.
+    Each battle is an embed with its OG image attached as a poster.
+    """
+    webhook_url = os.environ.get("DISCORD_WEBHOOK_URL")
+    if not webhook_url:
+        log.warning("DISCORD_WEBHOOK_URL not set. Skipping Discord notification.")
+        return
+
+    colors = {"Sports": 0xE94560, "Tech": 0x533483, "Economy": 0xF39C12}
+    emojis = {"Sports": "⚽", "Tech": "💻", "Economy": "📈"}
+
+    embeds: list[dict] = []
+    files: dict[str, tuple[str, bytes, str]] = {}
+
+    for i, battle in enumerate(battles):
+        image_path = os.path.join(og_dir, f"{battle['id']}.png")
+        if not os.path.exists(image_path):
+            log.warning(f"OG image not found for Discord: {image_path}")
+            continue
+
+        filename = f"{battle['id']}.png"
+        with open(image_path, "rb") as img:
+            files[f"file{i}"] = (filename, img.read(), "image/png")
+
+        embed = {
+            "title": f"{emojis.get(battle['category'], '⚔️')} {battle['battle_title']}",
+            "description": (
+                f"**{battle['option_a']}**  vs  **{battle['option_b']}**\n\n"
+                f"🔥 The internet is deciding right now. "
+                f"Cast your vote on the site!"
+            ),
+            "url": "https://daily-trend-battles.vercel.app",
+            "color": colors.get(battle["category"], 0x1A1A2E),
+            "image": {"url": f"attachment://{filename}"},
+            "footer": {
+                "text": f"Daily Trend Battles • {date_str} • {battle['category']}"
+            },
+            "fields": [
+                {
+                    "name": "🅰️ Option A",
+                    "value": battle["option_a"],
+                    "inline": True,
+                },
+                {
+                    "name": "🅱️ Option B",
+                    "value": battle["option_b"],
+                    "inline": True,
+                },
+                {
+                    "name": "📊 Category",
+                    "value": battle["category"],
+                    "inline": True,
+                },
+            ],
+        }
+        embeds.append(embed)
+
+    if not embeds:
+        log.warning("No embeds prepared — nothing to send to Discord.")
+        return
+
+    payload = {"embeds": embeds, "username": "Daily Trend Battles", "avatar_url": "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"}
+
+    try:
+        resp = requests.post(
+            webhook_url,
+            data={"payload_json": json.dumps(payload)},
+            files=files,
+            timeout=30,
+        )
+        resp.raise_for_status()
+        log.info(f"Discord webhook sent successfully. Status: {resp.status_code}")
+    except Exception as exc:
+        log.error(f"Discord webhook failed: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  MAIN PIPELINE
+# ═══════════════════════════════════════════════════════════════════════════
 
 def main() -> None:
     log.info("=" * 70)
@@ -637,15 +739,16 @@ def main() -> None:
         log.critical(f"Could not write output file '{OUTPUT_FILE}': {exc}")
         raise SystemExit(1)
 
-    # ═══════════════════════════════════════════════════════════════════════
-    #  NEW: Auto-generate OG images for social sharing
-    # ═══════════════════════════════════════════════════════════════════════
+    # ── Generate OG images ─────────────────────────────────────────────────
     try:
         from og_generator import generate_all_og
         og_files = generate_all_og(OUTPUT_FILE)
         log.info(f"Generated {len(og_files)} OG images for social sharing.")
     except Exception as exc:
         log.warning(f"OG generation skipped (non-critical): {exc}")
+
+    # ── Post to Discord Webhook ────────────────────────────────────────────
+    send_to_discord(battles, OG_DIR, date_str)
 
     log.info("=" * 70)
     log.info("  Pipeline complete — today's battles:")
@@ -656,6 +759,7 @@ def main() -> None:
             f"{battle['option_a']:<28}  vs  {battle['option_b']}"
         )
     log.info("=" * 70)
+
 
 if __name__ == "__main__":
     main()
