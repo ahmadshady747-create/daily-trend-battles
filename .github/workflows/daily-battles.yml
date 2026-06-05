@@ -1,6 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator + OG Images + Discord + Telegram
+#  Daily Trend Battle Generator + OG + Discord + Telegram + SEO Sitemap
 # =============================================================================
 
 name: Daily Battle Generator
@@ -48,20 +48,21 @@ jobs:
       - name: Run main.py
         env:
           # Discord
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL:  ${{ secrets.DISCORD_WEBHOOK_URL }}
           # Telegram
-          TELEGRAM_BOT_TOKEN:     ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_MY_CHAT_ID:    ${{ secrets.TELEGRAM_MY_CHAT_ID }}
-          TELEGRAM_CHANNEL_ID:    ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          # Repo name for control-panel links
-          GITHUB_REPOSITORY:      ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN:    ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_MY_CHAT_ID:   ${{ secrets.TELEGRAM_MY_CHAT_ID }}
+          TELEGRAM_CHANNEL_ID:   ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # SEO / Site
+          SITE_URL:              ${{ secrets.SITE_URL }}
+          GITHUB_REPOSITORY:     ${{ github.repository }}
         run: python main.py
 
-      # ── 5. Commit data.json + OG images ────────────────────────────────────
+      # ── 5. Commit data.json + OG images + sitemap.xml ────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git add -f data.json public/og/
+          git add -f data.json public/og/ public/sitemap.xml
           git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || true
           git push origin HEAD || true
