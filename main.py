@@ -2,7 +2,7 @@
 """
 =============================================================================
   Automated Daily Trend Battle Generator  |  main.py
-  JAMstack "A vs B" + Discord + Telegram Auto-Marketing & Control Panel
+  JAMstack "A vs B" + Discord + Telegram + SEO Sitemap Auto-Update
 =============================================================================
 """
 
@@ -14,6 +14,7 @@ import os
 import random
 import re
 import time
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 import requests
@@ -27,6 +28,9 @@ log = logging.getLogger("battle-generator")
 
 OUTPUT_FILE: str = "data.json"
 OG_DIR: str = "public/og"
+SITEMAP_FILE: str = "public/sitemap.xml"
+SITEMAP_NS: str = "http://www.sitemaps.org/schemas/sitemap/0.9"
+SITEMAP_MAX_URLS: int = 365
 
 TARGET_REGIONS: dict[str, str] = {
     "united_states": "US",
@@ -628,10 +632,6 @@ def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
 # ═══════════════════════════════════════════════════════════════════════════
 
 def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> None:
-    """
-    1. Public channel: Marketing posts with OG images.
-    2. Personal chat: Admin report with interactive URL buttons (no server needed).
-    """
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     my_chat = os.environ.get("TELEGRAM_MY_CHAT_ID")
     channel = os.environ.get("TELEGRAM_CHANNEL_ID")
@@ -643,7 +643,6 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
 
     api = f"https://api.telegram.org/bot{token}"
 
-    # ── 1. MARKETING: Send each battle to public channel ─────────────────
     if channel:
         for battle in battles:
             img_path = os.path.join(og_dir, f"{battle['id']}.png")
@@ -675,7 +674,6 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
                 else:
                     log.warning(f"[Telegram] Channel post failed: {resp.text}")
 
-    # ── 2. ADMIN REPORT: Summary + Inline Keyboard (URL buttons) ─────────
     if my_chat:
         lines = [f"<b>📊 Daily Battle Report — {date_str}</b>\n"]
         emojis = {"Sports": "⚽", "Tech": "💻", "Economy": "📈"}
@@ -689,7 +687,6 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
 
         report_text = "\n".join(lines)
 
-        # Inline keyboard with direct URLs — no callback server required
         keyboard = {
             "inline_keyboard": [
                 [
@@ -729,6 +726,95 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
             log.info("[Telegram] Admin report with control panel sent.")
         else:
             log.warning(f"[Telegram] Admin report failed: {resp.text}")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  SEO SITEMAP + BING PING
+# ═══════════════════════════════════════════════════════════════════════════
+
+def update_sitemap(battles: list[dict], date_str: str, site_url: str) -> None:
+    """
+    Update public/sitemap.xml with today's battle URLs.
+    Keeps last 365 URLs to prevent file bloat.
+    """
+    os.makedirs(os.path.dirname(SITEMAP_FILE) or ".", exist_ok=True)
+
+    ET.register_namespace("", SITEMAP_NS)
+    root = ET.Element("urlset")
+    root.set("xmlns", SITEMAP_NS)
+
+    existing: dict[str, ET.Element] = {}
+
+    # ── Parse existing sitemap (handles namespaced tags robustly) ──────────
+    if os.path.exists(SITEMAP_FILE):
+        try:
+            tree = ET.parse(SITEMAP_FILE)
+            old_root = tree.getroot()
+            # Detect namespace from root tag
+            if old_root.tag.startswith("{"):
+                ns_uri = old_root.tag.split("}")[0][1:]
+                nsmap = {"ns": ns_uri}
+                for url in old_root.findall("ns:url", nsmap):
+                    loc = url.find("ns:loc", nsmap)
+                    if loc is not None and loc.text:
+                        existing[loc.text] = url
+            else:
+                for url in old_root.findall("url"):
+                    loc = url.find("loc")
+                    if loc is not None and loc.text:
+                        existing[loc.text] = url
+        except Exception as exc:
+            log.warning(f"Could not parse existing sitemap: {exc}")
+
+    # ── Homepage ─────────────────────────────────────────────────────────────
+    home = site_url.rstrip("/")
+    home_el = ET.Element("url")
+    ET.SubElement(home_el, "loc").text = home
+    ET.SubElement(home_el, "lastmod").text = date_str
+    ET.SubElement(home_el, "changefreq").text = "daily"
+    ET.SubElement(home_el, "priority").text = "1.0"
+    existing[home] = home_el
+
+    # ── Battle pages ─────────────────────────────────────────────────────────
+    for b in battles:
+        battle_url = f"{site_url.rstrip('/')}/battle/{b['id']}"
+        el = ET.Element("url")
+        ET.SubElement(el, "loc").text = battle_url
+        ET.SubElement(el, "lastmod").text = date_str
+        ET.SubElement(el, "changefreq").text = "daily"
+        ET.SubElement(el, "priority").text = "0.8"
+        existing[battle_url] = el
+
+    # ── Limit size (keep newest 365) ───────────────────────────────────────
+    if len(existing) > SITEMAP_MAX_URLS:
+        sorted_items = sorted(existing.items(), key=lambda x: x[0], reverse=True)
+        existing = dict(sorted_items[:SITEMAP_MAX_URLS])
+
+    # ── Rebuild XML: homepage first, then battles sorted desc ────────────────
+    if home in existing:
+        root.append(existing.pop(home))
+    for _, el in sorted(existing.items(), key=lambda x: x[0], reverse=True):
+        root.append(el)
+
+    ET.indent(root, space='  ')
+    tree = ET.ElementTree(root)
+    tree.write(SITEMAP_FILE, encoding='utf-8', xml_declaration=True)
+    log.info(f"Sitemap updated: {len(existing)+1} URLs → {SITEMAP_FILE}")
+
+
+def ping_bing(sitemap_url: str) -> None:
+    """
+    Notify Bing Webmaster that sitemap has been updated.
+    """
+    ping_endpoint = f"https://www.bing.com/webmaster/ping.aspx?siteMap={sitemap_url}"
+    try:
+        resp = requests.get(ping_endpoint, timeout=30)
+        if resp.status_code == 200:
+            log.info(f"Bing ping successful ({resp.status_code}).")
+        else:
+            log.warning(f"Bing ping returned {resp.status_code}: {resp.text[:200]}")
+    except Exception as exc:
+        log.error(f"Bing ping failed: {exc}")
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -846,6 +932,15 @@ def main() -> None:
     except OSError as exc:
         log.critical(f"Could not write output file '{OUTPUT_FILE}': {exc}")
         raise SystemExit(1)
+
+    # ── SEO: Update sitemap + Ping Bing ────────────────────────────────────
+    try:
+        site_url = os.environ.get("SITE_URL", "https://daily-trend-battles.vercel.app")
+        update_sitemap(battles, date_str, site_url)
+        sitemap_url = f"{site_url.rstrip('/')}/sitemap.xml"
+        ping_bing(sitemap_url)
+    except Exception as exc:
+        log.warning(f"SEO sitemap update skipped (non-critical): {exc}")
 
     # ── Generate OG images ─────────────────────────────────────────────────
     try:
