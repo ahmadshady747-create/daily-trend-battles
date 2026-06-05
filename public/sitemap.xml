@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc />
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>/battle/2026-06-05-tech-e76ca8bc</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>/battle/2026-06-05-sports-689eb9c4</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>/battle/2026-06-05-economy-527e8c77</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-05T20:04:46Z",
+  "generated_at": "2026-06-05T23:34:30Z",
   "date": "2026-06-05",
   "battles": [
     {
-      "id": "2026-06-05-sports-b3c27ff6",
+      "id": "2026-06-05-sports-689eb9c4",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Real Madrid vs Barcelona — Who Wins Today?",
-      "option_a": "Real Madrid",
-      "option_b": "Barcelona",
-      "voting_api_key": "battles/sports/real-madrid-vs-barcelona/2026-06-05",
-      "timestamp": "2026-06-05T20:04:46Z"
+      "battle_title": "Sports Battle of the Day: New York Yankees Takes On Los Angeles Dodgers — Cast Your Vote!",
+      "option_a": "New York Yankees",
+      "option_b": "Los Angeles Dodgers",
+      "voting_api_key": "battles/sports/new-york-yankees-vs-los-angeles-dodgers/2026-06-05",
+      "timestamp": "2026-06-05T23:34:30Z"
     },
     {
-      "id": "2026-06-05-tech-ee170522",
+      "id": "2026-06-05-tech-e76ca8bc",
       "category": "Tech",
-      "battle_title": "Innovation Clash: ChatGPT Takes On Google Gemini — Cast Your Vote!",
-      "option_a": "ChatGPT",
-      "option_b": "Google Gemini",
-      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-06-05",
-      "timestamp": "2026-06-05T20:04:46Z"
+      "battle_title": "Tech Showdown: Netflix vs Disney+ — Which Reigns Supreme?",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-05",
+      "timestamp": "2026-06-05T23:34:30Z"
     },
     {
-      "id": "2026-06-05-economy-725da887",
+      "id": "2026-06-05-economy-527e8c77",
       "category": "Economy",
-      "battle_title": "Where Are You Putting Your Money? Bitcoin vs Gold — Decide Now!",
-      "option_a": "Bitcoin",
-      "option_b": "Gold",
-      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-05",
-      "timestamp": "2026-06-05T20:04:46Z"
+      "battle_title": "Rate Hike vs Rate Cut — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Rate Hike",
+      "option_b": "Rate Cut",
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-06-05",
+      "timestamp": "2026-06-05T23:34:30Z"
     }
   ]
 }
