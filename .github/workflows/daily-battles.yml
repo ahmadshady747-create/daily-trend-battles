@@ -1,6 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator + OG Images + Discord Webhook
+#  Daily Trend Battle Generator + OG Images + Discord + Telegram
 # =============================================================================
 
 name: Daily Battle Generator
@@ -44,10 +44,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. Run the battle generator (generates JSON, OG images, posts Discord) ─
+      # ── 4. Run the battle generator ────────────────────────────────────────
       - name: Run main.py
         env:
+          # Discord
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Telegram
+          TELEGRAM_BOT_TOKEN:     ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_MY_CHAT_ID:    ${{ secrets.TELEGRAM_MY_CHAT_ID }}
+          TELEGRAM_CHANNEL_ID:    ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # Repo name for control-panel links
+          GITHUB_REPOSITORY:      ${{ github.repository }}
         run: python main.py
 
       # ── 5. Commit data.json + OG images ────────────────────────────────────
