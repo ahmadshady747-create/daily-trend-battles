@@ -2,7 +2,7 @@
 """
 =============================================================================
   Automated Daily Trend Battle Generator  |  main.py
-  JAMstack "A vs B" Viral Comparison Platform  +  Discord Auto-Poster
+  JAMstack "A vs B" + Discord + Telegram Auto-Marketing & Control Panel
 =============================================================================
 """
 
@@ -546,13 +546,9 @@ def build_battle(
 # ═══════════════════════════════════════════════════════════════════════════
 
 def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
-    """
-    Post today's battles as a rich embed message to Discord via Webhook.
-    Each battle is an embed with its OG image attached as a poster.
-    """
     webhook_url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not webhook_url:
-        log.warning("DISCORD_WEBHOOK_URL not set. Skipping Discord notification.")
+        log.warning("DISCORD_WEBHOOK_URL not set. Skipping Discord.")
         return
 
     colors = {"Sports": 0xE94560, "Tech": 0x533483, "Economy": 0xF39C12}
@@ -608,7 +604,11 @@ def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
         log.warning("No embeds prepared — nothing to send to Discord.")
         return
 
-    payload = {"embeds": embeds, "username": "Daily Trend Battles", "avatar_url": "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"}
+    payload = {
+        "embeds": embeds,
+        "username": "Daily Trend Battles",
+        "avatar_url": "https://cdn-icons-png.flaticon.com/512/3062/3062634.png",
+    }
 
     try:
         resp = requests.post(
@@ -621,6 +621,114 @@ def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
         log.info(f"Discord webhook sent successfully. Status: {resp.status_code}")
     except Exception as exc:
         log.error(f"Discord webhook failed: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  TELEGRAM BOT — Marketing + Notifications + Control Panel
+# ═══════════════════════════════════════════════════════════════════════════
+
+def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> None:
+    """
+    1. Public channel: Marketing posts with OG images.
+    2. Personal chat: Admin report with interactive URL buttons (no server needed).
+    """
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    my_chat = os.environ.get("TELEGRAM_MY_CHAT_ID")
+    channel = os.environ.get("TELEGRAM_CHANNEL_ID")
+    repo = os.environ.get("GITHUB_REPOSITORY", "user/repo")
+
+    if not token:
+        log.warning("TELEGRAM_BOT_TOKEN not set. Skipping Telegram.")
+        return
+
+    api = f"https://api.telegram.org/bot{token}"
+
+    # ── 1. MARKETING: Send each battle to public channel ─────────────────
+    if channel:
+        for battle in battles:
+            img_path = os.path.join(og_dir, f"{battle['id']}.png")
+            if not os.path.exists(img_path):
+                log.warning(f"[Telegram] OG image missing for channel: {img_path}")
+                continue
+
+            caption = (
+                f"<b>{battle['battle_title']}</b>\n\n"
+                f"🅰️ {battle['option_a']}\n"
+                f"🅱️ {battle['option_b']}\n\n"
+                f"📅 {date_str}  •  🏷️ {battle['category']}\n"
+                f"👉 <a href='https://daily-trend-battles.vercel.app'>Vote Now on the Site</a>"
+            )
+
+            with open(img_path, "rb") as photo:
+                resp = requests.post(
+                    f"{api}/sendPhoto",
+                    data={
+                        "chat_id": channel,
+                        "caption": caption,
+                        "parse_mode": "HTML",
+                    },
+                    files={"photo": photo},
+                    timeout=30,
+                )
+                if resp.status_code == 200:
+                    log.info(f"[Telegram] Channel post sent: {battle['option_a']} vs {battle['option_b']}")
+                else:
+                    log.warning(f"[Telegram] Channel post failed: {resp.text}")
+
+    # ── 2. ADMIN REPORT: Summary + Inline Keyboard (URL buttons) ─────────
+    if my_chat:
+        lines = [f"<b>📊 Daily Battle Report — {date_str}</b>\n"]
+        emojis = {"Sports": "⚽", "Tech": "💻", "Economy": "📈"}
+        for b in battles:
+            emoji = emojis.get(b["category"], "⚔️")
+            lines.append(
+                f"\n{emoji} <b>{b['category']}</b>\n"
+                f"• {b['option_a']} <i>vs</i> {b['option_b']}\n"
+                f"• ID: <code>{b['id']}</code>"
+            )
+
+        report_text = "\n".join(lines)
+
+        # Inline keyboard with direct URLs — no callback server required
+        keyboard = {
+            "inline_keyboard": [
+                [
+                    {
+                        "text": "🔄 إعادة تشغيل الأتمتة",
+                        "url": f"https://github.com/{repo}/actions/workflows/daily-battles.yml",
+                    },
+                    {
+                        "text": "📊 فحص الموقع",
+                        "url": f"https://daily-trend-battles.vercel.app",
+                    },
+                ],
+                [
+                    {
+                        "text": "📁 فحص data.json",
+                        "url": f"https://github.com/{repo}/blob/main/data.json",
+                    },
+                    {
+                        "text": "⚙️ إعدادات المستودع",
+                        "url": f"https://github.com/{repo}/settings",
+                    },
+                ],
+            ]
+        }
+
+        resp = requests.post(
+            f"{api}/sendMessage",
+            json={
+                "chat_id": my_chat,
+                "text": report_text,
+                "parse_mode": "HTML",
+                "reply_markup": keyboard,
+            },
+            timeout=30,
+        )
+        if resp.status_code == 200:
+            log.info("[Telegram] Admin report with control panel sent.")
+        else:
+            log.warning(f"[Telegram] Admin report failed: {resp.text}")
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -747,8 +855,17 @@ def main() -> None:
     except Exception as exc:
         log.warning(f"OG generation skipped (non-critical): {exc}")
 
-    # ── Post to Discord Webhook ────────────────────────────────────────────
-    send_to_discord(battles, OG_DIR, date_str)
+    # ── Post to Discord Webhook ──────────────────────────────────────────────
+    try:
+        send_to_discord(battles, OG_DIR, date_str)
+    except Exception as exc:
+        log.warning(f"Discord webhook skipped (non-critical): {exc}")
+
+    # ── Post to Telegram (Marketing + Admin Control Panel) ───────────────────
+    try:
+        send_telegram_updates(battles, OG_DIR, date_str)
+    except Exception as exc:
+        log.warning(f"Telegram updates skipped (non-critical): {exc}")
 
     log.info("=" * 70)
     log.info("  Pipeline complete — today's battles:")
