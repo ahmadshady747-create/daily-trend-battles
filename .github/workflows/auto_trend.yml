@@ -1,0 +1,37 @@
+name: Daily Trend Battles Automation
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # يعمل تلقائياً كل يوم عند منتصف الليل بتوقيت UTC
+  workflow_dispatch: # يتيح لك تشغيله يدوياً في أي وقت للتجربة
+
+jobs:
+  run-automation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        # إذا كنت تستخدم مكتبات خارجية مثل requests اكتبها هنا بالأسفل:
+        pip install requests
+
+    - name: Run script
+      run: python script.py # تأكد من استبدال script.py باسم ملف البايثون الخاص بك بدقة
+
+    - name: Commit and Push updates
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add data.json
+        git diff-index --quiet HEAD || git commit -m "Automated daily update of viral matchups"
+        git push
