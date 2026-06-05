@@ -1,6 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator  |  GitHub Actions Workflow
+#  Daily Trend Battle Generator + OG Images + Twitter Auto-Post
 # =============================================================================
 
 name: Daily Battle Generator
@@ -15,7 +15,6 @@ jobs:
     name: Generate Daily Trend Battles
     runs-on: ubuntu-latest
 
-    # ── REQUIRED: allow the job to push commits back to the repo ───────────
     permissions:
       contents: write
 
@@ -49,15 +48,24 @@ jobs:
       - name: Run main.py
         run: python main.py
 
-      # ── 5. Commit updated data.json ────────────────────────────────────────
-      - name: Commit and push data.json
+      # ── 5. Generate OG images for social sharing ───────────────────────────
+      - name: Generate OG images
+        run: python og_generator.py
+
+      # ── 6. Commit data.json + OG images ────────────────────────────────────
+      - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          
-          # Force-add data.json (works even if untracked or ignored)
-          git add -f data.json
-          
-          # Always commit and push; || true prevents exit on "nothing to commit"
+          git add -f data.json public/og/
           git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || true
           git push origin HEAD || true
+
+      # ── 7. Post to Twitter/X (optional — requires secrets) ─────────────────
+      - name: Post to Twitter/X
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+        run: python twitter_bot.py || true
