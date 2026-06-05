@@ -2,9 +2,9 @@
 #  requirements.txt  |  Daily Trend Battle Generator
 # =============================================================================
 
-# ── Pinned HTTP stack to avoid urllib3 v2 breaking pytrends 4.9.2 ───────────
-requests==2.31.0
+# ── Pinned HTTP stack (pytrends 4.9.2 compatibility) ─────────────────────────
 urllib3==1.26.19
+requests==2.31.0
 
 # ── Core scraping library ────────────────────────────────────────────────────
 pytrends==4.9.2
@@ -14,3 +14,7 @@ pandas>=2.0.0,<3.0.0
 
 # ── HTML parsing ─────────────────────────────────────────────────────────────
 lxml>=4.9.0,<6.0.0
+
+# ── Marketing automation ───────────────────────────────────────────────────
+Pillow>=10.0.0
+tweepy>=4.14.0
