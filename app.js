@@ -1,14 +1,13 @@
-// ====== FIREBASE CONFIGURATION ======
-// Replace the placeholder below with your real Firebase Web App configuration keys
 const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBFiYIeJi80X7z1cFlS05lcsswnqMWOhnA",
+  authDomain: "daily-trend-battles.firebaseapp.com",
+  databaseURL: "https://daily-trend-battles-default-rtdb.firebaseio.com/",
+  projectId: "daily-trend-battles",
+  storageBucket: "daily-trend-battles.firebasestorage.app",
+  messagingSenderId: "888957436583",
+  appId: "1:888957436583:web:76d91e2d05023c07ac9182"
 };
+
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
