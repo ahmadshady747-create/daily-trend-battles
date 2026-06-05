@@ -15,6 +15,10 @@ jobs:
     name: Generate Daily Trend Battles
     runs-on: ubuntu-latest
 
+    # ── REQUIRED: allow the job to push commits back to the repo ───────────
+    permissions:
+      contents: write
+
     concurrency:
       group: daily-battle-generator
       cancel-in-progress: false
@@ -25,6 +29,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # ── 2. Set up Python ───────────────────────────────────────────────────
       - name: Set up Python 3.11
@@ -50,7 +55,10 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
           
-          # إجبار إضافة الملف ورفعه لتحديث الموقع بشكل حتمي
-          git add data.json || true
-          git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || echo "No changes to commit"
-          git push
+          git add data.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
+            git push origin HEAD
+          fi
