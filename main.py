@@ -4,38 +4,8 @@
   Automated Daily Trend Battle Generator  |  main.py
   JAMstack "A vs B" Viral Comparison Platform
 =============================================================================
-
-  HOW IT FITS INTO THE PIPELINE
-  ─────────────────────────────
-  GitHub Actions triggers this script once per day.
-  The script:
-    1. Fetches top-trending searches from Google Trends (US + EU regions)
-    2. Categorises and scores each trend against Sports, Tech, Economy
-    3. Pairs related trends into head-to-head battle objects
-    4. Writes / overwrites  data.json  in the repo root
-    5. The GitHub Action commits the file → Vercel auto-deploys the site
-
-  VOTING (hybrid static + live)
-  ─────────────────────────────
-  Each battle's  voting_api_key  field is the Firebase Realtime Database path
-  (or CountAPI namespace/key) the frontend should ping for live vote counts.
-  Format:  battles/{category}/{slugA}-vs-{slugB}/{YYYY-MM-DD}
-
-  e.g.  battles/sports/messi-vs-ronaldo/2025-07-14
-
-  RATE-LIMIT PROTECTION
-  ─────────────────────
-  Google Trends enforces aggressive rate limits on automated clients.
-  Every region request sleeps a random interval first. 429 / connection
-  errors trigger extra sleep + exponential back-off before retry.
-
-  DEPENDENCIES  (see requirements.txt)
-  ─────────────────────────────────────
-  pytrends, requests, pandas, lxml
-=============================================================================
 """
 
-# ── Standard Library ────────────────────────────────────────────────────────
 import hashlib
 import itertools
 import json
@@ -45,24 +15,12 @@ import re
 import time
 from datetime import datetime, timezone
 
-# NOTE: pytrends is imported INSIDE main() so that a library crash does not
-#       kill the entire script — we always fall back to static pairs.
-
-# ═══════════════════════════════════════════════════════════════════════════
-#  LOGGING SETUP
-# ═══════════════════════════════════════════════════════════════════════════
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  [%(levelname)-8s]  %(message)s",
     handlers=[logging.StreamHandler()],
 )
 log = logging.getLogger("battle-generator")
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-#  GLOBAL CONFIGURATION
-# ═══════════════════════════════════════════════════════════════════════════
 
 OUTPUT_FILE: str = "data.json"
 
@@ -80,11 +38,6 @@ RL_SLEEP_MIN: float = 45.0
 RL_SLEEP_MAX: float = 100.0
 MAX_RETRIES: int = 3
 CATEGORIES: list[str] = ["Sports", "Tech", "Economy"]
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-#  KEYWORD TAXONOMY
-# ═══════════════════════════════════════════════════════════════════════════
 
 CATEGORY_KEYWORDS: dict[str, list[str]] = {
     "Sports": [
@@ -122,7 +75,6 @@ CATEGORY_KEYWORDS: dict[str, list[str]] = {
         "tyson fury", "oleksandr usyk", "canelo alvarez",
         "max verstappen", "lewis hamilton", "charles leclerc", "lando norris",
     ],
-
     "Tech": [
         "google", "apple", "microsoft", "amazon", "meta", "netflix",
         "nvidia", "amd", "intel", "qualcomm", "arm holdings",
@@ -149,7 +101,6 @@ CATEGORY_KEYWORDS: dict[str, list[str]] = {
         "software", "app launch", "startup", "tech layoffs",
         "streaming service", "gaming", "esports",
     ],
-
     "Economy": [
         "bitcoin", "btc", "ethereum", "eth", "solana", "sol",
         "cardano", "ada", "dogecoin", "doge", "xrp", "ripple",
@@ -187,7 +138,6 @@ CATEGORY_KEYWORDS: dict[str, list[str]] = {
         "merger", "acquisition", "bankruptcy", "chapter 11",
     ],
 }
-
 
 KNOWN_RIVALRIES: list[tuple[str, str, str]] = [
     ("laker",      "celtic",        "Sports"),
@@ -260,7 +210,6 @@ KNOWN_RIVALRIES: list[tuple[str, str, str]] = [
     ("rate hike",  "rate cut",      "Economy"),
 ]
 
-
 FALLBACK_BATTLES: dict[str, list[tuple[str, str]]] = {
     "Sports": [
         ("LeBron James",           "Michael Jordan"),
@@ -314,7 +263,6 @@ FALLBACK_BATTLES: dict[str, list[tuple[str, str]]] = {
     ],
 }
 
-
 TITLE_TEMPLATES: dict[str, list[str]] = {
     "Sports": [
         "The Ultimate Sports Clash: {a} vs {b} — Who Wins Today?",
@@ -351,7 +299,6 @@ TITLE_TEMPLATES: dict[str, list[str]] = {
     ],
 }
 
-
 def slugify(text: str) -> str:
     text = text.lower().strip()
     text = re.sub(r"[^\w\s-]", "", text)
@@ -360,12 +307,10 @@ def slugify(text: str) -> str:
     text = re.sub(r"^-+|-+$", "", text)
     return text
 
-
 def generate_battle_id(category: str, option_a: str, option_b: str, date_str: str) -> str:
     raw = f"{category}::{option_a}::{option_b}::{date_str}"
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
     return f"{date_str}-{slugify(category)}-{digest}"
-
 
 def generate_voting_api_key(category: str, option_a: str, option_b: str, date_str: str) -> str:
     cat_slug = slugify(category)
@@ -373,11 +318,9 @@ def generate_voting_api_key(category: str, option_a: str, option_b: str, date_st
     b_slug   = slugify(option_b)[:30]
     return f"battles/{cat_slug}/{a_slug}-vs-{b_slug}/{date_str}"
 
-
 def generate_battle_title(category: str, option_a: str, option_b: str) -> str:
     template = random.choice(TITLE_TEMPLATES[category])
     return template.format(a=option_a, b=option_b)
-
 
 def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str]:
     for attempt in range(1, MAX_RETRIES + 1):
@@ -395,7 +338,6 @@ def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str
                 log.warning(f"[{geo_label}] Received empty/null DataFrame.")
                 return []
 
-            # SAFER: use the first column by position instead of hard-coded name
             trends: list[str] = (
                 df.iloc[:, 0]
                 .dropna()
@@ -438,7 +380,6 @@ def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str
     )
     return []
 
-
 def collect_all_trends(pytrends) -> list[str]:
     registry: dict[str, dict] = {}
 
@@ -471,10 +412,8 @@ def collect_all_trends(pytrends) -> list[str]:
     )
     return final_trends
 
-
 def keyword_score(trend_lower: str, keywords: list[str]) -> int:
     return sum(1 for kw in keywords if kw in trend_lower)
-
 
 def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
     buckets: dict[str, list[str]] = {cat: [] for cat in CATEGORIES}
@@ -498,7 +437,6 @@ def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
 
     return buckets
 
-
 def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
     a_lower = trend_a.lower()
     b_lower = trend_b.lower()
@@ -513,7 +451,6 @@ def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
         if (a_hits_x and b_hits_y) or (a_hits_y and b_hits_x):
             return True
     return False
-
 
 def pick_battle_pair(
     category_trends: list[str],
@@ -571,7 +508,6 @@ def pick_battle_pair(
     )
     return opt_a, opt_b
 
-
 def build_battle(
     category:      str,
     option_a:      str,
@@ -589,7 +525,6 @@ def build_battle(
         "timestamp":      timestamp_iso,
     }
 
-
 def main() -> None:
     log.info("=" * 70)
     log.info("  Daily Trend Battle Generator  |  Pipeline starting")
@@ -601,7 +536,6 @@ def main() -> None:
     log.info(f"Run date : {date_str}")
     log.info(f"UTC time : {timestamp_iso}")
 
-    # ── Step 1 : Initialise pytrends (graceful degradation) ─────────────────
     all_trends: list[str] = []
     pytrends = None
 
@@ -652,11 +586,9 @@ def main() -> None:
             "Every battle will use fallback pairs."
         )
 
-    # ── Step 3 : Categorise ─────────────────────────────────────────────────
     log.info(f"Categorising {len(all_trends)} unique trends ...")
     categorized: dict[str, list[str]] = categorize_trends(all_trends)
 
-    # ── Step 4 : Build 3 Battles ────────────────────────────────────────────
     battles:      list[dict] = []
     used_trends:  set[str]   = set()
 
@@ -687,7 +619,6 @@ def main() -> None:
         log.info(f"     key   : {battle['voting_api_key']}")
         log.info(f"     id    : {battle['id']}")
 
-    # ── Step 5 : Write data.json ────────────────────────────────────────────
     output_payload = {
         "generated_at": timestamp_iso,
         "date":         date_str,
@@ -706,7 +637,16 @@ def main() -> None:
         log.critical(f"Could not write output file '{OUTPUT_FILE}': {exc}")
         raise SystemExit(1)
 
-    # ── Pipeline Summary ────────────────────────────────────────────────────
+    # ═══════════════════════════════════════════════════════════════════════
+    #  NEW: Auto-generate OG images for social sharing
+    # ═══════════════════════════════════════════════════════════════════════
+    try:
+        from og_generator import generate_all_og
+        og_files = generate_all_og(OUTPUT_FILE)
+        log.info(f"Generated {len(og_files)} OG images for social sharing.")
+    except Exception as exc:
+        log.warning(f"OG generation skipped (non-critical): {exc}")
+
     log.info("=" * 70)
     log.info("  Pipeline complete — today's battles:")
     log.info("=" * 70)
@@ -716,7 +656,6 @@ def main() -> None:
             f"{battle['option_a']:<28}  vs  {battle['option_b']}"
         )
     log.info("=" * 70)
-
 
 if __name__ == "__main__":
     main()
