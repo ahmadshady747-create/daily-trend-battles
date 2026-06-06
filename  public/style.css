@@ -1,0 +1,181 @@
+:root {
+    --bg-color: #0d1117;
+    --card-bg: #161b22;
+    --border-color: #30363d;
+    --text-main: #c9d1d9;
+    --accent-color: #58a6ff;
+    --option-a-color: #ff4500;
+    --option-b-color: #1e90ff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #ff4500, #58a6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #8b949e;
+    margin-top: 5px;
+}
+
+.ad-container {
+    background-color: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    width: 100%;
+    max-width: 600px;
+    height: 90px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.ad-badge {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    font-size: 0.65rem;
+    color: #484f58;
+}
+
+main {
+    width: 100%;
+    max-width: 600px;
+}
+
+.battle-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    background-color: #21262d;
+    border: 1px solid var(--border-color);
+}
+
+.Sports { color: #238636; }
+.Tech { color: #8957e5; }
+.Economy { color: #d29922; }
+
+.battle-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.vs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    background-color: #21262d;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.option-btn:hover {
+    border-color: var(--accent-color);
+    background-color: #30363d;
+}
+
+.option-a-btn:hover { border-color: var(--option-a-color); }
+.option-b-btn:hover { border-color: var(--option-b-color); }
+
+/* Progress tracking visual styles */
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.25;
+}
+
+.progress-a { background-color: var(--option-a-color); }
+.progress-b { background-color: var(--option-b-color); }
+
+.btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.percentage-display {
+    font-weight: 700;
+}
+
+.voted-badge {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    margin-top: 8px;
+    text-align: center;
+}
+
+.loading {
+    text-align: center;
+    color: #8b949e;
+    padding: 40px;
+}
+
+footer {
+    text-align: center;
+    color: #484f58;
+    font-size: 0.8rem;
+    margin-top: 20px;
+    padding: 20px;
+}
