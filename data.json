@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-05T23:34:30Z",
-  "date": "2026-06-05",
+  "generated_at": "2026-06-06T11:12:06Z",
+  "date": "2026-06-06",
   "battles": [
     {
-      "id": "2026-06-05-sports-689eb9c4",
+      "id": "2026-06-06-sports-47b762b6",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: New York Yankees Takes On Los Angeles Dodgers — Cast Your Vote!",
-      "option_a": "New York Yankees",
-      "option_b": "Los Angeles Dodgers",
-      "voting_api_key": "battles/sports/new-york-yankees-vs-los-angeles-dodgers/2026-06-05",
-      "timestamp": "2026-06-05T23:34:30Z"
+      "battle_title": "The Ultimate Sports Clash: Kansas City Chiefs vs Philadelphia Eagles — Who Wins Today?",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
     },
     {
-      "id": "2026-06-05-tech-e76ca8bc",
+      "id": "2026-06-06-tech-501597c6",
       "category": "Tech",
-      "battle_title": "Tech Showdown: Netflix vs Disney+ — Which Reigns Supreme?",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-05",
-      "timestamp": "2026-06-05T23:34:30Z"
+      "battle_title": "The Big Tech Battle: PlayStation 5 vs Xbox Series X — You Decide the Winner!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
     },
     {
-      "id": "2026-06-05-economy-527e8c77",
+      "id": "2026-06-06-economy-0d95394b",
       "category": "Economy",
-      "battle_title": "Rate Hike vs Rate Cut — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Rate Hike",
-      "option_b": "Rate Cut",
-      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-06-05",
-      "timestamp": "2026-06-05T23:34:30Z"
+      "battle_title": "Economic Showdown: Bonds vs Equities — Which Comes Out on Top?",
+      "option_a": "Bonds",
+      "option_b": "Equities",
+      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
     }
   ]
 }
