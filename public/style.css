@@ -3,9 +3,11 @@
     --card-bg: #161b22;
     --border-color: #30363d;
     --text-main: #c9d1d9;
+    --text-secondary: #8b949e;
     --accent-color: #58a6ff;
     --option-a-color: #ff4500;
     --option-b-color: #1e90ff;
+    --success-color: #238636;
 }
 
 * {
@@ -23,11 +25,13 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    line-height: 1.5;
 }
 
 header {
     text-align: center;
     margin-bottom: 25px;
+    position: relative;
 }
 
 .logo {
@@ -37,33 +41,75 @@ header {
     background: linear-gradient(45deg, #ff4500, #58a6ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
 }
 
 .subtitle {
     font-size: 0.95rem;
-    color: #8b949e;
+    color: var(--text-secondary);
     margin-top: 5px;
+}
+
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: rgba(35, 134, 54, 0.15);
+    border: 1px solid var(--success-color);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.pulse {
+    width: 8px;
+    height: 8px;
+    background: var(--success-color);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 .ad-container {
     background-color: var(--card-bg);
     border: 1px dashed var(--border-color);
     width: 100%;
-    max-width: 600px;
-    height: 90px;
+    max-width: 728px;
+    min-height: 90px;
     margin: 15px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    border-radius: 8px;
+}
+
+.ad-container.middle-ad {
+    min-height: 250px;
+    max-width: 600px;
 }
 
 .ad-badge {
     position: absolute;
-    top: 2px;
-    left: 5px;
+    top: 4px;
+    left: 8px;
     font-size: 0.65rem;
     color: #484f58;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ad-placeholder {
+    color: #484f58;
+    font-size: 0.85rem;
 }
 
 main {
@@ -78,11 +124,17 @@ main {
     padding: 20px;
     margin-bottom: 25px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.battle-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 .category-tag {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: bold;
@@ -90,17 +142,19 @@ main {
     margin-bottom: 12px;
     background-color: #21262d;
     border: 1px solid var(--border-color);
+    letter-spacing: 0.5px;
 }
 
-.Sports { color: #238636; }
-.Tech { color: #8957e5; }
-.Economy { color: #d29922; }
+.Sports { color: #3fb950; border-color: #3fb950; }
+.Tech { color: #a371f7; border-color: #a371f7; }
+.Economy { color: #d29922; border-color: #d29922; }
 
 .battle-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.4;
+    color: #f0f6fc;
 }
 
 .vs-container {
@@ -109,39 +163,69 @@ main {
     gap: 12px;
 }
 
+.vs-divider {
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.vs-divider::before,
+.vs-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.vs-divider::before { left: 0; }
+.vs-divider::after { right: 0; }
+
 .option-btn {
     background-color: #21262d;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     color: var(--text-main);
     padding: 16px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
     position: relative;
     overflow: hidden;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.option-btn:hover {
+.option-btn:hover:not(:disabled) {
     border-color: var(--accent-color);
     background-color: #30363d;
+    transform: translateX(4px);
 }
 
-.option-a-btn:hover { border-color: var(--option-a-color); }
-.option-b-btn:hover { border-color: var(--option-b-color); }
+.option-a-btn:hover:not(:disabled) { border-color: var(--option-a-color); }
+.option-b-btn:hover:not(:disabled) { border-color: var(--option-b-color); }
 
-/* Progress tracking visual styles */
+.option-btn:disabled {
+    cursor: default;
+    opacity: 0.9;
+}
+
 .progress-bar {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     z-index: 1;
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.25;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.2;
+    border-radius: 8px;
 }
 
 .progress-a { background-color: var(--option-a-color); }
@@ -153,29 +237,159 @@ main {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
 }
 
-.percentage-display {
+.btn-label {
     font-weight: 700;
 }
 
+.btn-stats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.percentage-display {
+    font-weight: 800;
+    font-size: 1.1rem;
+    min-width: 45px;
+    text-align: right;
+}
+
 .voted-badge {
-    font-size: 0.75rem;
-    color: var(--accent-color);
+    font-size: 0.85rem;
+    color: var(--success-color);
     margin-top: 8px;
     text-align: center;
+    padding: 8px;
+    background: rgba(35, 134, 54, 0.1);
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.battle-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.battle-share {
+    display: flex;
+    gap: 8px;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: #21262d;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.share-btn:hover {
+    background: #30363d;
+    border-color: var(--accent-color);
 }
 
 .loading {
     text-align: center;
-    color: #8b949e;
-    padding: 40px;
+    color: var(--text-secondary);
+    padding: 60px 20px;
+}
+
+.loading.error {
+    color: #f85149;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.retry-btn {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.retry-btn:hover {
+    background: #79c0ff;
 }
 
 footer {
     text-align: center;
     color: #484f58;
     font-size: 0.8rem;
-    margin-top: 20px;
-    padding: 20px;
+    margin-top: 30px;
+    padding: 30px 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+.update-time {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: #484f58;
+}
+
+.battle-card.voted .option-btn {
+    border-color: var(--border-color);
+}
+
+.battle-card.voted .option-a-btn { border-color: rgba(255, 69, 0, 0.3); }
+.battle-card.voted .option-b-btn { border-color: rgba(30, 144, 255, 0.3); }
+
+@media (max-width: 480px) {
+    .logo { font-size: 1.6rem; }
+    .battle-title { font-size: 1.1rem; }
+    .option-btn { padding: 14px; font-size: 0.95rem; }
+    .ad-container { min-height: 60px; }
+    .ad-container.middle-ad { min-height: 200px; }
 }
