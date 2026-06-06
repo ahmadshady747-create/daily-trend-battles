@@ -23,46 +23,56 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      # ── 1. Check out the repository ────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # ── 2. Set up Python ───────────────────────────────────────────────────
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: "requirements.txt"
 
-      # ── 3. Install dependencies ────────────────────────────────────────────
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libjpeg-dev zlib1g-dev libpng-dev libfreetype6-dev
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 4. Run the battle generator ────────────────────────────────────────
+      - name: Prepare directories
+        run: |
+          mkdir -p public/og
+          mkdir -p public
+
       - name: Run main.py
         env:
-          # Discord
-          DISCORD_WEBHOOK_URL:  ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Telegram
-          TELEGRAM_BOT_TOKEN:    ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_MY_CHAT_ID:   ${{ secrets.TELEGRAM_MY_CHAT_ID }}
-          TELEGRAM_CHANNEL_ID:   ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          # SEO / Site
-          SITE_URL:              ${{ secrets.SITE_URL }}
-          GITHUB_REPOSITORY:     ${{ github.repository }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_MY_CHAT_ID: ${{ secrets.TELEGRAM_MY_CHAT_ID }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: python main.py
 
-      # ── 5. Commit data.json + OG images + sitemap.xml ────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name  "github-actions[bot]"
+          git config --local user.name "github-actions[bot]"
+
           git add -f data.json public/og/ public/sitemap.xml
-          git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')" || true
-          git push origin HEAD || true
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git push origin HEAD:${{ github.ref_name }}
