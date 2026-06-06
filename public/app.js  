@@ -3,24 +3,26 @@
 //  Firebase Realtime Database + Anonymous Voting + Live Updates
 // =============================================================================
 
-// --- Firebase Configuration (REPLACE WITH YOUR ACTUAL CONFIG) ---
+// --- Firebase Configuration (REAL - daily-trend-battles) ---
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBFiYIeJi80X7z1cFlS05lcsswnqMWOhnA",
+    authDomain: "daily-trend-battles.firebaseapp.com",
+    databaseURL: "https://daily-trend-battles-default-rtdb.firebaseio.com",
+    projectId: "daily-trend-battles",
+    storageBucket: "daily-trend-battles.firebasestorage.app",
+    messagingSenderId: "888957436583",
+    appId: "1:888957436583:web:76d91e2d05023c07ac9182"
 };
 
-// Initialize Firebase
+// Initialize Firebase (Compat SDK)
 let app, database;
 try {
     app = firebase.initializeApp(firebaseConfig);
     database = firebase.database();
+    console.log("[Firebase] Connected successfully.");
 } catch (e) {
-    console.error("Firebase initialization failed:", e);
+    console.error("[Firebase] Initialization failed:", e);
+    database = null;
 }
 
 // --- State Management ---
@@ -47,6 +49,7 @@ function getPercentage(votesA, votesB) {
 function vote(battleId, option) {
     if (!database) {
         alert("Voting system is temporarily unavailable. Please try again later.");
+        console.error("[Vote] Database not initialized.");
         return;
     }
 
@@ -56,7 +59,10 @@ function vote(battleId, option) {
     }
 
     const battle = currentBattles.find(b => b.id === battleId);
-    if (!battle) return;
+    if (!battle) {
+        console.error("[Vote] Battle not found:", battleId);
+        return;
+    }
 
     const voteRef = database.ref(`votes/${battle.voting_api_key}/${option}`);
 
@@ -64,13 +70,14 @@ function vote(battleId, option) {
         return (currentVotes || 0) + 1;
     }, (error, committed) => {
         if (error) {
-            console.error("Vote failed:", error);
+            console.error("[Vote] Transaction failed:", error);
             alert("Failed to register vote. Please try again.");
         } else if (committed) {
             votedBattles[battleId] = option;
             localStorage.setItem('votedBattles', JSON.stringify(votedBattles));
             updateBattleUI(battleId);
             showVotedBadge(battleId, option);
+            console.log(`[Vote] Registered for ${battleId}: ${option}`);
         }
     });
 }
