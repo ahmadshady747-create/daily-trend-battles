@@ -20,6 +20,10 @@
       "dest": "/sitemap.xml"
     },
     {
+      "src": "/data.json",
+      "dest": "/data.json"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
