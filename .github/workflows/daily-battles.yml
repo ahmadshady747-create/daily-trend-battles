@@ -74,9 +74,9 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git pull --rebase origin main
           git add -f data.json og/ sitemap.xml
           git diff --staged --quiet \
             && echo "Nothing to commit — skipping." \
             || git commit -m "[skip ci] chore: daily battle update $(date -u +'%Y-%m-%d')"
+          git pull --rebase origin main
           git push origin HEAD
