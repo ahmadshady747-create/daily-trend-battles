@@ -1,6 +1,5 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
-#  Daily Trend Battle Generator + OG + Discord + Telegram + SEO Sitemap
 # =============================================================================
 
 name: Daily Battle Generator
@@ -46,7 +45,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Prepare output directories
+      - name: Prepare directories
         run: |
           mkdir -p og
           touch og/.gitkeep
@@ -66,5 +65,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -f data.json og/ sitemap.xml
-          git diff --staged --quiet && echo "Nothing to commit" || git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
+          git diff --staged --quiet && echo "Nothing to commit" || git commit -m "[skip ci] chore: daily battle update $(date -u +'%Y-%m-%d')"
           git push origin HEAD
