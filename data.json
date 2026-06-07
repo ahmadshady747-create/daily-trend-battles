@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-06-07T12:00:36Z",
+  "date": "2026-06-07",
+  "battles": [
+    {
+      "id": "2026-06-07-sports-ea02f2c3",
+      "category": "Sports",
+      "battle_title": "The GOAT Question Returns: Manchester City or Arsenal? The World Weighs In!",
+      "option_a": "Manchester City",
+      "option_b": "Arsenal",
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-07",
+      "timestamp": "2026-06-07T12:00:36Z"
+    },
+    {
+      "id": "2026-06-07-tech-ea35849e",
+      "category": "Tech",
+      "battle_title": "Apple vs Google — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "Apple",
+      "option_b": "Google",
+      "voting_api_key": "battles/tech/apple-vs-google/2026-06-07",
+      "timestamp": "2026-06-07T12:00:36Z"
+    },
+    {
+      "id": "2026-06-07-economy-4de08cb6",
+      "category": "Economy",
+      "battle_title": "Bonds vs Equities: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Bonds",
+      "option_b": "Equities",
+      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-07",
+      "timestamp": "2026-06-07T12:00:36Z"
+    }
+  ]
+}

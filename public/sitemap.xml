@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://daily-trend-battles.vercel.app/</loc>
-    <lastmod>2026-06-06</lastmod>
+    <loc />
+    <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://daily-trend-battles.vercel.app/battle/2026-06-06-tech-501597c6</loc>
-    <lastmod>2026-06-06</lastmod>
+    <loc>/battle/2026-06-07-tech-ea35849e</loc>
+    <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://daily-trend-battles.vercel.app/battle/2026-06-06-sports-47b762b6</loc>
-    <lastmod>2026-06-06</lastmod>
+    <loc>/battle/2026-06-07-sports-ea02f2c3</loc>
+    <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://daily-trend-battles.vercel.app/battle/2026-06-06-economy-0d95394b</loc>
-    <lastmod>2026-06-06</lastmod>
+    <loc>/battle/2026-06-07-economy-4de08cb6</loc>
+    <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
