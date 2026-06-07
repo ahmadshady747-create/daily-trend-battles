@@ -63,18 +63,9 @@ jobs:
         run: python main.py
 
       - name: Commit and push
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add -f data.json og/ sitemap.xml
-          git diff --staged --quiet \
-            && echo "Nothing to commit — skipping." \
-            && exit 0
-          git commit -m "[skip ci] chore: daily battle update $(date -u +'%Y-%m-%d')"
-          # Retry push up to 3 times if rejected
-          for i in 1 2 3; do
-            git push origin HEAD && break
-            echo "Push failed, pulling and retrying ($i/3)..."
-            git pull --rebase origin main
-            sleep 3
-          done
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[skip ci] chore: daily battle update"
+          file_pattern: 'data.json og/* sitemap.xml'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
