@@ -11,3 +11,6 @@ An automated JAMstack platform that fetches real-time global search trends daily
 
 ## 🚀 Live Updates
 The data orchestration pipeline automatically rewrites `data.json` every 24 hours, triggering decentralized builds to keep content fresh without manual intervention.
+
+
+yes
