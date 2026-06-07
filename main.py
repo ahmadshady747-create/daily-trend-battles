@@ -1,209 +1,1010 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-  OG Image Generator  |  og_generator.py
-  Generates 1200x630 shareable images for each battle.
-  Saves to: public/og/{battle_id}.png
-
-  FIX: Added _fit_font() to scale text down when option names are too wide,
-       preventing overlap with the central "VS" label.
-  FIX: Added _hex_to_rgb() so all color operations use tuples, not strings.
-  FIX: Improved font candidate list with Ubuntu and Noto fonts available
-       on ubuntu-latest GitHub Actions runners.
+ Automated Daily Trend Battle Generator  |  main.py
+ JAMstack "A vs B" + Discord + Telegram + SEO Sitemap Auto-Update
 =============================================================================
 """
 
+import hashlib
+import itertools
 import json
+import logging
 import os
-from PIL import Image, ImageDraw, ImageFont
+import random
+import re
+import time
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 
-OG_DIR     = "public/og"
-IMAGE_SIZE = (1200, 630)
-W, H       = IMAGE_SIZE
+import requests
 
-CATEGORY_STYLES: dict[str, dict] = {
-    "Sports":  {"bg": "#1a1a2e", "accent": "#e94560"},
-    "Tech":    {"bg": "#16213e", "accent": "#533483"},
-    "Economy": {"bg": "#0f3460", "accent": "#f39c12"},
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)-8s] %(message)s",
+    handlers=[logging.StreamHandler()],
+)
+log = logging.getLogger("battle-generator")
+
+OUTPUT_FILE: str = "data.json"
+OG_DIR: str = "public/og"
+SITEMAP_FILE: str = "public/sitemap.xml"
+SITEMAP_NS: str = "http://www.sitemaps.org/schemas/sitemap/0.9"
+SITEMAP_MAX_URLS: int = 365
+
+TARGET_REGIONS: dict[str, str] = {
+    "united_states": "US",
+    "united_kingdom": "GB",
+    "germany": "DE",
+    "france": "FR",
 }
 
-# Ordered by likelihood of being present on ubuntu-latest
-FONT_CANDIDATES: list[str] = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
-    "/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf",
-    "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
-    "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+TRENDS_PER_REGION: int = 20
+SLEEP_MIN: float = 5.0
+SLEEP_MAX: float = 13.0
+RL_SLEEP_MIN: float = 45.0
+RL_SLEEP_MAX: float = 100.0
+MAX_RETRIES: int = 3
+CATEGORIES: list[str] = ["Sports", "Tech", "Economy"]
+
+CATEGORY_KEYWORDS: dict[str, list[str]] = {
+    "Sports": [
+        "nfl", "nba", "mlb", "nhl", "nascar", "mls", "wnba", "ncaa",
+        "premier league", "champions league", "europa league",
+        "bundesliga", "serie a", "la liga", "ligue 1",
+        "super bowl", "world cup", "euro 20", "copa america",
+        "wimbledon", "us open", "french open", "australian open", "grand slam",
+        "masters", "tour de france", "formula 1", "f1", "motogp",
+        "ufc", "boxing", "wwe", "olympics", "paralympics", "commonwealth games",
+        "soccer", "football", "basketball", "baseball", "hockey",
+        "tennis", "golf", "cricket", "rugby", "volleyball",
+        "swimming", "athletics", "cycling", "wrestling", "mma",
+        "sport", "game", "match", "league", "cup", "championship",
+        "tournament", "playoff", "draft", "trade", "transfer",
+        "head coach", "manager fired", "contract extension",
+        "lakers", "celtics", "warriors", "bulls", "nets", "heat",
+        "knicks", "bucks", "suns", "nuggets", "cavaliers", "thunder",
+        "yankees", "dodgers", "red sox", "cubs", "cardinals", "mets",
+        "braves", "astros", "rangers", "phillies",
+        "patriots", "chiefs", "cowboys", "eagles", "49ers", "packers",
+        "ravens", "bills", "bengals", "steelers", "broncos", "raiders",
+        "manchester city", "manchester united", "liverpool", "arsenal",
+        "chelsea", "tottenham", "aston villa", "newcastle", "brighton",
+        "real madrid", "barcelona", "atletico madrid",
+        "psg", "juventus", "ac milan", "inter milan", "napoli",
+        "dortmund", "bayern munich", "leverkusen",
+        "lebron", "stephen curry", "giannis", "luka doncic",
+        "nikola jokic", "kevin durant", "jayson tatum",
+        "patrick mahomes", "lamar jackson", "josh allen",
+        "messi", "ronaldo", "mbappe", "haaland", "bellingham", "vinicius",
+        "djokovic", "alcaraz", "medvedev", "sinner",
+        "swiatek", "sabalenka", "gauff",
+        "tiger woods", "rory mcilroy", "scottie scheffler",
+        "tyson fury", "oleksandr usyk", "canelo alvarez",
+        "max verstappen", "lewis hamilton", "charles leclerc", "lando norris",
+    ],
+    "Tech": [
+        "google", "apple", "microsoft", "amazon", "meta", "netflix",
+        "nvidia", "amd", "intel", "qualcomm", "arm holdings",
+        "tesla", "spacex", "openai", "anthropic", "deepmind", "mistral",
+        "samsung", "sony", "lg", "huawei", "xiaomi", "oppo",
+        "twitter", "x.com", "tiktok", "instagram", "snapchat", "reddit",
+        "linkedin", "discord", "whatsapp", "telegram", "signal",
+        "youtube", "twitch", "spotify", "uber", "lyft", "airbnb",
+        "zoom", "slack", "notion", "figma", "canva",
+        "iphone", "ipad", "macbook", "airpods", "apple watch", "vision pro",
+        "galaxy", "pixel", "surface", "chromebook",
+        "playstation", "ps5", "xbox series", "nintendo switch",
+        "chatgpt", "gemini", "claude", "copilot", "gpt-4", "gpt-5",
+        "llama", "mistral", "sora", "midjourney", "dall-e",
+        "stable diffusion", "runway", "perplexity",
+        "ai", "artificial intelligence", "machine learning", "deep learning",
+        "llm", "generative ai", "agi", "neural network",
+        "5g", "6g", "cloud computing", "aws", "azure", "gcp",
+        "cybersecurity", "data breach", "ransomware", "phishing", "hack",
+        "vr", "ar", "mixed reality", "virtual reality", "augmented reality",
+        "blockchain", "nft", "web3", "decentralized",
+        "robot", "autonomous vehicle", "self-driving", "ev charging",
+        "semiconductor", "chip shortage", "gpu", "cpu", "processor",
+        "software", "app launch", "startup", "tech layoffs",
+        "streaming service", "gaming", "esports",
+    ],
+    "Economy": [
+        "bitcoin", "btc", "ethereum", "eth", "solana", "sol",
+        "cardano", "ada", "dogecoin", "doge", "xrp", "ripple",
+        "binance", "coinbase", "kraken", "crypto",
+        "cryptocurrency", "defi", "staking", "altcoin",
+        "stablecoin", "usdt", "usdc", "web3 finance",
+        "stock", "stocks", "stock market", "wall street", "nyse", "nasdaq",
+        "s&p 500", "sp500", "dow jones", "dow", "ftse 100",
+        "dax", "cac 40", "nikkei", "hang seng",
+        "shares", "equity", "ipo", "earnings", "dividend",
+        "bull market", "bear market", "short selling", "hedge",
+        "rally", "selloff", "market correction", "market crash",
+        "inflation", "deflation", "recession", "depression", "stagflation",
+        "economy", "gdp", "growth", "economic slowdown",
+        "unemployment", "jobs report", "nonfarm payrolls", "cpi", "pce", "ppi",
+        "federal reserve", "fed rate", "fomc", "ecb rate",
+        "bank of england", "boe",
+        "interest rate", "rate hike", "rate cut",
+        "quantitative easing", "tapering",
+        "bond yield", "treasury yield", "yield curve", "10-year yield",
+        "mortgage rate", "housing market", "home prices",
+        "oil price", "crude oil", "brent crude", "wti", "opec",
+        "energy prices", "natural gas", "gas prices",
+        "gold price", "silver price", "platinum", "copper",
+        "commodity", "wheat prices", "corn prices",
+        "dollar index", "usd", "euro", "eur", "pound sterling", "gbp",
+        "japanese yen", "jpy", "swiss franc", "currency",
+        "forex", "exchange rate", "currency devaluation",
+        "tariff", "trade war", "sanctions", "import", "export",
+        "trade deficit", "supply chain", "manufacturing",
+        "tax cut", "tax hike", "government budget", "national debt",
+        "stimulus package", "bailout", "austerity",
+        "bank earnings", "banking crisis", "finance",
+        "hedge fund", "private equity", "venture capital",
+        "merger", "acquisition", "bankruptcy", "chapter 11",
+    ],
+}
+
+KNOWN_RIVALRIES: list[tuple[str, str, str]] = [
+    ("laker", "celtic", "Sports"),
+    ("laker", "warrior", "Sports"),
+    ("lebron", "curry", "Sports"),
+    ("lebron", "jordan", "Sports"),
+    ("lebron", "giannis", "Sports"),
+    ("jokic", "giannis", "Sports"),
+    ("luka", "sga", "Sports"),
+    ("messi", "ronaldo", "Sports"),
+    ("messi", "mbappe", "Sports"),
+    ("mbappe", "haaland", "Sports"),
+    ("bellingham", "vinicius", "Sports"),
+    ("real madrid","barcelona", "Sports"),
+    ("liverpool", "manchester", "Sports"),
+    ("arsenal", "chelsea", "Sports"),
+    ("dortmund", "bayern", "Sports"),
+    ("nfl", "nba", "Sports"),
+    ("chiefs", "eagle", "Sports"),
+    ("mahomes", "lamar", "Sports"),
+    ("djokovic", "alcaraz", "Sports"),
+    ("sinner", "alcaraz", "Sports"),
+    ("swiatek", "sabalenka", "Sports"),
+    ("fury", "usyk", "Sports"),
+    ("verstappen", "hamilton", "Sports"),
+    ("verstappen", "norris", "Sports"),
+    ("yankee", "red sox", "Sports"),
+    ("dodger", "yankee", "Sports"),
+    ("mcilroy", "scheffler", "Sports"),
+    ("tiger", "mcilroy", "Sports"),
+    ("iphone", "android", "Tech"),
+    ("iphone", "galaxy", "Tech"),
+    ("apple", "google", "Tech"),
+    ("apple", "microsoft", "Tech"),
+    ("apple", "samsung", "Tech"),
+    ("nvidia", "amd", "Tech"),
+    ("playstation","xbox", "Tech"),
+    ("ps5", "xbox", "Tech"),
+    ("netflix", "disney", "Tech"),
+    ("netflix", "hbo", "Tech"),
+    ("tiktok", "instagram", "Tech"),
+    ("tiktok", "youtube", "Tech"),
+    ("chatgpt", "gemini", "Tech"),
+    ("chatgpt", "claude", "Tech"),
+    ("openai", "anthropic", "Tech"),
+    ("openai", "google", "Tech"),
+    ("twitter", "threads", "Tech"),
+    ("tesla", "waymo", "Tech"),
+    ("uber", "lyft", "Tech"),
+    ("aws", "azure", "Tech"),
+    ("android", "ios", "Tech"),
+    ("macbook", "surface", "Tech"),
+    ("bitcoin", "gold", "Economy"),
+    ("bitcoin", "ethereum", "Economy"),
+    ("ethereum", "solana", "Economy"),
+    ("solana", "cardano", "Economy"),
+    ("dogecoin", "xrp", "Economy"),
+    ("nasdaq", "dow", "Economy"),
+    ("nasdaq", "s&p", "Economy"),
+    ("inflation", "recession", "Economy"),
+    ("gold", "silver", "Economy"),
+    ("dollar", "euro", "Economy"),
+    ("dollar", "yen", "Economy"),
+    ("pound", "euro", "Economy"),
+    ("oil", "gold", "Economy"),
+    ("oil", "natural gas", "Economy"),
+    ("stock", "crypto", "Economy"),
+    ("real estate","stock", "Economy"),
+    ("fed", "ecb", "Economy"),
+    ("rate hike", "rate cut", "Economy"),
 ]
 
+FALLBACK_BATTLES: dict[str, list[tuple[str, str]]] = {
+    "Sports": [
+        ("LeBron James", "Michael Jordan"),
+        ("Messi", "Ronaldo"),
+        ("Real Madrid", "Barcelona"),
+        ("Manchester City", "Arsenal"),
+        ("Novak Djokovic", "Carlos Alcaraz"),
+        ("Kansas City Chiefs", "Philadelphia Eagles"),
+        ("LA Lakers", "Boston Celtics"),
+        ("Tiger Woods", "Rory McIlroy"),
+        ("Tyson Fury", "Oleksandr Usyk"),
+        ("Max Verstappen", "Lewis Hamilton"),
+        ("Mbappé", "Erling Haaland"),
+        ("Roger Federer", "Rafael Nadal"),
+        ("New York Yankees", "Los Angeles Dodgers"),
+        ("NFL", "NBA"),
+        ("Iga Swiatek", "Aryna Sabalenka"),
+        ("Scottie Scheffler", "Rory McIlroy"),
+    ],
+    "Tech": [
+        ("iPhone", "Android"),
+        ("Apple", "Google"),
+        ("ChatGPT", "Google Gemini"),
+        ("Nvidia", "AMD"),
+        ("Netflix", "Disney+"),
+        ("TikTok", "Instagram Reels"),
+        ("PlayStation 5", "Xbox Series X"),
+        ("OpenAI", "Anthropic"),
+        ("Tesla", "Waymo"),
+        ("Samsung Galaxy", "Apple iPhone"),
+        ("Twitter / X", "Threads"),
+        ("AWS", "Microsoft Azure"),
+        ("macOS", "Windows 11"),
+        ("Spotify", "Apple Music"),
+    ],
+    "Economy": [
+        ("Bitcoin", "Gold"),
+        ("Ethereum", "Bitcoin"),
+        ("Nasdaq", "S&P 500"),
+        ("Inflation", "Recession"),
+        ("US Dollar", "Euro"),
+        ("Gold", "Silver"),
+        ("Real Estate", "Stock Market"),
+        ("Federal Reserve", "European Central Bank"),
+        ("Solana", "Ethereum"),
+        ("Oil", "Natural Gas"),
+        ("Stock Market", "Crypto Market"),
+        ("Dogecoin", "Ripple (XRP)"),
+        ("Rate Hike", "Rate Cut"),
+        ("Bonds", "Equities"),
+    ],
+}
 
-def _ensure_dir() -> None:
-    os.makedirs(OG_DIR, exist_ok=True)
+TITLE_TEMPLATES: dict[str, list[str]] = {
+    "Sports": [
+        "The Ultimate Sports Clash: {a} vs {b} — Who Wins Today?",
+        "Head-to-Head: {a} vs {b} — The Internet Decides!",
+        "Sports Battle of the Day: {a} Takes On {b} — Cast Your Vote!",
+        "{a} vs {b}: The Rivalry Everyone Is Talking About — Pick a Side!",
+        "Fan Vote: {a} or {b}? Only One Can Reign Supreme!",
+        "The Great Sports Debate: Is {a} Better Than {b}? Vote Now!",
+        "{a} vs {b} — Who Would Win? The Numbers Will Shock You!",
+        "The GOAT Question Returns: {a} or {b}? The World Weighs In!",
+        "{a} vs {b}: This Debate Just Got Heated — What's Your Take?",
+    ],
+    "Tech": [
+        "Tech Showdown: {a} vs {b} — Which Reigns Supreme?",
+        "The Big Tech Battle: {a} vs {b} — You Decide the Winner!",
+        "Innovation Clash: {a} Takes On {b} — Cast Your Vote!",
+        "{a} vs {b}: The Tech Question Everyone Is Arguing About!",
+        "Digital Duel of the Day: {a} or {b}? One Click Decides!",
+        "Is {a} Really Better Than {b}? The Internet Weighs In!",
+        "{a} vs {b} — The Battle That's Breaking Tech Twitter Right Now!",
+        "The $1 Trillion Question: {a} or {b}? Vote and Find Out!",
+        "{a} vs {b}: Which One Would You Choose? (No Wrong Answers)",
+    ],
+    "Economy": [
+        "Market Battle: {a} vs {b} — Where Would You Put Your Money?",
+        "Economic Showdown: {a} vs {b} — Which Comes Out on Top?",
+        "Financial Face-Off: {a} Takes On {b} — Vote Now!",
+        "{a} vs {b}: The Big Money Question — What Does the World Think?",
+        "Trending in Finance: {a} or {b}? The Answer Might Surprise You!",
+        "Is {a} a Better Bet Than {b} Right Now? Cast Your Vote!",
+        "{a} vs {b} — The Economic Clash Everyone Is Debating Today!",
+        "Where Are You Putting Your Money? {a} vs {b} — Decide Now!",
+        "{a} vs {b}: Wall Street Is Watching — Which Side Are You On?",
+    ],
+}
 
+def slugify(text: str) -> str:
+    text = text.lower().strip()
+    text = re.sub(r"[^\w\s-]", "", text)
+    text = re.sub(r"[\s_]+", "-", text)
+    text = re.sub(r"-{2,}", "-", text)
+    text = re.sub(r"^-+|-+$", "", text)
+    return text
 
-def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
-    """Convert '#rrggbb' string to (r, g, b) int tuple."""
-    h = hex_color.lstrip("#")
-    return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+def generate_battle_id(category: str, option_a: str, option_b: str, date_str: str) -> str:
+    raw = f"{category}::{option_a}::{option_b}::{date_str}"
+    digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:8]
+    return f"{date_str}-{slugify(category)}-{digest}"
 
+def generate_voting_api_key(category: str, option_a: str, option_b: str, date_str: str) -> str:
+    cat_slug = slugify(category)
+    a_slug = slugify(option_a)[:30]
+    b_slug = slugify(option_b)[:30]
+    return f"battles/{cat_slug}/{a_slug}-vs-{b_slug}/{date_str}"
 
-def _get_font(size: int) -> ImageFont.FreeTypeFont:
-    """Return the first available TrueType bold font at the given size."""
-    for path in FONT_CANDIDATES:
-        if os.path.exists(path):
-            try:
-                return ImageFont.truetype(path, size)
-            except Exception:
+def generate_battle_title(category: str, option_a: str, option_b: str) -> str:
+    template = random.choice(TITLE_TEMPLATES[category])
+    return template.format(a=option_a, b=option_b)
+
+def fetch_region_trends(pytrends, country_name: str, geo_label: str) -> list[str]:
+    for attempt in range(1, MAX_RETRIES + 1):
+        sleep_sec = random.uniform(SLEEP_MIN, SLEEP_MAX)
+        log.info(
+            f"[{geo_label}] Attempt {attempt}/{MAX_RETRIES} "
+            f"— sleeping {sleep_sec:.1f}s ..."
+        )
+        time.sleep(sleep_sec)
+
+        try:
+            df = pytrends.trending_searches(pn=country_name)
+
+            if df is None or df.empty or len(df.columns) == 0:
+                log.warning(f"[{geo_label}] Received empty/null DataFrame.")
+                return []
+
+            trends: list[str] = (
+                df.iloc[:, 0]
+                .dropna()
+                .astype(str)
+                .str.strip()
+                .tolist()
+            )[:TRENDS_PER_REGION]
+
+            log.info(f"[{geo_label}] ✓ {len(trends)} trends fetched.")
+            return trends
+
+        except Exception as exc:
+            err_str = str(exc)
+            log.warning(f"[{geo_label}] Attempt {attempt} failed — {exc}")
+
+            rate_limit_signals = (
+                "429",
+                "too many requests",
+                "rate limit",
+                "quota",
+                "temporarilyblocked",
+            )
+            if any(sig in err_str.lower() for sig in rate_limit_signals):
+                rl_sleep = random.uniform(RL_SLEEP_MIN, RL_SLEEP_MAX)
+                log.warning(
+                    f"[{geo_label}] Rate limit detected — "
+                    f"extra sleep {rl_sleep:.0f}s before retry ..."
+                )
+                time.sleep(rl_sleep)
+            elif attempt < MAX_RETRIES:
+                backoff = random.uniform(8.0, 18.0) * attempt
+                log.info(
+                    f"[{geo_label}] Back-off {backoff:.1f}s before retry ..."
+                )
+                time.sleep(backoff)
+
+    log.error(
+        f"[{geo_label}] All {MAX_RETRIES} attempts failed. "
+        f"Region skipped — moving on."
+    )
+    return []
+
+def collect_all_trends(pytrends) -> list[str]:
+    registry: dict[str, dict] = {}
+
+    for country_name, geo_label in TARGET_REGIONS.items():
+        regional = fetch_region_trends(pytrends, country_name, geo_label)
+
+        for rank, raw in enumerate(regional):
+            raw = raw.strip()
+            if not raw:
                 continue
-    # Last-resort fallback (very small but always present in Pillow)
+
+            norm = raw.lower()
+            score = TRENDS_PER_REGION - rank
+
+            if norm not in registry:
+                registry[norm] = {"score": score, "label": raw}
+            else:
+                registry[norm]["score"] += score
+                if raw != raw.lower():
+                    registry[norm]["label"] = raw
+
+    sorted_entries = sorted(
+        registry.values(), key=lambda v: v["score"], reverse=True
+    )
+    final_trends = [e["label"] for e in sorted_entries]
+
+    log.info(
+        f"Aggregated {len(final_trends)} unique trends "
+        f"across {len(TARGET_REGIONS)} regions."
+    )
+    return final_trends
+
+def keyword_score(trend_lower: str, keywords: list[str]) -> int:
+    return sum(1 for kw in keywords if kw in trend_lower)
+
+def categorize_trends(all_trends: list[str]) -> dict[str, list[str]]:
+    buckets: dict[str, list[str]] = {cat: [] for cat in CATEGORIES}
+
+    for trend in all_trends:
+        trend_lower = trend.lower()
+        scores = {
+            cat: keyword_score(trend_lower, kws)
+            for cat, kws in CATEGORY_KEYWORDS.items()
+        }
+        best_cat = max(scores, key=scores.get)
+        if scores[best_cat] > 0:
+            buckets[best_cat].append(trend)
+
+    for cat in CATEGORIES:
+        preview = buckets[cat][:5]
+        log.info(
+            f"  {cat:<10} {len(buckets[cat]):3d} trends matched "
+            f"— top: {preview}"
+        )
+
+    return buckets
+
+def is_rivalry(trend_a: str, trend_b: str, category: str) -> bool:
+    a_lower = trend_a.lower()
+    b_lower = trend_b.lower()
+
+    for kw_x, kw_y, rival_cat in KNOWN_RIVALRIES:
+        if rival_cat != category:
+            continue
+        a_hits_x = kw_x in a_lower
+        a_hits_y = kw_y in a_lower
+        b_hits_x = kw_x in b_lower
+        b_hits_y = kw_y in b_lower
+        if (a_hits_x and b_hits_y) or (a_hits_y and b_hits_x):
+            return True
+    return False
+
+def pick_battle_pair(
+    category_trends: list[str],
+    category: str,
+    used_trends: set[str],
+) -> tuple[str, str]:
+    available = [t for t in category_trends if t not in used_trends]
+
+    if len(available) >= 2:
+        for trend_a, trend_b in itertools.combinations(available, 2):
+            if is_rivalry(trend_a, trend_b, category):
+                log.info(
+                    f"[{category}] 🔥 Rivalry detected: "
+                    f"'{trend_a}' vs '{trend_b}'"
+                )
+                return trend_a, trend_b
+
+    if len(available) >= 2:
+        opt_a, opt_b = available[0], available[1]
+        log.info(
+            f"[{category}] 📊 Top-2 live pair: '{opt_a}' vs '{opt_b}'"
+        )
+        return opt_a, opt_b
+
+    if len(available) == 1:
+        live = available[0]
+        live_lower = live.lower()
+        fallbacks = list(FALLBACK_BATTLES[category])
+        random.shuffle(fallbacks)
+
+        for fa, fb in fallbacks:
+            if fa.lower() not in live_lower and live_lower not in fa.lower():
+                log.info(
+                    f"[{category}] 📡 1 live + fallback: '{live}' vs '{fa}'"
+                )
+                return live, fa
+            elif fb.lower() not in live_lower and live_lower not in fb.lower():
+                log.info(
+                    f"[{category}] 📡 1 live + fallback: '{live}' vs '{fb}'"
+                )
+                return live, fb
+
+        log.warning(
+            f"[{category}] Could not find clean fallback partner for '{live}'; "
+            f"forcing first fallback B."
+        )
+        return live, FALLBACK_BATTLES[category][0][1]
+
+    fallbacks = list(FALLBACK_BATTLES[category])
+    random.shuffle(fallbacks)
+    opt_a, opt_b = fallbacks[0]
+    log.info(
+        f"[{category}] 🗄️ No live trends — full fallback: "
+        f"'{opt_a}' vs '{opt_b}'"
+    )
+    return opt_a, opt_b
+
+def build_battle(
+    category: str,
+    option_a: str,
+    option_b: str,
+    date_str: str,
+    timestamp_iso: str,
+) -> dict:
+    return {
+        "id": generate_battle_id(category, option_a, option_b, date_str),
+        "category": category,
+        "battle_title": generate_battle_title(category, option_a, option_b),
+        "option_a": option_a,
+        "option_b": option_b,
+        "voting_api_key": generate_voting_api_key(category, option_a, option_b, date_str),
+        "timestamp": timestamp_iso,
+    }
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  OG IMAGE GENERATION (Integrated from og_generator.py)
+# ═══════════════════════════════════════════════════════════════════════════
+
+from PIL import Image, ImageDraw, ImageFont
+
+OG_IMAGE_SIZE = (1200, 630)
+
+OG_CATEGORY_STYLES = {
+    "Sports": {"bg": "#1a1a2e", "accent": "#e94560", "emoji": "⚽"},
+    "Tech": {"bg": "#16213e", "accent": "#533483", "emoji": "💻"},
+    "Economy": {"bg": "#0f3460", "accent": "#f39c12", "emoji": "📈"},
+}
+
+def _og_get_font(size):
+    candidates = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return ImageFont.truetype(path, size)
     return ImageFont.load_default()
 
-
-def _text_size(draw: ImageDraw.ImageDraw, text: str, font) -> tuple[int, int]:
-    """Return (width, height) of text rendered with font."""
+def _og_text_size(draw, text, font):
     bbox = draw.textbbox((0, 0), text, font=font)
     return bbox[2] - bbox[0], bbox[3] - bbox[1]
 
-
-def _fit_font(
-    draw:      ImageDraw.ImageDraw,
-    text:      str,
-    max_size:  int,
-    max_width: int,
-    min_size:  int = 22,
-) -> tuple[ImageFont.FreeTypeFont, int]:
-    """
-    Return the largest font (and its size) where `text` fits within `max_width`.
-    Steps down by 4pt until min_size is reached.
-    """
-    size = max_size
-    while size >= min_size:
-        font = _get_font(size)
-        w, _ = _text_size(draw, text, font)
-        if w <= max_width:
-            return font, size
-        size -= 4
-    return _get_font(min_size), min_size
-
-
-def generate_battle_og(battle: dict, date_str: str) -> str:
-    """
-    Render a 1200×630 OG share image for one battle and save it as PNG.
-    Returns the saved file path.
-    """
-    _ensure_dir()
-
+def generate_battle_og(battle, date_str):
     cat = battle["category"]
-    a   = battle["option_a"]
-    b   = battle["option_b"]
+    a = battle["option_a"]
+    b = battle["option_b"]
     bid = battle["id"]
 
-    style      = CATEGORY_STYLES.get(cat, {"bg": "#1a1a2e", "accent": "#e94560"})
-    bg_rgb     = _hex_to_rgb(style["bg"])
-    accent_rgb = _hex_to_rgb(style["accent"])
+    style = OG_CATEGORY_STYLES.get(cat, {"bg": "#1a1a2e", "accent": "#e94560", "emoji": "🔥"})
 
-    img  = Image.new("RGB", IMAGE_SIZE, bg_rgb)
+    os.makedirs(OG_DIR, exist_ok=True)
+    img = Image.new("RGB", OG_IMAGE_SIZE, style["bg"])
     draw = ImageDraw.Draw(img)
 
-    # ── Subtle accent side-bars ───────────────────────────────────────────
-    # Left edge glow for option A
-    for x in range(12):
-        alpha = int(180 * (1 - x / 12))
-        color = tuple(
-            min(255, bg_rgb[i] + int((accent_rgb[i] - bg_rgb[i]) * alpha / 255))
-            for i in range(3)
-        )
-        draw.line([(x, 0), (x, H)], fill=color)
+    font_cat = _og_get_font(36)
+    font_title = _og_get_font(56)
+    font_vs = _og_get_font(160)
+    font_meta = _og_get_font(24)
 
-    # Right edge glow for option B
-    for x in range(12):
-        alpha = int(180 * (1 - x / 12))
-        color = tuple(
-            min(255, bg_rgb[i] + int((accent_rgb[i] - bg_rgb[i]) * alpha / 255))
-            for i in range(3)
-        )
-        draw.line([(W - 1 - x, 0), (W - 1 - x, H)], fill=color)
+    cat_text = f"{style['emoji']} {cat.upper()}"
+    tw, th = _og_text_size(draw, cat_text, font_cat)
+    padding = 20
+    draw.rounded_rectangle([50, 50, 70 + tw + padding, 110], radius=10, fill=style["accent"])
+    draw.text((60, 58), cat_text, fill="white", font=font_cat)
 
-    # ── Category badge ────────────────────────────────────────────────────
-    font_cat   = _get_font(32)
-    badge_text = cat.upper()
-    bw, bh     = _text_size(draw, badge_text, font_cat)
-    pad_x, pad_y = 18, 9
-    draw.rounded_rectangle(
-        [50, 44, 50 + bw + pad_x * 2, 44 + bh + pad_y * 2],
-        radius=8,
-        fill=accent_rgb,
-    )
-    draw.text((50 + pad_x, 44 + pad_y), badge_text, fill="white", font=font_cat)
+    vw, vh = _og_text_size(draw, "VS", font_vs)
+    vx = (OG_IMAGE_SIZE[0] - vw) // 2
+    vy = (OG_IMAGE_SIZE[1] - vh) // 2 - 10
+    draw.text((vx, vy), "VS", fill=style["accent"], font=font_vs)
 
-    # ── Central "VS" ──────────────────────────────────────────────────────
-    font_vs    = _get_font(150)
-    vs_text    = "VS"
-    vw, vh     = _text_size(draw, vs_text, font_vs)
-    vx         = (W - vw) // 2
-    vy         = (H - vh) // 2 - 10
-    # Drop shadow
-    draw.text((vx + 4, vy + 4), vs_text, fill=(0, 0, 0), font=font_vs)
-    draw.text((vx, vy),         vs_text, fill=accent_rgb,  font=font_vs)
+    draw.text((80, 260), a, fill="white", font=font_title)
 
-    # ── Option labels ─────────────────────────────────────────────────────
-    # Available width per side: from margin to just before centre VS label
-    margin      = 60
-    vs_half     = vw // 2
-    center_x    = W // 2
-    max_side_w  = center_x - vs_half - margin - 20  # small extra buffer
+    bw, _ = _og_text_size(draw, b, font_title)
+    draw.text((OG_IMAGE_SIZE[0] - bw - 80, 260), b, fill="white", font=font_title)
 
-    # Option A — left-aligned
-    font_a, _   = _fit_font(draw, a, max_size=52, max_width=max_side_w)
-    aw, ah      = _text_size(draw, a, font_a)
-    ay          = H // 2 - ah // 2 + 30
-    draw.text((margin + 2, ay + 2), a, fill=(0, 0, 0), font=font_a)   # shadow
-    draw.text((margin,     ay),     a, fill="white",   font=font_a)
+    site_url = os.environ.get("SITE_URL", "daily-trend-battles.vercel.app").replace("https://", "").replace("http://", "")
+    draw.text((80, 560), f"Daily Trend Battles • {date_str}", fill="#888888", font=font_meta)
+    draw.text((80, 590), site_url, fill="#666666", font=font_meta)
 
-    # Option B — right-aligned
-    font_b, _   = _fit_font(draw, b, max_size=52, max_width=max_side_w)
-    bw_t, bh_t  = _text_size(draw, b, font_b)
-    bx          = W - margin - bw_t
-    by          = H // 2 - bh_t // 2 + 30
-    draw.text((bx + 2, by + 2), b, fill=(0, 0, 0), font=font_b)   # shadow
-    draw.text((bx,     by),     b, fill="white",   font=font_b)
-
-    # ── Footer ────────────────────────────────────────────────────────────
-    font_meta = _get_font(22)
-    draw.text(
-        (margin, H - 55),
-        f"Daily Trend Battles  •  {date_str}",
-        fill="#888888",
-        font=font_meta,
-    )
-    draw.text(
-        (margin, H - 28),
-        "daily-trend-battles.vercel.app",
-        fill="#666666",
-        font=font_meta,
-    )
-
-    path = f"{OG_DIR}/{bid}.png"
-    img.save(path, "PNG", optimize=True)
-    print(f"[OG] Generated: {path}")
+    path = os.path.join(OG_DIR, f"{bid}.png")
+    img.save(path, "PNG")
+    log.info(f"[OG] {path}")
     return path
 
-
-def generate_all_og(data_file: str = "data.json") -> list[str]:
-    """Generate OG images for every battle in the given data file."""
-    with open(data_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    files: list[str] = []
-    for battle in data.get("battles", []):
-        try:
-            path = generate_battle_og(battle, data["date"])
-            files.append(path)
-        except Exception as exc:
-            print(f"[OG] ERROR generating image for {battle.get('id', '?')}: {exc}")
-
+def generate_all_og(battles, date_str):
+    files = []
+    for battle in battles:
+        files.append(generate_battle_og(battle, date_str))
     return files
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  DISCORD WEBHOOK POSTER
+# ═══════════════════════════════════════════════════════════════════════════
+
+def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
+    webhook_url = os.environ.get("DISCORD_WEBHOOK_URL")
+    if not webhook_url:
+        log.warning("DISCORD_WEBHOOK_URL not set. Skipping Discord.")
+        return
+
+    colors = {"Sports": 0xE94560, "Tech": 0x533483, "Economy": 0xF39C12}
+    emojis = {"Sports": "⚽", "Tech": "💻", "Economy": "📈"}
+
+    embeds: list[dict] = []
+    files: dict[str, tuple[str, bytes, str]] = {}
+
+    for i, battle in enumerate(battles):
+        image_path = os.path.join(og_dir, f"{battle['id']}.png")
+        if not os.path.exists(image_path):
+            log.warning(f"OG image not found for Discord: {image_path}")
+            continue
+
+        filename = f"{battle['id']}.png"
+        with open(image_path, "rb") as img:
+            files[f"file{i}"] = (filename, img.read(), "image/png")
+
+        embed = {
+            "title": f"{emojis.get(battle['category'], '⚔️')} {battle['battle_title']}",
+            "description": (
+                f"**{battle['option_a']}** vs **{battle['option_b']}**\n\n"
+                f"🔥 The internet is deciding right now. "
+                f"Cast your vote on the site!"
+            ),
+            "url": "https://daily-trend-battles.vercel.app",
+            "color": colors.get(battle["category"], 0x1A1A2E),
+            "image": {"url": f"attachment://{filename}"},
+            "footer": {
+                "text": f"Daily Trend Battles • {date_str} • {battle['category']}"
+            },
+            "fields": [
+                {"name": "🅰️ Option A", "value": battle["option_a"], "inline": True},
+                {"name": "🅱️ Option B", "value": battle["option_b"], "inline": True},
+                {"name": "📊 Category", "value": battle["category"], "inline": True},
+            ],
+        }
+        embeds.append(embed)
+
+    if not embeds:
+        log.warning("No embeds prepared — nothing to send to Discord.")
+        return
+
+    payload = {
+        "embeds": embeds,
+        "username": "Daily Trend Battles",
+        "avatar_url": "https://cdn-icons-png.flaticon.com/512/3062/3062634.png",
+    }
+
+    try:
+        resp = requests.post(
+            webhook_url,
+            data={"payload_json": json.dumps(payload)},
+            files=files,
+            timeout=30,
+        )
+        resp.raise_for_status()
+        log.info(f"Discord webhook sent successfully. Status: {resp.status_code}")
+    except Exception as exc:
+        log.error(f"Discord webhook failed: {exc}")
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  TELEGRAM BOT — Marketing + Notifications + Control Panel
+# ═══════════════════════════════════════════════════════════════════════════
+
+def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> None:
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    my_chat = os.environ.get("TELEGRAM_MY_CHAT_ID")
+    channel = os.environ.get("TELEGRAM_CHANNEL_ID")
+    repo = os.environ.get("GITHUB_REPOSITORY", "user/repo")
+
+    if not token:
+        log.warning("TELEGRAM_BOT_TOKEN not set. Skipping Telegram.")
+        return
+
+    api = f"https://api.telegram.org/bot{token}"
+
+    # ── 1. MARKETING: Send each battle to public channel ─────────────────
+    if channel:
+        for battle in battles:
+            img_path = os.path.join(og_dir, f"{battle['id']}.png")
+            if not os.path.exists(img_path):
+                log.warning(f"[Telegram] OG image missing for channel: {img_path}")
+                continue
+
+            caption = (
+                f"<b>{battle['battle_title']}</b>\n\n"
+                f"🅰️ {battle['option_a']}\n"
+                f"🅱️ {battle['option_b']}\n\n"
+                f"📅 {date_str} • 🏷️ {battle['category']}\n"
+                f"👉 Vote Now on the Site"
+            )
+
+            with open(img_path, "rb") as photo:
+                resp = requests.post(
+                    f"{api}/sendPhoto",
+                    data={
+                        "chat_id": channel,
+                        "caption": caption,
+                        "parse_mode": "HTML",
+                    },
+                    files={"photo": photo},
+                    timeout=30,
+                )
+                if resp.status_code == 200:
+                    log.info(f"[Telegram] Channel post sent: {battle['option_a']} vs {battle['option_b']}")
+                else:
+                    log.warning(f"[Telegram] Channel post failed: {resp.text}")
+
+    # ── 2. ADMIN REPORT: Summary + Inline Keyboard (URL buttons) ─────────
+    if my_chat:
+        lines = [f"<b>📊 Daily Battle Report — {date_str}</b>\n"]
+        emojis = {"Sports": "⚽", "Tech": "💻", "Economy": "📈"}
+        for b in battles:
+            emoji = emojis.get(b["category"], "⚔️")
+            lines.append(
+                f"\n{emoji} <b>{b['category']}</b>\n"
+                f"• {b['option_a']} <i>vs</i> {b['option_b']}\n"
+                f"• ID: <code>{b['id']}</code>"
+            )
+
+        report_text = "\n".join(lines)
+
+        keyboard = {
+            "inline_keyboard": [
+                [
+                    {"text": "🔄 إعادة تشغيل الأتمتة", "url": f"https://github.com/{repo}/actions/workflows/daily-battles.yml"},
+                    {"text": "📊 فحص الموقع", "url": f"https://daily-trend-battles.vercel.app"},
+                ],
+                [
+                    {"text": "📁 فحص data.json", "url": f"https://github.com/{repo}/blob/main/data.json"},
+                    {"text": "⚙️ إعدادات المستودع", "url": f"https://github.com/{repo}/settings"},
+                ],
+            ]
+        }
+
+        resp = requests.post(
+            f"{api}/sendMessage",
+            json={
+                "chat_id": my_chat,
+                "text": report_text,
+                "parse_mode": "HTML",
+                "reply_markup": keyboard,
+            },
+            timeout=30,
+        )
+        if resp.status_code == 200:
+            log.info("[Telegram] Admin report with control panel sent.")
+        else:
+            log.warning(f"[Telegram] Admin report failed: {resp.text}")
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  SEO SITEMAP + BING PING (NEW ADDITION)
+# ═══════════════════════════════════════════════════════════════════════════
+
+def update_sitemap(battles: list[dict], date_str: str, site_url: str) -> None:
+    """Update public/sitemap.xml with today's battle URLs. Keeps last 365 URLs."""
+    os.makedirs(os.path.dirname(SITEMAP_FILE) or ".", exist_ok=True)
+
+    ET.register_namespace("", SITEMAP_NS)
+    root = ET.Element("urlset")
+    root.set("xmlns", SITEMAP_NS)
+
+    existing: dict[str, ET.Element] = {}
+
+    # ── Parse existing sitemap (handles namespaced tags robustly) ──────────
+    if os.path.exists(SITEMAP_FILE):
+        try:
+            tree = ET.parse(SITEMAP_FILE)
+            old_root = tree.getroot()
+            if old_root.tag.startswith("{"):
+                ns_uri = old_root.tag.split("}")[0][1:]
+                nsmap = {"ns": ns_uri}
+                for url in old_root.findall("ns:url", nsmap):
+                    loc = url.find("ns:loc", nsmap)
+                    if loc is not None and loc.text:
+                        existing[loc.text] = url
+            else:
+                for url in old_root.findall("url"):
+                    loc = url.find("loc")
+                    if loc is not None and loc.text:
+                        existing[loc.text] = url
+        except Exception as exc:
+            log.warning(f"Could not parse existing sitemap: {exc}")
+
+    # ── Homepage ─────────────────────────────────────────────────────────────
+    home = site_url.rstrip("/")
+    home_el = ET.Element("url")
+    ET.SubElement(home_el, "loc").text = home
+    ET.SubElement(home_el, "lastmod").text = date_str
+    ET.SubElement(home_el, "changefreq").text = "daily"
+    ET.SubElement(home_el, "priority").text = "1.0"
+    existing[home] = home_el
+
+    # ── Battle pages ─────────────────────────────────────────────────────────
+    for b in battles:
+        battle_url = f"{site_url.rstrip('/')}/battle/{b['id']}"
+        el = ET.Element("url")
+        ET.SubElement(el, "loc").text = battle_url
+        ET.SubElement(el, "lastmod").text = date_str
+        ET.SubElement(el, "changefreq").text = "daily"
+        ET.SubElement(el, "priority").text = "0.8"
+        existing[battle_url] = el
+
+    # ── Limit size (keep newest 365) ───────────────────────────────────────
+    if len(existing) > SITEMAP_MAX_URLS:
+        sorted_items = sorted(existing.items(), key=lambda x: x[0], reverse=True)
+        existing = dict(sorted_items[:SITEMAP_MAX_URLS])
+
+    # ── Rebuild XML: homepage first, then battles sorted desc ────────────────
+    if home in existing:
+        root.append(existing.pop(home))
+    for _, el in sorted(existing.items(), key=lambda x: x[0], reverse=True):
+        root.append(el)
+
+    ET.indent(root, space='  ')
+    tree = ET.ElementTree(root)
+    tree.write(SITEMAP_FILE, encoding='utf-8', xml_declaration=True)
+    log.info(f"Sitemap updated: {len(existing)+1} URLs → {SITEMAP_FILE}")
+
+
+def ping_bing(sitemap_url: str) -> None:
+    """Notify Bing Webmaster that sitemap has been updated."""
+    ping_endpoint = f"https://www.bing.com/webmaster/ping.aspx?siteMap={sitemap_url}"
+    try:
+        resp = requests.get(ping_endpoint, timeout=30)
+        if resp.status_code == 200:
+            log.info(f"Bing ping successful ({resp.status_code}).")
+        else:
+            log.warning(f"Bing ping returned {resp.status_code}: {resp.text[:200]}")
+    except Exception as exc:
+        log.error(f"Bing ping failed: {exc}")
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  MAIN PIPELINE
+# ═══════════════════════════════════════════════════════════════════════════
+
+def main() -> None:
+    log.info("=" * 70)
+    log.info(" Daily Trend Battle Generator | Pipeline starting")
+    log.info("=" * 70)
+
+    now_utc = datetime.now(timezone.utc)
+    date_str = now_utc.strftime("%Y-%m-%d")
+    timestamp_iso = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    log.info(f"Run date : {date_str}")
+    log.info(f"UTC time : {timestamp_iso}")
+
+    all_trends: list[str] = []
+    pytrends = None
+
+    try:
+        from pytrends.request import TrendReq
+        log.info("pytrends module imported successfully.")
+    except Exception as exc:
+        log.critical(f"Failed to import pytrends module: {exc}")
+        log.warning("All battles will use fallback pairs.")
+    else:
+        try:
+            pytrends = TrendReq(
+                hl="en-US",
+                tz=0,
+                timeout=(10, 35),
+                retries=2,
+                backoff_factor=0.5,
+            )
+        except TypeError:
+            log.warning(
+                "Modern TrendReq kwargs unsupported — "
+                "falling back to minimal constructor."
+            )
+            try:
+                pytrends = TrendReq(hl="en-US", tz=0, timeout=(10, 35))
+            except Exception as exc:
+                log.critical(f"Failed to create pytrends client: {exc}")
+                pytrends = None
+        except Exception as exc:
+            log.critical(f"Unexpected error creating pytrends client: {exc}")
+            pytrends = None
+
+    if pytrends is not None:
+        log.info("pytrends client ready.")
+        log.info(
+            f"Fetching top-{TRENDS_PER_REGION} trends from "
+            f"{len(TARGET_REGIONS)} regions: {list(TARGET_REGIONS.values())} ..."
+        )
+        try:
+            all_trends = collect_all_trends(pytrends)
+        except Exception as exc:
+            log.error(f"Trend collection crashed: {exc}")
+            all_trends = []
+
+    if not all_trends:
+        log.warning(
+            "Zero trends collected from all regions. "
+            "Every battle will use fallback pairs."
+        )
+
+    log.info(f"Categorising {len(all_trends)} unique trends ...")
+    categorized: dict[str, list[str]] = categorize_trends(all_trends)
+
+    battles: list[dict] = []
+    used_trends: set[str] = set()
+
+    for category in CATEGORIES:
+        log.info(f"{'─' * 55}")
+        log.info(f" Building {category} battle ...")
+
+        option_a, option_b = pick_battle_pair(
+            category_trends=categorized.get(category, []),
+            category=category,
+            used_trends=used_trends,
+        )
+
+        used_trends.add(option_a)
+        used_trends.add(option_b)
+
+        battle = build_battle(
+            category=category,
+            option_a=option_a,
+            option_b=option_b,
+            date_str=date_str,
+            timestamp_iso=timestamp_iso,
+        )
+        battles.append(battle)
+
+        log.info(f"  ✓ {option_a} vs {option_b}")
+        log.info(f"  title : {battle['battle_title']}")
+        log.info(f"  key   : {battle['voting_api_key']}")
+        log.info(f"  id    : {battle['id']}")
+
+    output_payload = {
+        "generated_at": timestamp_iso,
+        "date": date_str,
+        "battles": battles,
+    }
+
+    try:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as fh:
+            json.dump(output_payload, fh, ensure_ascii=False, indent=2)
+        log.info(f"{'─' * 55}")
+        log.info(
+            f"✓ Successfully wrote {len(battles)} battles "
+            f"to '{OUTPUT_FILE}'."
+        )
+    except OSError as exc:
+        log.critical(f"Could not write output file '{OUTPUT_FILE}': {exc}")
+        raise SystemExit(1)
+
+    # ── SEO: Update sitemap + Ping Bing ────────────────────────────────────
+    try:
+        site_url = os.environ.get("SITE_URL", "https://daily-trend-battles.vercel.app")
+        update_sitemap(battles, date_str, site_url)
+        sitemap_url = f"{site_url.rstrip('/')}/sitemap.xml"
+        ping_bing(sitemap_url)
+    except Exception as exc:
+        log.warning(f"SEO sitemap update skipped (non-critical): {exc}")
+
+    # ── Generate OG images ─────────────────────────────────────────────────
+    try:
+        og_files = generate_all_og(battles, date_str)
+        log.info(f"Generated {len(og_files)} OG images for social sharing.")
+    except Exception as exc:
+        log.warning(f"OG generation skipped (non-critical): {exc}")
+
+    # ── Post to Discord Webhook ──────────────────────────────────────────────
+    try:
+        send_to_discord(battles, OG_DIR, date_str)
+    except Exception as exc:
+        log.warning(f"Discord webhook skipped (non-critical): {exc}")
+
+    # ── Post to Telegram (Marketing + Admin Control Panel) ───────────────────
+    try:
+        send_telegram_updates(battles, OG_DIR, date_str)
+    except Exception as exc:
+        log.warning(f"Telegram updates skipped (non-critical): {exc}")
+
+    log.info("=" * 70)
+    log.info(" Pipeline complete — today's battles:")
+    log.info("=" * 70)
+    for battle in battles:
+        log.info(
+            f"  [{battle['category']:<8}] "
+            f"{battle['option_a']:<28} vs {battle['option_b']}"
+        )
+    log.info("=" * 70)
 
 
 if __name__ == "__main__":
-    generate_all_og()
+    main()
