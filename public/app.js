@@ -1,0 +1,237 @@
+// =============================================================================
+//  app.js  |  Daily Versus - Frontend Voting Application
+//  Firebase Realtime Database + Anonymous Voting + Live Updates
+// =============================================================================
+
+// --- Firebase Configuration (REPLACE WITH YOUR ACTUAL CONFIG) ---
+const firebaseConfig = {
+  apiKey: "AIzaSyBFiYIeJi80X7z1cFlS05lcsswnqMWOhnA",
+  authDomain: "daily-trend-battles.firebaseapp.com",
+  databaseURL: "https://daily-trend-battles-default-rtdb.firebaseio.com",
+  projectId: "daily-trend-battles",
+  storageBucket: "daily-trend-battles.firebasestorage.app",
+  messagingSenderId: "888957436583",
+  appId: "1:888957436583:web:76d91e2d05023c07ac9182"
+};
+
+// Initialize Firebase
+let app, database;
+try {
+    app = firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+} catch (e) {
+    console.error("Firebase initialization failed:", e);
+}
+
+// --- State Management ---
+const votedBattles = JSON.parse(localStorage.getItem('votedBattles') || '{}');
+let currentBattles = [];
+
+// --- DOM Elements ---
+const battlesContainer = document.getElementById('battles-container');
+
+// --- Utility Functions ---
+function formatNumber(num) {
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    return num.toString();
+}
+
+function getPercentage(votesA, votesB) {
+    const total = votesA + votesB;
+    if (total === 0) return 50;
+    return Math.round((votesA / total) * 100);
+}
+
+// --- Voting Logic ---
+function vote(battleId, option) {
+    if (!database) {
+        alert("Voting system is temporarily unavailable. Please try again later.");
+        return;
+    }
+
+    if (votedBattles[battleId]) {
+        alert("You have already voted in this battle!");
+        return;
+    }
+
+    const battle = currentBattles.find(b => b.id === battleId);
+    if (!battle) return;
+
+    const voteRef = database.ref(`votes/${battle.voting_api_key}/${option}`);
+
+    voteRef.transaction(currentVotes => {
+        return (currentVotes || 0) + 1;
+    }, (error, committed) => {
+        if (error) {
+            console.error("Vote failed:", error);
+            alert("Failed to register vote. Please try again.");
+        } else if (committed) {
+            votedBattles[battleId] = option;
+            localStorage.setItem('votedBattles', JSON.stringify(votedBattles));
+            updateBattleUI(battleId);
+            showVotedBadge(battleId, option);
+        }
+    });
+}
+
+function showVotedBadge(battleId, option) {
+    const card = document.getElementById(`battle-${battleId}`);
+    if (!card) return;
+
+    const existing = card.querySelector('.voted-badge');
+    if (existing) existing.remove();
+
+    const badge = document.createElement('div');
+    badge.className = 'voted-badge';
+    badge.innerHTML = `✅ You voted for <strong>${option === 'a' ? card.dataset.optionA : card.dataset.optionB}</strong>`;
+    card.querySelector('.vs-container').appendChild(badge);
+}
+
+// --- UI Updates ---
+function updateBattleUI(battleId) {
+    const battle = currentBattles.find(b => b.id === battleId);
+    if (!battle || !database) return;
+
+    const refA = database.ref(`votes/${battle.voting_api_key}/a`);
+    const refB = database.ref(`votes/${battle.voting_api_key}/b`);
+
+    refA.once('value', snapA => {
+        refB.once('value', snapB => {
+            const votesA = snapA.val() || 0;
+            const votesB = snapB.val() || 0;
+            const total = votesA + votesB;
+            const pctA = getPercentage(votesA, votesB);
+            const pctB = 100 - pctA;
+
+            const card = document.getElementById(`battle-${battleId}`);
+            if (!card) return;
+
+            const barA = card.querySelector('.progress-a');
+            const barB = card.querySelector('.progress-b');
+            const countA = card.querySelector('.count-a');
+            const countB = card.querySelector('.count-b');
+            const pctAEl = card.querySelector('.pct-a');
+            const pctBEl = card.querySelector('.pct-b');
+
+            if (barA) barA.style.width = `${pctA}%`;
+            if (barB) barB.style.width = `${pctB}%`;
+            if (countA) countA.textContent = formatNumber(votesA);
+            if (countB) countB.textContent = formatNumber(votesB);
+            if (pctAEl) pctAEl.textContent = `${pctA}%`;
+            if (pctBEl) pctBEl.textContent = `${pctB}%`;
+
+            if (votedBattles[battleId]) {
+                card.classList.add('voted');
+            }
+        });
+    });
+}
+
+function listenToBattle(battleId) {
+    const battle = currentBattles.find(b => b.id === battleId);
+    if (!battle || !database) return;
+
+    const refA = database.ref(`votes/${battle.voting_api_key}/a`);
+    const refB = database.ref(`votes/${battle.voting_api_key}/b`);
+
+    refA.on('value', () => updateBattleUI(battleId));
+    refB.on('value', () => updateBattleUI(battleId));
+}
+
+// --- Rendering ---
+function createBattleCard(battle) {
+    const hasVoted = votedBattles[battle.id];
+    const votedClass = hasVoted ? 'voted' : '';
+
+    const siteUrl = window.location.origin;
+    const battleUrl = `${siteUrl}/battle/${battle.id}`;
+    const shareText = encodeURIComponent(battle.battle_title);
+
+    return `
+        <article class="battle-card ${votedClass}" id="battle-${battle.id}" 
+                 data-option-a="${battle.option_a}" data-option-b="${battle.option_b}">
+            <span class="category-tag ${battle.category}">${battle.category}</span>
+            <h2 class="battle-title">${battle.battle_title}</h2>
+            <div class="vs-container">
+                <button class="option-btn option-a-btn" onclick="vote('${battle.id}', 'a')" 
+                        ${hasVoted ? 'disabled' : ''}>
+                    <div class="progress-bar progress-a"></div>
+                    <div class="btn-content">
+                        <span class="btn-label">🔥 ${battle.option_a}</span>
+                        <span class="btn-stats">
+                            <span class="count-a">0</span>
+                            <span class="percentage-display pct-a">50%</span>
+                        </span>
+                    </div>
+                </button>
+
+                <div class="vs-divider">VS</div>
+
+                <button class="option-btn option-b-btn" onclick="vote('${battle.id}', 'b')" 
+                        ${hasVoted ? 'disabled' : ''}>
+                    <div class="progress-bar progress-b"></div>
+                    <div class="btn-content">
+                        <span class="btn-label">⚡ ${battle.option_b}</span>
+                        <span class="btn-stats">
+                            <span class="count-b">0</span>
+                            <span class="percentage-display pct-b">50%</span>
+                        </span>
+                    </div>
+                </button>
+
+                ${hasVoted ? `<div class="voted-badge">✅ You voted for <strong>${hasVoted === 'a' ? battle.option_a : battle.option_b}</strong></div>` : ''}
+            </div>
+            <div class="battle-meta">
+                <span class="battle-date">📅 ${battle.date || new Date().toISOString().split('T')[0]}</span>
+                <span class="battle-share">
+                    <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(battleUrl)}" 
+                       target="_blank" rel="noopener" class="share-btn twitter" aria-label="Share on X">𝕏</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(battleUrl)}" 
+                       target="_blank" rel="noopener" class="share-btn facebook" aria-label="Share on Facebook">f</a>
+                    <a href="https://wa.me/?text=${encodeURIComponent(battle.battle_title + ' ' + battleUrl)}" 
+                       target="_blank" rel="noopener" class="share-btn whatsapp" aria-label="Share on WhatsApp">📱</a>
+                </span>
+            </div>
+        </article>
+    `;
+}
+
+async function loadBattles() {
+    try {
+        // تم تحديث المسار هنا ليقرأ من مجلد public مباشرة بما أن index.html أصبح في الجذر خارج المجلد
+        const response = await fetch('public/data.json?v=' + Date.now());
+        if (!response.ok) throw new Error('Failed to load data');
+
+        const data = await response.json();
+        currentBattles = data.battles || [];
+
+        if (currentBattles.length === 0) {
+            battlesContainer.innerHTML = '<div class="loading">No battles available today. Check back tomorrow!</div>';
+            return;
+        }
+
+        battlesContainer.innerHTML = currentBattles.map(createBattleCard).join('');
+
+        // Initialize live listeners
+        currentBattles.forEach(battle => {
+            updateBattleUI(battle.id);
+            listenToBattle(battle.id);
+        });
+
+        // Update page title
+        document.title = `Daily Versus - ${data.date} Battles`;
+
+    } catch (error) {
+        console.error('Error loading battles:', error);
+        battlesContainer.innerHTML = `
+            <div class="loading error">
+                <p>Failed to load today's battles.</p>
+                <button onclick="loadBattles()" class="retry-btn">Retry</button>
+            </div>
+        `;
+    }
+}
+
+// --- Initialize ---
+document.addEventListener('DOMContentLoaded', loadBattles);
