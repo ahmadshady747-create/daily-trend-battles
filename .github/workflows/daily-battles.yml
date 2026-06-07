@@ -27,7 +27,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # ── 2. Set up Python ───────────────────────────────────────────────────
@@ -39,10 +39,6 @@ jobs:
           cache-dependency-path: "requirements.txt"
 
       # ── 3. Install system fonts for Pillow OG image generation ────────────
-      #    FIX: Without this step, Pillow falls back to a tiny bitmap font
-      #    (ImageFont.load_default) because no TrueType font exists on the runner.
-      #    fonts-dejavu-core  → DejaVuSans-Bold.ttf  (primary candidate)
-      #    fonts-liberation   → LiberationSans-Bold.ttf (fallback candidate)
       - name: Install system fonts
         run: |
           sudo apt-get update -qq
@@ -78,6 +74,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
+          git pull --rebase origin main
           git add -f data.json og/ sitemap.xml
           git diff --staged --quiet \
             && echo "Nothing to commit — skipping." \
