@@ -1,5 +1,6 @@
 # =============================================================================
 #  .github/workflows/daily-battles.yml
+#  Daily Trend Battle Generator + OG + Discord + Telegram + SEO Sitemap
 # =============================================================================
 
 name: Daily Battle Generator
@@ -11,6 +12,8 @@ on:
 
 jobs:
   generate-battles:
+    # FIX: Prevent infinite loop — skip if triggered by the bot itself
+    if: github.actor != 'github-actions[bot]'
     name: Generate Daily Trend Battles
     runs-on: ubuntu-latest
 
@@ -22,12 +25,14 @@ jobs:
       cancel-in-progress: false
 
     steps:
+      # ── 1. Check out the repository ────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # ── 2. Set up Python ───────────────────────────────────────────────────
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -35,6 +40,11 @@ jobs:
           cache: "pip"
           cache-dependency-path: "requirements.txt"
 
+      # ── 3. Install system fonts for Pillow OG image generation ────────────
+      #    FIX: Without this step, Pillow falls back to a tiny bitmap font
+      #    (ImageFont.load_default) because no TrueType font exists on the runner.
+      #    fonts-dejavu-core  → DejaVuSans-Bold.ttf  (primary candidate)
+      #    fonts-liberation   → LiberationSans-Bold.ttf (fallback candidate)
       - name: Install system fonts
         run: |
           sudo apt-get update -qq
@@ -42,16 +52,20 @@ jobs:
             fonts-dejavu-core \
             fonts-liberation
 
+      # ── 4. Install Python dependencies ────────────────────────────────────
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Prepare directories
+      # ── 5. Prepare output directories ─────────────────────────────────────
+      #    FIX: Changed from public/og to og/ (root-level for Vercel)
+      - name: Prepare output directories
         run: |
           mkdir -p og
           touch og/.gitkeep
 
+      # ── 6. Run the battle generator ────────────────────────────────────────
       - name: Run main.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -62,10 +76,20 @@ jobs:
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 
+      # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
+      #    FIX: Order changed to prevent git conflicts:
+      #    1. git add (stage new files)
+      #    2. git commit (commit them)
+      #    3. git pull --rebase (sync with remote)
+      #    4. git push (push to remote)
       - name: Commit and push
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "[skip ci] chore: daily battle update"
-          file_pattern: 'data.json og/* sitemap.xml'
-          commit_user_name: 'github-actions[bot]'
-          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name  "github-actions[bot]"
+          git add -f data.json og/ sitemap.xml
+          git diff --staged --quiet \
+            && echo "Nothing to commit — skipping." \
+            && exit 0
+          git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
+          git pull --rebase origin main
+          git push origin HEAD
