@@ -56,11 +56,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── 5. Prepare output directories ─────────────────────────────────────
+            # ── 5. Prepare output directories ─────────────────────────────────────
       - name: Prepare output directories
         run: |
-          mkdir -p public/og
-          touch public/og/.gitkeep
+          mkdir -p og
+          touch og/.gitkeep
 
       # ── 6. Run the battle generator ────────────────────────────────────────
       - name: Run main.py
@@ -73,13 +73,13 @@ jobs:
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 
-      # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
+          # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
           git pull --rebase origin HEAD || true
-          git add -f data.json public/og/ public/sitemap.xml
+          git add -f data.json og/ sitemap.xml
           git diff --staged --quiet \
             && echo "Nothing to commit — skipping." \
             || git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
