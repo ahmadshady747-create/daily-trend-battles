@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-07T12:07:54Z",
+  "generated_at": "2026-06-07T12:55:36Z",
   "date": "2026-06-07",
   "battles": [
     {
-      "id": "2026-06-07-sports-2a4e463b",
+      "id": "2026-06-07-sports-ecfce1e9",
       "category": "Sports",
-      "battle_title": "Max Verstappen vs Lewis Hamilton — Who Would Win? The Numbers Will Shock You!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-07",
-      "timestamp": "2026-06-07T12:07:54Z"
+      "battle_title": "Sports Battle of the Day: New York Yankees Takes On Los Angeles Dodgers — Cast Your Vote!",
+      "option_a": "New York Yankees",
+      "option_b": "Los Angeles Dodgers",
+      "voting_api_key": "battles/sports/new-york-yankees-vs-los-angeles-dodgers/2026-06-07",
+      "timestamp": "2026-06-07T12:55:36Z"
     },
     {
-      "id": "2026-06-07-tech-5eed58a5",
+      "id": "2026-06-07-tech-3070b5a4",
       "category": "Tech",
-      "battle_title": "Innovation Clash: Netflix Takes On Disney+ — Cast Your Vote!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-07",
-      "timestamp": "2026-06-07T12:07:54Z"
+      "battle_title": "PlayStation 5 vs Xbox Series X — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-06-07",
+      "timestamp": "2026-06-07T12:55:36Z"
     },
     {
-      "id": "2026-06-07-economy-63dc39e7",
+      "id": "2026-06-07-economy-c40c3296",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Nasdaq vs S&P 500 — Which Comes Out on Top?",
-      "option_a": "Nasdaq",
-      "option_b": "S&P 500",
-      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-07",
-      "timestamp": "2026-06-07T12:07:54Z"
+      "battle_title": "Is Bitcoin a Better Bet Than Gold Right Now? Cast Your Vote!",
+      "option_a": "Bitcoin",
+      "option_b": "Gold",
+      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-07",
+      "timestamp": "2026-06-07T12:55:36Z"
     }
   ]
 }
