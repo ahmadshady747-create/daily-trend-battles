@@ -27,10 +27,11 @@ logging.basicConfig(
 log = logging.getLogger("battle-generator")
 
 OUTPUT_FILE: str = "data.json"
-OG_DIR: str = "public/og"
-SITEMAP_FILE: str = "public/sitemap.xml"
+OG_DIR: str = "og"
+SITEMAP_FILE: str = "sitemap.xml"
 SITEMAP_NS: str = "http://www.sitemaps.org/schemas/sitemap/0.9"
 SITEMAP_MAX_URLS: int = 365
+
 
 TARGET_REGIONS: dict[str, str] = {
     "united_states": "US",
