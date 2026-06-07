@@ -644,7 +644,7 @@ def send_to_discord(battles: list[dict], og_dir: str, date_str: str) -> None:
                 f"🔥 The internet is deciding right now. "
                 f"Cast your vote on the site!"
             ),
-            "url": "https://daily-trend-battles.vercel.app",
+            "url": "https://trend-pulse-two.vercel.app",
             "color": colors.get(battle["category"], 0x1A1A2E),
             "image": {"url": f"attachment://{filename}"},
             "footer": {
@@ -746,7 +746,7 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
             "inline_keyboard": [
                 [
                     {"text": "🔄 إعادة تشغيل الأتمتة", "url": f"https://github.com/{repo}/actions/workflows/daily-battles.yml"},
-                    {"text": "📊 فحص الموقع", "url": f"https://daily-trend-battles.vercel.app"},
+                    {"text": "📊 فحص الموقع", "url": f"https://trend-pulse-two.vercel.app"},
                 ],
                 [
                     {"text": "📁 فحص data.json", "url": f"https://github.com/{repo}/blob/main/data.json"},
@@ -775,12 +775,11 @@ def send_telegram_updates(battles: list[dict], og_dir: str, date_str: str) -> No
 # ═══════════════════════════════════════════════════════════════════════════
 
 def update_sitemap(battles: list[dict], date_str: str, site_url: str) -> None:
-    """Update public/sitemap.xml with today's battle URLs. Keeps last 365 URLs."""
+    """Update sitemap.xml with today's battle URLs. Keeps last 365 URLs."""
     os.makedirs(os.path.dirname(SITEMAP_FILE) or ".", exist_ok=True)
 
     ET.register_namespace("", SITEMAP_NS)
     root = ET.Element("urlset")
-    root.set("xmlns", SITEMAP_NS)
 
     existing: dict[str, ET.Element] = {}
 
@@ -795,12 +794,14 @@ def update_sitemap(battles: list[dict], date_str: str, site_url: str) -> None:
                 for url in old_root.findall("ns:url", nsmap):
                     loc = url.find("ns:loc", nsmap)
                     if loc is not None and loc.text:
-                        existing[loc.text] = url
+                        loc_text = loc.text.strip().replace('\n', '').replace('\r', '')
+                        existing[loc_text] = url
             else:
                 for url in old_root.findall("url"):
                     loc = url.find("loc")
                     if loc is not None and loc.text:
-                        existing[loc.text] = url
+                        loc_text = loc.text.strip().replace('\n', '').replace('\r', '')
+                        existing[loc_text] = url
         except Exception as exc:
             log.warning(f"Could not parse existing sitemap: {exc}")
 
@@ -970,7 +971,7 @@ def main() -> None:
 
     # ── SEO: Update sitemap + Ping Bing ────────────────────────────────────
     try:
-        site_url = os.environ.get("SITE_URL", "https://daily-trend-battles.vercel.app")
+        site_url = os.environ.get("SITE_URL", "https://trend-pulse-two.vercel.app").strip()
         update_sitemap(battles, date_str, site_url)
         sitemap_url = f"{site_url.rstrip('/')}/sitemap.xml"
         ping_bing(sitemap_url)
