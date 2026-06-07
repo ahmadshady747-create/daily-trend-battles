@@ -36,13 +36,9 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: "requirements.txt"
 
       # ── 3. Install system fonts for Pillow OG image generation ────────────
-      #    FIX: Without this step, Pillow falls back to a tiny bitmap font
-      #    (ImageFont.load_default) because no TrueType font exists on the runner.
-      #    fonts-dejavu-core  → DejaVuSans-Bold.ttf  (primary candidate)
-      #    fonts-liberation   → LiberationSans-Bold.ttf (fallback candidate)
       - name: Install system fonts
         run: |
           sudo apt-get update -qq
@@ -56,7 +52,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-            # ── 5. Prepare output directories ─────────────────────────────────────
+      # ── 5. Prepare output directories ─────────────────────────────────────
       - name: Prepare output directories
         run: |
           mkdir -p og
@@ -73,14 +69,13 @@ jobs:
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 
-          # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
+      # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "github-actions[bot]"
-          git pull --rebase origin HEAD || true
           git add -f data.json og/ sitemap.xml
           git diff --staged --quiet \
             && echo "Nothing to commit — skipping." \
             || git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
-          git push origin HEAD || true
+          git push origin HEAD
