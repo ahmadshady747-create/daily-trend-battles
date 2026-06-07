@@ -77,19 +77,14 @@ jobs:
         run: python main.py
 
       # ── 7. Commit data.json + OG images + sitemap.xml ─────────────────────
-      #    FIX: Order changed to prevent git conflicts:
-      #    1. git add (stage new files)
-      #    2. git commit (commit them)
-      #    3. git pull --rebase (sync with remote)
-      #    4. git push (push to remote)
+      #    FIX: Use git-auto-commit-action instead of raw git commands.
+      #    This action handles add, commit, pull, push, and merge conflicts
+      #    automatically — used by 50,000+ repositories.
       - name: Commit and push
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name  "github-actions[bot]"
-          git add -f data.json og/ sitemap.xml
-          git diff --staged --quiet \
-            && echo "Nothing to commit — skipping." \
-            && exit 0
-          git commit -m "chore: daily battle update $(date -u +'%Y-%m-%d')"
-          git pull --rebase origin main
-          git push origin HEAD
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: daily battle update"
+          file_pattern: 'data.json og/* sitemap.xml'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
+          push_options: '--force-with-lease'
