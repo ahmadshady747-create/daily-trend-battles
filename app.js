@@ -200,7 +200,8 @@ function createBattleCard(battle) {
 async function loadBattles() {
     try {
         // تم تحديث المسار هنا ليقرأ من مجلد public مباشرة بما أن index.html أصبح في الجذر خارج المجلد
-        const response = await fetch('public/data.json?v=' + Date.now());
+        const response = await fetch('data.json?v=' + Date.now());
+
         if (!response.ok) throw new Error('Failed to load data');
 
         const data = await response.json();
