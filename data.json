@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-07T20:27:00Z",
+  "generated_at": "2026-06-07T21:54:13Z",
   "date": "2026-06-07",
   "battles": [
     {
-      "id": "2026-06-07-sports-9a731fa9",
+      "id": "2026-06-07-sports-18c1adeb",
       "category": "Sports",
-      "battle_title": "The Great Sports Debate: Is LeBron James Better Than Michael Jordan? Vote Now!",
-      "option_a": "LeBron James",
-      "option_b": "Michael Jordan",
-      "voting_api_key": "battles/sports/lebron-james-vs-michael-jordan/2026-06-07",
-      "timestamp": "2026-06-07T20:27:00Z"
+      "battle_title": "The Great Sports Debate: Is Real Madrid Better Than Barcelona? Vote Now!",
+      "option_a": "Real Madrid",
+      "option_b": "Barcelona",
+      "voting_api_key": "battles/sports/real-madrid-vs-barcelona/2026-06-07",
+      "timestamp": "2026-06-07T21:54:13Z"
     },
     {
-      "id": "2026-06-07-tech-549c57d2",
+      "id": "2026-06-07-tech-9938e741",
       "category": "Tech",
-      "battle_title": "TikTok vs Instagram Reels: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-06-07",
-      "timestamp": "2026-06-07T20:27:00Z"
+      "battle_title": "AWS vs Microsoft Azure: The Tech Question Everyone Is Arguing About!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-06-07",
+      "timestamp": "2026-06-07T21:54:13Z"
     },
     {
-      "id": "2026-06-07-economy-9da66f6a",
+      "id": "2026-06-07-economy-4de08cb6",
       "category": "Economy",
-      "battle_title": "Market Battle: Inflation vs Recession — Where Would You Put Your Money?",
-      "option_a": "Inflation",
-      "option_b": "Recession",
-      "voting_api_key": "battles/economy/inflation-vs-recession/2026-06-07",
-      "timestamp": "2026-06-07T20:27:00Z"
+      "battle_title": "Bonds vs Equities — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Bonds",
+      "option_b": "Equities",
+      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-07",
+      "timestamp": "2026-06-07T21:54:13Z"
     }
   ]
 }
