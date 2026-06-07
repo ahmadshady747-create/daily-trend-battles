@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-06T11:12:06Z",
-  "date": "2026-06-06",
+  "generated_at": "2026-06-07T20:27:00Z",
+  "date": "2026-06-07",
   "battles": [
     {
-      "id": "2026-06-06-sports-47b762b6",
+      "id": "2026-06-07-sports-9a731fa9",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Kansas City Chiefs vs Philadelphia Eagles — Who Wins Today?",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-06",
-      "timestamp": "2026-06-06T11:12:06Z"
+      "battle_title": "The Great Sports Debate: Is LeBron James Better Than Michael Jordan? Vote Now!",
+      "option_a": "LeBron James",
+      "option_b": "Michael Jordan",
+      "voting_api_key": "battles/sports/lebron-james-vs-michael-jordan/2026-06-07",
+      "timestamp": "2026-06-07T20:27:00Z"
     },
     {
-      "id": "2026-06-06-tech-501597c6",
+      "id": "2026-06-07-tech-549c57d2",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: PlayStation 5 vs Xbox Series X — You Decide the Winner!",
-      "option_a": "PlayStation 5",
-      "option_b": "Xbox Series X",
-      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-06-06",
-      "timestamp": "2026-06-06T11:12:06Z"
+      "battle_title": "TikTok vs Instagram Reels: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "TikTok",
+      "option_b": "Instagram Reels",
+      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-06-07",
+      "timestamp": "2026-06-07T20:27:00Z"
     },
     {
-      "id": "2026-06-06-economy-0d95394b",
+      "id": "2026-06-07-economy-9da66f6a",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Bonds vs Equities — Which Comes Out on Top?",
-      "option_a": "Bonds",
-      "option_b": "Equities",
-      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-06",
-      "timestamp": "2026-06-06T11:12:06Z"
+      "battle_title": "Market Battle: Inflation vs Recession — Where Would You Put Your Money?",
+      "option_a": "Inflation",
+      "option_b": "Recession",
+      "voting_api_key": "battles/economy/inflation-vs-recession/2026-06-07",
+      "timestamp": "2026-06-07T20:27:00Z"
     }
   ]
 }
