@@ -3,7 +3,7 @@
 =============================================================================
   OG Image Generator  |  og_generator.py
   Generates 1200x630 shareable images for each battle.
-  Saves to: public/og/{battle_id}.png
+  Saves to: og/{battle_id}.png
 
   FIX: Added _fit_font() to scale text down when option names are too wide,
        preventing overlap with the central "VS" label.
@@ -17,7 +17,7 @@ import json
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-OG_DIR     = "public/og"
+OG_DIR     = "og"
 IMAGE_SIZE = (1200, 630)
 W, H       = IMAGE_SIZE
 
@@ -178,7 +178,7 @@ def generate_battle_og(battle: dict, date_str: str) -> str:
     )
     draw.text(
         (margin, H - 28),
-        "daily-trend-battles.vercel.app",
+        "trend-pulse-two.vercel.app",
         fill="#666666",
         font=font_meta,
     )
