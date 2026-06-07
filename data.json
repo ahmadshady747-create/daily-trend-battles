@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-07T12:00:36Z",
+  "generated_at": "2026-06-07T12:07:54Z",
   "date": "2026-06-07",
   "battles": [
     {
-      "id": "2026-06-07-sports-ea02f2c3",
+      "id": "2026-06-07-sports-2a4e463b",
       "category": "Sports",
-      "battle_title": "The GOAT Question Returns: Manchester City or Arsenal? The World Weighs In!",
-      "option_a": "Manchester City",
-      "option_b": "Arsenal",
-      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-07",
-      "timestamp": "2026-06-07T12:00:36Z"
+      "battle_title": "Max Verstappen vs Lewis Hamilton — Who Would Win? The Numbers Will Shock You!",
+      "option_a": "Max Verstappen",
+      "option_b": "Lewis Hamilton",
+      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-07",
+      "timestamp": "2026-06-07T12:07:54Z"
     },
     {
-      "id": "2026-06-07-tech-ea35849e",
+      "id": "2026-06-07-tech-5eed58a5",
       "category": "Tech",
-      "battle_title": "Apple vs Google — The Battle That's Breaking Tech Twitter Right Now!",
-      "option_a": "Apple",
-      "option_b": "Google",
-      "voting_api_key": "battles/tech/apple-vs-google/2026-06-07",
-      "timestamp": "2026-06-07T12:00:36Z"
+      "battle_title": "Innovation Clash: Netflix Takes On Disney+ — Cast Your Vote!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-07",
+      "timestamp": "2026-06-07T12:07:54Z"
     },
     {
-      "id": "2026-06-07-economy-4de08cb6",
+      "id": "2026-06-07-economy-63dc39e7",
       "category": "Economy",
-      "battle_title": "Bonds vs Equities: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Bonds",
-      "option_b": "Equities",
-      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-07",
-      "timestamp": "2026-06-07T12:00:36Z"
+      "battle_title": "Economic Showdown: Nasdaq vs S&P 500 — Which Comes Out on Top?",
+      "option_a": "Nasdaq",
+      "option_b": "S&P 500",
+      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-07",
+      "timestamp": "2026-06-07T12:07:54Z"
     }
   ]
 }
