@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-06-06T11:12:06Z",
+  "date": "2026-06-06",
+  "battles": [
+    {
+      "id": "2026-06-06-sports-47b762b6",
+      "category": "Sports",
+      "battle_title": "The Ultimate Sports Clash: Kansas City Chiefs vs Philadelphia Eagles — Who Wins Today?",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
+    },
+    {
+      "id": "2026-06-06-tech-501597c6",
+      "category": "Tech",
+      "battle_title": "The Big Tech Battle: PlayStation 5 vs Xbox Series X — You Decide the Winner!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
+    },
+    {
+      "id": "2026-06-06-economy-0d95394b",
+      "category": "Economy",
+      "battle_title": "Economic Showdown: Bonds vs Equities — Which Comes Out on Top?",
+      "option_a": "Bonds",
+      "option_b": "Equities",
+      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-06",
+      "timestamp": "2026-06-06T11:12:06Z"
+    }
+  ]
+}
