@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-07T21:54:13Z",
+  "generated_at": "2026-06-07T22:14:08Z",
   "date": "2026-06-07",
   "battles": [
     {
-      "id": "2026-06-07-sports-18c1adeb",
+      "id": "2026-06-07-sports-51ac9bc0",
       "category": "Sports",
-      "battle_title": "The Great Sports Debate: Is Real Madrid Better Than Barcelona? Vote Now!",
-      "option_a": "Real Madrid",
-      "option_b": "Barcelona",
-      "voting_api_key": "battles/sports/real-madrid-vs-barcelona/2026-06-07",
-      "timestamp": "2026-06-07T21:54:13Z"
+      "battle_title": "The GOAT Question Returns: Tyson Fury or Oleksandr Usyk? The World Weighs In!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-07",
+      "timestamp": "2026-06-07T22:14:08Z"
     },
     {
-      "id": "2026-06-07-tech-9938e741",
+      "id": "2026-06-07-tech-3070b5a4",
       "category": "Tech",
-      "battle_title": "AWS vs Microsoft Azure: The Tech Question Everyone Is Arguing About!",
-      "option_a": "AWS",
-      "option_b": "Microsoft Azure",
-      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-06-07",
-      "timestamp": "2026-06-07T21:54:13Z"
+      "battle_title": "The $1 Trillion Question: PlayStation 5 or Xbox Series X? Vote and Find Out!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-06-07",
+      "timestamp": "2026-06-07T22:14:08Z"
     },
     {
-      "id": "2026-06-07-economy-4de08cb6",
+      "id": "2026-06-07-economy-03d461e5",
       "category": "Economy",
-      "battle_title": "Bonds vs Equities — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Bonds",
-      "option_b": "Equities",
-      "voting_api_key": "battles/economy/bonds-vs-equities/2026-06-07",
-      "timestamp": "2026-06-07T21:54:13Z"
+      "battle_title": "Is Stock Market a Better Bet Than Crypto Market Right Now? Cast Your Vote!",
+      "option_a": "Stock Market",
+      "option_b": "Crypto Market",
+      "voting_api_key": "battles/economy/stock-market-vs-crypto-market/2026-06-07",
+      "timestamp": "2026-06-07T22:14:08Z"
     }
   ]
 }

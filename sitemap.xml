@@ -19,7 +19,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-07-tech-3070b5a4</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://trend-pulse-two.vercel.app/battle/2026-06-07-sports-9a731fa9</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-07-sports-51ac9bc0</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -38,6 +50,12 @@
   </url>
   <url>
     <loc>https://trend-pulse-two.vercel.app/battle/2026-06-07-economy-4de08cb6</loc>
+    <lastmod>2026-06-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-07-economy-03d461e5</loc>
     <lastmod>2026-06-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
