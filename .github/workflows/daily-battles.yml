@@ -82,10 +82,10 @@ jobs:
       #    2. git commit (commit them)
       #    3. git pull --rebase (sync with remote)
       #    4. git push (push to remote)
-      - name: Commit and push
+        - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name  "github-actions[bot]"
+          git config --local user.name "github-actions[bot]"
           git add -f data.json og/ sitemap.xml
           git diff --staged --quiet \
             && echo "Nothing to commit — skipping." \
