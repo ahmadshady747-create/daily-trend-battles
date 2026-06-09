@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-08T17:37:20Z",
-  "date": "2026-06-08",
+  "generated_at": "2026-06-09T16:20:20Z",
+  "date": "2026-06-09",
   "battles": [
     {
-      "id": "2026-06-08-sports-4b74d51c",
+      "id": "2026-06-09-sports-833959b3",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Iga Swiatek vs Aryna Sabalenka — Who Wins Today?",
-      "option_a": "Iga Swiatek",
-      "option_b": "Aryna Sabalenka",
-      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-06-08",
-      "timestamp": "2026-06-08T17:37:20Z"
+      "battle_title": "Manchester City vs Arsenal: This Debate Just Got Heated — What's Your Take?",
+      "option_a": "Manchester City",
+      "option_b": "Arsenal",
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-09",
+      "timestamp": "2026-06-09T16:20:20Z"
     },
     {
-      "id": "2026-06-08-tech-32813b56",
+      "id": "2026-06-09-tech-18f8d87a",
       "category": "Tech",
-      "battle_title": "Tech Showdown: TikTok vs Instagram Reels — Which Reigns Supreme?",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-06-08",
-      "timestamp": "2026-06-08T17:37:20Z"
+      "battle_title": "Samsung Galaxy vs Apple iPhone: The Tech Question Everyone Is Arguing About!",
+      "option_a": "Samsung Galaxy",
+      "option_b": "Apple iPhone",
+      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-06-09",
+      "timestamp": "2026-06-09T16:20:20Z"
     },
     {
-      "id": "2026-06-08-economy-a06c6b62",
+      "id": "2026-06-09-economy-0e2c0ec2",
       "category": "Economy",
-      "battle_title": "Bitcoin vs Gold — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Bitcoin",
-      "option_b": "Gold",
-      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-08",
-      "timestamp": "2026-06-08T17:37:20Z"
+      "battle_title": "Real Estate vs Stock Market: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Real Estate",
+      "option_b": "Stock Market",
+      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-06-09",
+      "timestamp": "2026-06-09T16:20:20Z"
     }
   ]
 }
