@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-11T17:59:05Z",
-  "date": "2026-06-11",
+  "generated_at": "2026-06-12T16:34:32Z",
+  "date": "2026-06-12",
   "battles": [
     {
-      "id": "2026-06-11-sports-742e0769",
+      "id": "2026-06-12-sports-356dd173",
       "category": "Sports",
-      "battle_title": "Head-to-Head: Real Madrid vs Barcelona — The Internet Decides!",
-      "option_a": "Real Madrid",
-      "option_b": "Barcelona",
-      "voting_api_key": "battles/sports/real-madrid-vs-barcelona/2026-06-11",
-      "timestamp": "2026-06-11T17:59:05Z"
+      "battle_title": "Fan Vote: Max Verstappen or Lewis Hamilton? Only One Can Reign Supreme!",
+      "option_a": "Max Verstappen",
+      "option_b": "Lewis Hamilton",
+      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-12",
+      "timestamp": "2026-06-12T16:34:32Z"
     },
     {
-      "id": "2026-06-11-tech-1dfd3930",
+      "id": "2026-06-12-tech-76a278df",
       "category": "Tech",
-      "battle_title": "Tech Showdown: TikTok vs Instagram Reels — Which Reigns Supreme?",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-06-11",
-      "timestamp": "2026-06-11T17:59:05Z"
+      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
+      "option_a": "Spotify",
+      "option_b": "Apple Music",
+      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-06-12",
+      "timestamp": "2026-06-12T16:34:32Z"
     },
     {
-      "id": "2026-06-11-economy-653d1e29",
+      "id": "2026-06-12-economy-f6c9ba58",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Inflation or Recession? The Answer Might Surprise You!",
-      "option_a": "Inflation",
-      "option_b": "Recession",
-      "voting_api_key": "battles/economy/inflation-vs-recession/2026-06-11",
-      "timestamp": "2026-06-11T17:59:05Z"
+      "battle_title": "Where Are You Putting Your Money? Real Estate vs Stock Market — Decide Now!",
+      "option_a": "Real Estate",
+      "option_b": "Stock Market",
+      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-06-12",
+      "timestamp": "2026-06-12T16:34:32Z"
     }
   ]
 }
