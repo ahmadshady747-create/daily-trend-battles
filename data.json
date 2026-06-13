@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-12T16:34:32Z",
-  "date": "2026-06-12",
+  "generated_at": "2026-06-13T12:09:41Z",
+  "date": "2026-06-13",
   "battles": [
     {
-      "id": "2026-06-12-sports-356dd173",
+      "id": "2026-06-13-sports-a47049fc",
       "category": "Sports",
-      "battle_title": "Fan Vote: Max Verstappen or Lewis Hamilton? Only One Can Reign Supreme!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-12",
-      "timestamp": "2026-06-12T16:34:32Z"
+      "battle_title": "Fan Vote: Tyson Fury or Oleksandr Usyk? Only One Can Reign Supreme!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-13",
+      "timestamp": "2026-06-13T12:09:41Z"
     },
     {
-      "id": "2026-06-12-tech-76a278df",
+      "id": "2026-06-13-tech-d461738f",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
-      "option_a": "Spotify",
-      "option_b": "Apple Music",
-      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-06-12",
-      "timestamp": "2026-06-12T16:34:32Z"
+      "battle_title": "The $1 Trillion Question: Twitter / X or Threads? Vote and Find Out!",
+      "option_a": "Twitter / X",
+      "option_b": "Threads",
+      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-13",
+      "timestamp": "2026-06-13T12:09:41Z"
     },
     {
-      "id": "2026-06-12-economy-f6c9ba58",
+      "id": "2026-06-13-economy-a4678c47",
       "category": "Economy",
-      "battle_title": "Where Are You Putting Your Money? Real Estate vs Stock Market — Decide Now!",
-      "option_a": "Real Estate",
-      "option_b": "Stock Market",
-      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-06-12",
-      "timestamp": "2026-06-12T16:34:32Z"
+      "battle_title": "Economic Showdown: Dogecoin vs Ripple (XRP) — Which Comes Out on Top?",
+      "option_a": "Dogecoin",
+      "option_b": "Ripple (XRP)",
+      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-13",
+      "timestamp": "2026-06-13T12:09:41Z"
     }
   ]
 }
