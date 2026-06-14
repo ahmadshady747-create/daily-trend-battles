@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-13T12:09:41Z",
-  "date": "2026-06-13",
+  "generated_at": "2026-06-14T12:29:47Z",
+  "date": "2026-06-14",
   "battles": [
     {
-      "id": "2026-06-13-sports-a47049fc",
+      "id": "2026-06-14-sports-13c7a224",
       "category": "Sports",
-      "battle_title": "Fan Vote: Tyson Fury or Oleksandr Usyk? Only One Can Reign Supreme!",
+      "battle_title": "The Ultimate Sports Clash: Tyson Fury vs Oleksandr Usyk — Who Wins Today?",
       "option_a": "Tyson Fury",
       "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-13",
-      "timestamp": "2026-06-13T12:09:41Z"
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-14",
+      "timestamp": "2026-06-14T12:29:47Z"
     },
     {
-      "id": "2026-06-13-tech-d461738f",
+      "id": "2026-06-14-tech-bc26abff",
       "category": "Tech",
-      "battle_title": "The $1 Trillion Question: Twitter / X or Threads? Vote and Find Out!",
-      "option_a": "Twitter / X",
-      "option_b": "Threads",
-      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-13",
-      "timestamp": "2026-06-13T12:09:41Z"
+      "battle_title": "Tech Showdown: OpenAI vs Anthropic — Which Reigns Supreme?",
+      "option_a": "OpenAI",
+      "option_b": "Anthropic",
+      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-14",
+      "timestamp": "2026-06-14T12:29:47Z"
     },
     {
-      "id": "2026-06-13-economy-a4678c47",
+      "id": "2026-06-14-economy-4ac2cb70",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Dogecoin vs Ripple (XRP) — Which Comes Out on Top?",
+      "battle_title": "Where Are You Putting Your Money? Dogecoin vs Ripple (XRP) — Decide Now!",
       "option_a": "Dogecoin",
       "option_b": "Ripple (XRP)",
-      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-13",
-      "timestamp": "2026-06-13T12:09:41Z"
+      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-14",
+      "timestamp": "2026-06-14T12:29:47Z"
     }
   ]
 }
