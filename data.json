@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-14T12:29:47Z",
-  "date": "2026-06-14",
+  "generated_at": "2026-06-15T19:59:32Z",
+  "date": "2026-06-15",
   "battles": [
     {
-      "id": "2026-06-14-sports-13c7a224",
+      "id": "2026-06-15-sports-a8f78278",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Tyson Fury vs Oleksandr Usyk — Who Wins Today?",
-      "option_a": "Tyson Fury",
-      "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-14",
-      "timestamp": "2026-06-14T12:29:47Z"
+      "battle_title": "The Great Sports Debate: Is Manchester City Better Than Arsenal? Vote Now!",
+      "option_a": "Manchester City",
+      "option_b": "Arsenal",
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-15",
+      "timestamp": "2026-06-15T19:59:32Z"
     },
     {
-      "id": "2026-06-14-tech-bc26abff",
+      "id": "2026-06-15-tech-7af49d39",
       "category": "Tech",
-      "battle_title": "Tech Showdown: OpenAI vs Anthropic — Which Reigns Supreme?",
+      "battle_title": "The Big Tech Battle: OpenAI vs Anthropic — You Decide the Winner!",
       "option_a": "OpenAI",
       "option_b": "Anthropic",
-      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-14",
-      "timestamp": "2026-06-14T12:29:47Z"
+      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-15",
+      "timestamp": "2026-06-15T19:59:32Z"
     },
     {
-      "id": "2026-06-14-economy-4ac2cb70",
+      "id": "2026-06-15-economy-0e86f92a",
       "category": "Economy",
-      "battle_title": "Where Are You Putting Your Money? Dogecoin vs Ripple (XRP) — Decide Now!",
-      "option_a": "Dogecoin",
-      "option_b": "Ripple (XRP)",
-      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-14",
-      "timestamp": "2026-06-14T12:29:47Z"
+      "battle_title": "Market Battle: Oil vs Natural Gas — Where Would You Put Your Money?",
+      "option_a": "Oil",
+      "option_b": "Natural Gas",
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-06-15",
+      "timestamp": "2026-06-15T19:59:32Z"
     }
   ]
 }
