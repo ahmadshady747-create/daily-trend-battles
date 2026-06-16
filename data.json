@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-15T19:59:32Z",
-  "date": "2026-06-15",
+  "generated_at": "2026-06-16T19:51:39Z",
+  "date": "2026-06-16",
   "battles": [
     {
-      "id": "2026-06-15-sports-a8f78278",
+      "id": "2026-06-16-sports-33870d77",
       "category": "Sports",
-      "battle_title": "The Great Sports Debate: Is Manchester City Better Than Arsenal? Vote Now!",
-      "option_a": "Manchester City",
-      "option_b": "Arsenal",
-      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-15",
-      "timestamp": "2026-06-15T19:59:32Z"
+      "battle_title": "The GOAT Question Returns: Kansas City Chiefs or Philadelphia Eagles? The World Weighs In!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-16",
+      "timestamp": "2026-06-16T19:51:39Z"
     },
     {
-      "id": "2026-06-15-tech-7af49d39",
+      "id": "2026-06-16-tech-91af9b40",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: OpenAI vs Anthropic — You Decide the Winner!",
+      "battle_title": "The $1 Trillion Question: OpenAI or Anthropic? Vote and Find Out!",
       "option_a": "OpenAI",
       "option_b": "Anthropic",
-      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-15",
-      "timestamp": "2026-06-15T19:59:32Z"
+      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-16",
+      "timestamp": "2026-06-16T19:51:39Z"
     },
     {
-      "id": "2026-06-15-economy-0e86f92a",
+      "id": "2026-06-16-economy-5fb0137d",
       "category": "Economy",
-      "battle_title": "Market Battle: Oil vs Natural Gas — Where Would You Put Your Money?",
-      "option_a": "Oil",
-      "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-06-15",
-      "timestamp": "2026-06-15T19:59:32Z"
+      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-06-16",
+      "timestamp": "2026-06-16T19:51:39Z"
     }
   ]
 }
