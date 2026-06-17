@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-16T19:51:39Z",
-  "date": "2026-06-16",
+  "generated_at": "2026-06-17T17:33:39Z",
+  "date": "2026-06-17",
   "battles": [
     {
-      "id": "2026-06-16-sports-33870d77",
+      "id": "2026-06-17-sports-51fddd21",
       "category": "Sports",
-      "battle_title": "The GOAT Question Returns: Kansas City Chiefs or Philadelphia Eagles? The World Weighs In!",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-16",
-      "timestamp": "2026-06-16T19:51:39Z"
+      "battle_title": "The Ultimate Sports Clash: NFL vs NBA — Who Wins Today?",
+      "option_a": "NFL",
+      "option_b": "NBA",
+      "voting_api_key": "battles/sports/nfl-vs-nba/2026-06-17",
+      "timestamp": "2026-06-17T17:33:39Z"
     },
     {
-      "id": "2026-06-16-tech-91af9b40",
+      "id": "2026-06-17-tech-d03d8631",
       "category": "Tech",
-      "battle_title": "The $1 Trillion Question: OpenAI or Anthropic? Vote and Find Out!",
-      "option_a": "OpenAI",
-      "option_b": "Anthropic",
-      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-06-16",
-      "timestamp": "2026-06-16T19:51:39Z"
+      "battle_title": "Innovation Clash: Twitter / X Takes On Threads — Cast Your Vote!",
+      "option_a": "Twitter / X",
+      "option_b": "Threads",
+      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-17",
+      "timestamp": "2026-06-17T17:33:39Z"
     },
     {
-      "id": "2026-06-16-economy-5fb0137d",
+      "id": "2026-06-17-economy-832dce8b",
       "category": "Economy",
-      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-06-16",
-      "timestamp": "2026-06-16T19:51:39Z"
+      "battle_title": "Economic Showdown: US Dollar vs Euro — Which Comes Out on Top?",
+      "option_a": "US Dollar",
+      "option_b": "Euro",
+      "voting_api_key": "battles/economy/us-dollar-vs-euro/2026-06-17",
+      "timestamp": "2026-06-17T17:33:39Z"
     }
   ]
 }
