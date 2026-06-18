@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-17T17:33:39Z",
-  "date": "2026-06-17",
+  "generated_at": "2026-06-18T17:49:16Z",
+  "date": "2026-06-18",
   "battles": [
     {
-      "id": "2026-06-17-sports-51fddd21",
+      "id": "2026-06-18-sports-62a97b67",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: NFL vs NBA — Who Wins Today?",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-06-17",
-      "timestamp": "2026-06-17T17:33:39Z"
+      "battle_title": "Head-to-Head: Tyson Fury vs Oleksandr Usyk — The Internet Decides!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-18",
+      "timestamp": "2026-06-18T17:49:16Z"
     },
     {
-      "id": "2026-06-17-tech-d03d8631",
+      "id": "2026-06-18-tech-527ec769",
       "category": "Tech",
-      "battle_title": "Innovation Clash: Twitter / X Takes On Threads — Cast Your Vote!",
-      "option_a": "Twitter / X",
-      "option_b": "Threads",
-      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-17",
-      "timestamp": "2026-06-17T17:33:39Z"
+      "battle_title": "The Big Tech Battle: Netflix vs Disney+ — You Decide the Winner!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-18",
+      "timestamp": "2026-06-18T17:49:16Z"
     },
     {
-      "id": "2026-06-17-economy-832dce8b",
+      "id": "2026-06-18-economy-33975148",
       "category": "Economy",
-      "battle_title": "Economic Showdown: US Dollar vs Euro — Which Comes Out on Top?",
-      "option_a": "US Dollar",
-      "option_b": "Euro",
-      "voting_api_key": "battles/economy/us-dollar-vs-euro/2026-06-17",
-      "timestamp": "2026-06-17T17:33:39Z"
+      "battle_title": "Stock Market vs Crypto Market — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Stock Market",
+      "option_b": "Crypto Market",
+      "voting_api_key": "battles/economy/stock-market-vs-crypto-market/2026-06-18",
+      "timestamp": "2026-06-18T17:49:16Z"
     }
   ]
 }
