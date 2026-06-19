@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-18T17:49:16Z",
-  "date": "2026-06-18",
+  "generated_at": "2026-06-19T16:19:32Z",
+  "date": "2026-06-19",
   "battles": [
     {
-      "id": "2026-06-18-sports-62a97b67",
+      "id": "2026-06-19-sports-0db03f20",
       "category": "Sports",
-      "battle_title": "Head-to-Head: Tyson Fury vs Oleksandr Usyk — The Internet Decides!",
-      "option_a": "Tyson Fury",
-      "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-06-18",
-      "timestamp": "2026-06-18T17:49:16Z"
+      "battle_title": "Mbappé vs Erling Haaland — Who Would Win? The Numbers Will Shock You!",
+      "option_a": "Mbappé",
+      "option_b": "Erling Haaland",
+      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-06-19",
+      "timestamp": "2026-06-19T16:19:32Z"
     },
     {
-      "id": "2026-06-18-tech-527ec769",
+      "id": "2026-06-19-tech-31f7c0f4",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: Netflix vs Disney+ — You Decide the Winner!",
+      "battle_title": "Is Netflix Really Better Than Disney+? The Internet Weighs In!",
       "option_a": "Netflix",
       "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-18",
-      "timestamp": "2026-06-18T17:49:16Z"
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-19",
+      "timestamp": "2026-06-19T16:19:32Z"
     },
     {
-      "id": "2026-06-18-economy-33975148",
+      "id": "2026-06-19-economy-5c53dead",
       "category": "Economy",
-      "battle_title": "Stock Market vs Crypto Market — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Stock Market",
-      "option_b": "Crypto Market",
-      "voting_api_key": "battles/economy/stock-market-vs-crypto-market/2026-06-18",
-      "timestamp": "2026-06-18T17:49:16Z"
+      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-06-19",
+      "timestamp": "2026-06-19T16:19:32Z"
     }
   ]
 }
