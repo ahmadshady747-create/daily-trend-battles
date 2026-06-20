@@ -2,9 +2,27 @@
 <urlset>
   <url>
     <loc>https://trend-pulse-two.vercel.app</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-20-tech-109c6208</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-20-sports-05a5fb07</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://trend-pulse-two.vercel.app/battle/2026-06-20-economy-d54e9798</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://trend-pulse-two.vercel.app/battle/2026-06-19-tech-31f7c0f4</loc>

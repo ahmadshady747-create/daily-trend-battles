@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-19T16:19:32Z",
-  "date": "2026-06-19",
+  "generated_at": "2026-06-20T12:16:02Z",
+  "date": "2026-06-20",
   "battles": [
     {
-      "id": "2026-06-19-sports-0db03f20",
+      "id": "2026-06-20-sports-05a5fb07",
       "category": "Sports",
-      "battle_title": "Mbappé vs Erling Haaland — Who Would Win? The Numbers Will Shock You!",
-      "option_a": "Mbappé",
-      "option_b": "Erling Haaland",
-      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-06-19",
-      "timestamp": "2026-06-19T16:19:32Z"
+      "battle_title": "Fan Vote: NFL or NBA? Only One Can Reign Supreme!",
+      "option_a": "NFL",
+      "option_b": "NBA",
+      "voting_api_key": "battles/sports/nfl-vs-nba/2026-06-20",
+      "timestamp": "2026-06-20T12:16:02Z"
     },
     {
-      "id": "2026-06-19-tech-31f7c0f4",
+      "id": "2026-06-20-tech-109c6208",
       "category": "Tech",
-      "battle_title": "Is Netflix Really Better Than Disney+? The Internet Weighs In!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-19",
-      "timestamp": "2026-06-19T16:19:32Z"
+      "battle_title": "Nvidia vs AMD: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "Nvidia",
+      "option_b": "AMD",
+      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-06-20",
+      "timestamp": "2026-06-20T12:16:02Z"
     },
     {
-      "id": "2026-06-19-economy-5c53dead",
+      "id": "2026-06-20-economy-d54e9798",
       "category": "Economy",
-      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-06-19",
-      "timestamp": "2026-06-19T16:19:32Z"
+      "battle_title": "Trending in Finance: Real Estate or Stock Market? The Answer Might Surprise You!",
+      "option_a": "Real Estate",
+      "option_b": "Stock Market",
+      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-06-20",
+      "timestamp": "2026-06-20T12:16:02Z"
     }
   ]
 }
