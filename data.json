@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-20T12:16:02Z",
-  "date": "2026-06-20",
+  "generated_at": "2026-06-21T12:31:15Z",
+  "date": "2026-06-21",
   "battles": [
     {
-      "id": "2026-06-20-sports-05a5fb07",
+      "id": "2026-06-21-sports-94d7b845",
       "category": "Sports",
-      "battle_title": "Fan Vote: NFL or NBA? Only One Can Reign Supreme!",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-06-20",
-      "timestamp": "2026-06-20T12:16:02Z"
+      "battle_title": "Head-to-Head: Manchester City vs Arsenal — The Internet Decides!",
+      "option_a": "Manchester City",
+      "option_b": "Arsenal",
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-21",
+      "timestamp": "2026-06-21T12:31:15Z"
     },
     {
-      "id": "2026-06-20-tech-109c6208",
+      "id": "2026-06-21-tech-3489ad5f",
       "category": "Tech",
-      "battle_title": "Nvidia vs AMD: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "Nvidia",
-      "option_b": "AMD",
-      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-06-20",
-      "timestamp": "2026-06-20T12:16:02Z"
+      "battle_title": "ChatGPT vs Google Gemini: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "ChatGPT",
+      "option_b": "Google Gemini",
+      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-06-21",
+      "timestamp": "2026-06-21T12:31:15Z"
     },
     {
-      "id": "2026-06-20-economy-d54e9798",
+      "id": "2026-06-21-economy-ef57a204",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Real Estate or Stock Market? The Answer Might Surprise You!",
-      "option_a": "Real Estate",
-      "option_b": "Stock Market",
-      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-06-20",
-      "timestamp": "2026-06-20T12:16:02Z"
+      "battle_title": "Nasdaq vs S&P 500: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Nasdaq",
+      "option_b": "S&P 500",
+      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-21",
+      "timestamp": "2026-06-21T12:31:15Z"
     }
   ]
 }
