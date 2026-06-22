@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-21T12:31:15Z",
-  "date": "2026-06-21",
+  "generated_at": "2026-06-22T18:58:35Z",
+  "date": "2026-06-22",
   "battles": [
     {
-      "id": "2026-06-21-sports-94d7b845",
+      "id": "2026-06-22-sports-b701ded1",
       "category": "Sports",
       "battle_title": "Head-to-Head: Manchester City vs Arsenal — The Internet Decides!",
       "option_a": "Manchester City",
       "option_b": "Arsenal",
-      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-21",
-      "timestamp": "2026-06-21T12:31:15Z"
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-22",
+      "timestamp": "2026-06-22T18:58:35Z"
     },
     {
-      "id": "2026-06-21-tech-3489ad5f",
+      "id": "2026-06-22-tech-cbeda6ba",
       "category": "Tech",
-      "battle_title": "ChatGPT vs Google Gemini: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "ChatGPT",
-      "option_b": "Google Gemini",
-      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-06-21",
-      "timestamp": "2026-06-21T12:31:15Z"
+      "battle_title": "Twitter / X vs Threads — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "Twitter / X",
+      "option_b": "Threads",
+      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-22",
+      "timestamp": "2026-06-22T18:58:35Z"
     },
     {
-      "id": "2026-06-21-economy-ef57a204",
+      "id": "2026-06-22-economy-b4ee31a8",
       "category": "Economy",
-      "battle_title": "Nasdaq vs S&P 500: Wall Street Is Watching — Which Side Are You On?",
+      "battle_title": "Where Are You Putting Your Money? Nasdaq vs S&P 500 — Decide Now!",
       "option_a": "Nasdaq",
       "option_b": "S&P 500",
-      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-21",
-      "timestamp": "2026-06-21T12:31:15Z"
+      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-22",
+      "timestamp": "2026-06-22T18:58:35Z"
     }
   ]
 }
