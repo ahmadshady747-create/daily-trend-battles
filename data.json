@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-22T18:58:35Z",
-  "date": "2026-06-22",
+  "generated_at": "2026-06-23T16:12:10Z",
+  "date": "2026-06-23",
   "battles": [
     {
-      "id": "2026-06-22-sports-b701ded1",
+      "id": "2026-06-23-sports-fd96107f",
       "category": "Sports",
-      "battle_title": "Head-to-Head: Manchester City vs Arsenal — The Internet Decides!",
-      "option_a": "Manchester City",
-      "option_b": "Arsenal",
-      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-06-22",
-      "timestamp": "2026-06-22T18:58:35Z"
+      "battle_title": "The Ultimate Sports Clash: Messi vs Ronaldo — Who Wins Today?",
+      "option_a": "Messi",
+      "option_b": "Ronaldo",
+      "voting_api_key": "battles/sports/messi-vs-ronaldo/2026-06-23",
+      "timestamp": "2026-06-23T16:12:10Z"
     },
     {
-      "id": "2026-06-22-tech-cbeda6ba",
+      "id": "2026-06-23-tech-4dbb99d2",
       "category": "Tech",
-      "battle_title": "Twitter / X vs Threads — The Battle That's Breaking Tech Twitter Right Now!",
-      "option_a": "Twitter / X",
-      "option_b": "Threads",
-      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-06-22",
-      "timestamp": "2026-06-22T18:58:35Z"
+      "battle_title": "Is Tesla Really Better Than Waymo? The Internet Weighs In!",
+      "option_a": "Tesla",
+      "option_b": "Waymo",
+      "voting_api_key": "battles/tech/tesla-vs-waymo/2026-06-23",
+      "timestamp": "2026-06-23T16:12:10Z"
     },
     {
-      "id": "2026-06-22-economy-b4ee31a8",
+      "id": "2026-06-23-economy-526da7b8",
       "category": "Economy",
-      "battle_title": "Where Are You Putting Your Money? Nasdaq vs S&P 500 — Decide Now!",
-      "option_a": "Nasdaq",
-      "option_b": "S&P 500",
-      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-06-22",
-      "timestamp": "2026-06-22T18:58:35Z"
+      "battle_title": "Dogecoin vs Ripple (XRP) — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Dogecoin",
+      "option_b": "Ripple (XRP)",
+      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-23",
+      "timestamp": "2026-06-23T16:12:10Z"
     }
   ]
 }
