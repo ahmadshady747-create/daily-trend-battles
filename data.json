@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-23T16:12:10Z",
-  "date": "2026-06-23",
+  "generated_at": "2026-06-24T13:59:46Z",
+  "date": "2026-06-24",
   "battles": [
     {
-      "id": "2026-06-23-sports-fd96107f",
+      "id": "2026-06-24-sports-5b769e08",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Messi vs Ronaldo — Who Wins Today?",
-      "option_a": "Messi",
-      "option_b": "Ronaldo",
-      "voting_api_key": "battles/sports/messi-vs-ronaldo/2026-06-23",
-      "timestamp": "2026-06-23T16:12:10Z"
+      "battle_title": "Fan Vote: Kansas City Chiefs or Philadelphia Eagles? Only One Can Reign Supreme!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-24",
+      "timestamp": "2026-06-24T13:59:46Z"
     },
     {
-      "id": "2026-06-23-tech-4dbb99d2",
+      "id": "2026-06-24-tech-19493936",
       "category": "Tech",
-      "battle_title": "Is Tesla Really Better Than Waymo? The Internet Weighs In!",
-      "option_a": "Tesla",
-      "option_b": "Waymo",
-      "voting_api_key": "battles/tech/tesla-vs-waymo/2026-06-23",
-      "timestamp": "2026-06-23T16:12:10Z"
+      "battle_title": "Samsung Galaxy vs Apple iPhone: The Tech Question Everyone Is Arguing About!",
+      "option_a": "Samsung Galaxy",
+      "option_b": "Apple iPhone",
+      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-06-24",
+      "timestamp": "2026-06-24T13:59:46Z"
     },
     {
-      "id": "2026-06-23-economy-526da7b8",
+      "id": "2026-06-24-economy-e77ab26a",
       "category": "Economy",
-      "battle_title": "Dogecoin vs Ripple (XRP) — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Dogecoin",
-      "option_b": "Ripple (XRP)",
-      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-06-23",
-      "timestamp": "2026-06-23T16:12:10Z"
+      "battle_title": "Bitcoin vs Gold — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Bitcoin",
+      "option_b": "Gold",
+      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-24",
+      "timestamp": "2026-06-24T13:59:46Z"
     }
   ]
 }
