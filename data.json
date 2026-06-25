@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-24T13:59:46Z",
-  "date": "2026-06-24",
+  "generated_at": "2026-06-25T13:38:29Z",
+  "date": "2026-06-25",
   "battles": [
     {
-      "id": "2026-06-24-sports-5b769e08",
+      "id": "2026-06-25-sports-e6d73ee4",
       "category": "Sports",
-      "battle_title": "Fan Vote: Kansas City Chiefs or Philadelphia Eagles? Only One Can Reign Supreme!",
+      "battle_title": "The Ultimate Sports Clash: Kansas City Chiefs vs Philadelphia Eagles — Who Wins Today?",
       "option_a": "Kansas City Chiefs",
       "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-24",
-      "timestamp": "2026-06-24T13:59:46Z"
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-25",
+      "timestamp": "2026-06-25T13:38:29Z"
     },
     {
-      "id": "2026-06-24-tech-19493936",
+      "id": "2026-06-25-tech-5b414465",
       "category": "Tech",
-      "battle_title": "Samsung Galaxy vs Apple iPhone: The Tech Question Everyone Is Arguing About!",
-      "option_a": "Samsung Galaxy",
-      "option_b": "Apple iPhone",
-      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-06-24",
-      "timestamp": "2026-06-24T13:59:46Z"
+      "battle_title": "Is Netflix Really Better Than Disney+? The Internet Weighs In!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-25",
+      "timestamp": "2026-06-25T13:38:29Z"
     },
     {
-      "id": "2026-06-24-economy-e77ab26a",
+      "id": "2026-06-25-economy-1459405a",
       "category": "Economy",
-      "battle_title": "Bitcoin vs Gold — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Bitcoin",
-      "option_b": "Gold",
-      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-24",
-      "timestamp": "2026-06-24T13:59:46Z"
+      "battle_title": "Inflation vs Recession: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Inflation",
+      "option_b": "Recession",
+      "voting_api_key": "battles/economy/inflation-vs-recession/2026-06-25",
+      "timestamp": "2026-06-25T13:38:29Z"
     }
   ]
 }
