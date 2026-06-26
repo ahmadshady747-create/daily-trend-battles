@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-25T13:38:29Z",
-  "date": "2026-06-25",
+  "generated_at": "2026-06-26T13:34:33Z",
+  "date": "2026-06-26",
   "battles": [
     {
-      "id": "2026-06-25-sports-e6d73ee4",
+      "id": "2026-06-26-sports-cd15debf",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Kansas City Chiefs vs Philadelphia Eagles — Who Wins Today?",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-06-25",
-      "timestamp": "2026-06-25T13:38:29Z"
+      "battle_title": "Mbappé vs Erling Haaland: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Mbappé",
+      "option_b": "Erling Haaland",
+      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-06-26",
+      "timestamp": "2026-06-26T13:34:33Z"
     },
     {
-      "id": "2026-06-25-tech-5b414465",
+      "id": "2026-06-26-tech-bc5ea85a",
       "category": "Tech",
-      "battle_title": "Is Netflix Really Better Than Disney+? The Internet Weighs In!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-25",
-      "timestamp": "2026-06-25T13:38:29Z"
+      "battle_title": "Digital Duel of the Day: AWS or Microsoft Azure? One Click Decides!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-06-26",
+      "timestamp": "2026-06-26T13:34:33Z"
     },
     {
-      "id": "2026-06-25-economy-1459405a",
+      "id": "2026-06-26-economy-f585b1a1",
       "category": "Economy",
-      "battle_title": "Inflation vs Recession: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Inflation",
-      "option_b": "Recession",
-      "voting_api_key": "battles/economy/inflation-vs-recession/2026-06-25",
-      "timestamp": "2026-06-25T13:38:29Z"
+      "battle_title": "Is Stock Market a Better Bet Than Crypto Market Right Now? Cast Your Vote!",
+      "option_a": "Stock Market",
+      "option_b": "Crypto Market",
+      "voting_api_key": "battles/economy/stock-market-vs-crypto-market/2026-06-26",
+      "timestamp": "2026-06-26T13:34:33Z"
     }
   ]
 }
