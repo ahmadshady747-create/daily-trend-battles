@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-27T11:16:23Z",
-  "date": "2026-06-27",
+  "generated_at": "2026-06-28T12:00:18Z",
+  "date": "2026-06-28",
   "battles": [
     {
-      "id": "2026-06-27-sports-4ed4efe0",
+      "id": "2026-06-28-sports-2fcc4a7d",
       "category": "Sports",
-      "battle_title": "Head-to-Head: Tiger Woods vs Rory McIlroy — The Internet Decides!",
-      "option_a": "Tiger Woods",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-06-27",
-      "timestamp": "2026-06-27T11:16:23Z"
+      "battle_title": "Head-to-Head: Max Verstappen vs Lewis Hamilton — The Internet Decides!",
+      "option_a": "Max Verstappen",
+      "option_b": "Lewis Hamilton",
+      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-28",
+      "timestamp": "2026-06-28T12:00:18Z"
     },
     {
-      "id": "2026-06-27-tech-7ff8d53a",
+      "id": "2026-06-28-tech-d6673b40",
       "category": "Tech",
-      "battle_title": "Netflix vs Disney+ — The Battle That's Breaking Tech Twitter Right Now!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-27",
-      "timestamp": "2026-06-27T11:16:23Z"
+      "battle_title": "AWS vs Microsoft Azure: The Tech Question Everyone Is Arguing About!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-06-28",
+      "timestamp": "2026-06-28T12:00:18Z"
     },
     {
-      "id": "2026-06-27-economy-cee12859",
+      "id": "2026-06-28-economy-a3753edd",
       "category": "Economy",
-      "battle_title": "Oil vs Natural Gas: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Oil",
-      "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-06-27",
-      "timestamp": "2026-06-27T11:16:23Z"
+      "battle_title": "Trending in Finance: Bitcoin or Gold? The Answer Might Surprise You!",
+      "option_a": "Bitcoin",
+      "option_b": "Gold",
+      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-28",
+      "timestamp": "2026-06-28T12:00:18Z"
     }
   ]
 }
