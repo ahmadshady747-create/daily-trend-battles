@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-28T12:00:18Z",
-  "date": "2026-06-28",
+  "generated_at": "2026-06-29T17:14:05Z",
+  "date": "2026-06-29",
   "battles": [
     {
-      "id": "2026-06-28-sports-2fcc4a7d",
+      "id": "2026-06-29-sports-648781d4",
       "category": "Sports",
-      "battle_title": "Head-to-Head: Max Verstappen vs Lewis Hamilton — The Internet Decides!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-06-28",
-      "timestamp": "2026-06-28T12:00:18Z"
+      "battle_title": "Mbappé vs Erling Haaland: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Mbappé",
+      "option_b": "Erling Haaland",
+      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-06-29",
+      "timestamp": "2026-06-29T17:14:05Z"
     },
     {
-      "id": "2026-06-28-tech-d6673b40",
+      "id": "2026-06-29-tech-ce635a65",
       "category": "Tech",
-      "battle_title": "AWS vs Microsoft Azure: The Tech Question Everyone Is Arguing About!",
-      "option_a": "AWS",
-      "option_b": "Microsoft Azure",
-      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-06-28",
-      "timestamp": "2026-06-28T12:00:18Z"
+      "battle_title": "The $1 Trillion Question: Netflix or Disney+? Vote and Find Out!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-29",
+      "timestamp": "2026-06-29T17:14:05Z"
     },
     {
-      "id": "2026-06-28-economy-a3753edd",
+      "id": "2026-06-29-economy-e947b10b",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Bitcoin or Gold? The Answer Might Surprise You!",
-      "option_a": "Bitcoin",
-      "option_b": "Gold",
-      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-06-28",
-      "timestamp": "2026-06-28T12:00:18Z"
+      "battle_title": "Economic Showdown: Ethereum vs Bitcoin — Which Comes Out on Top?",
+      "option_a": "Ethereum",
+      "option_b": "Bitcoin",
+      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-06-29",
+      "timestamp": "2026-06-29T17:14:05Z"
     }
   ]
 }
