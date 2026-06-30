@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-06-29T17:14:05Z",
-  "date": "2026-06-29",
+  "generated_at": "2026-06-30T09:27:01Z",
+  "date": "2026-06-30",
   "battles": [
     {
-      "id": "2026-06-29-sports-648781d4",
+      "id": "2026-06-30-sports-839353cc",
       "category": "Sports",
-      "battle_title": "Mbappé vs Erling Haaland: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Mbappé",
-      "option_b": "Erling Haaland",
-      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-06-29",
-      "timestamp": "2026-06-29T17:14:05Z"
+      "battle_title": "Iga Swiatek vs Aryna Sabalenka: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Iga Swiatek",
+      "option_b": "Aryna Sabalenka",
+      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-06-30",
+      "timestamp": "2026-06-30T09:27:01Z"
     },
     {
-      "id": "2026-06-29-tech-ce635a65",
+      "id": "2026-06-30-tech-5d85c888",
       "category": "Tech",
-      "battle_title": "The $1 Trillion Question: Netflix or Disney+? Vote and Find Out!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-06-29",
-      "timestamp": "2026-06-29T17:14:05Z"
+      "battle_title": "iPhone vs Android — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "iPhone",
+      "option_b": "Android",
+      "voting_api_key": "battles/tech/iphone-vs-android/2026-06-30",
+      "timestamp": "2026-06-30T09:27:01Z"
     },
     {
-      "id": "2026-06-29-economy-e947b10b",
+      "id": "2026-06-30-economy-58fc6961",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Ethereum vs Bitcoin — Which Comes Out on Top?",
-      "option_a": "Ethereum",
-      "option_b": "Bitcoin",
-      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-06-29",
-      "timestamp": "2026-06-29T17:14:05Z"
+      "battle_title": "Federal Reserve vs European Central Bank: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Federal Reserve",
+      "option_b": "European Central Bank",
+      "voting_api_key": "battles/economy/federal-reserve-vs-european-central-bank/2026-06-30",
+      "timestamp": "2026-06-30T09:27:01Z"
     }
   ]
 }
