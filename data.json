@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-01T09:39:01Z",
-  "date": "2026-07-01",
+  "generated_at": "2026-07-02T08:50:45Z",
+  "date": "2026-07-02",
   "battles": [
     {
-      "id": "2026-07-01-sports-fcb6fd2d",
+      "id": "2026-07-02-sports-40f4146e",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Scottie Scheffler vs Rory McIlroy — Who Wins Today?",
-      "option_a": "Scottie Scheffler",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-01",
-      "timestamp": "2026-07-01T09:39:01Z"
+      "battle_title": "The GOAT Question Returns: New York Yankees or Los Angeles Dodgers? The World Weighs In!",
+      "option_a": "New York Yankees",
+      "option_b": "Los Angeles Dodgers",
+      "voting_api_key": "battles/sports/new-york-yankees-vs-los-angeles-dodgers/2026-07-02",
+      "timestamp": "2026-07-02T08:50:45Z"
     },
     {
-      "id": "2026-07-01-tech-38727625",
+      "id": "2026-07-02-tech-2a67a3ba",
       "category": "Tech",
-      "battle_title": "Digital Duel of the Day: TikTok or Instagram Reels? One Click Decides!",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-07-01",
-      "timestamp": "2026-07-01T09:39:01Z"
+      "battle_title": "Apple vs Google: The Tech Question Everyone Is Arguing About!",
+      "option_a": "Apple",
+      "option_b": "Google",
+      "voting_api_key": "battles/tech/apple-vs-google/2026-07-02",
+      "timestamp": "2026-07-02T08:50:45Z"
     },
     {
-      "id": "2026-07-01-economy-22114711",
+      "id": "2026-07-02-economy-c5694a2e",
       "category": "Economy",
-      "battle_title": "Ethereum vs Bitcoin: The Big Money Question — What Does the World Think?",
-      "option_a": "Ethereum",
-      "option_b": "Bitcoin",
-      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-07-01",
-      "timestamp": "2026-07-01T09:39:01Z"
+      "battle_title": "Where Are You Putting Your Money? Oil vs Natural Gas — Decide Now!",
+      "option_a": "Oil",
+      "option_b": "Natural Gas",
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-02",
+      "timestamp": "2026-07-02T08:50:45Z"
     }
   ]
 }
