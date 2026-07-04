@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-03T08:56:38Z",
-  "date": "2026-07-03",
+  "generated_at": "2026-07-04T08:31:26Z",
+  "date": "2026-07-04",
   "battles": [
     {
-      "id": "2026-07-03-sports-d0c63de2",
+      "id": "2026-07-04-sports-5c43f857",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: Real Madrid Takes On Barcelona — Cast Your Vote!",
-      "option_a": "Real Madrid",
-      "option_b": "Barcelona",
-      "voting_api_key": "battles/sports/real-madrid-vs-barcelona/2026-07-03",
-      "timestamp": "2026-07-03T08:56:38Z"
+      "battle_title": "Fan Vote: Kansas City Chiefs or Philadelphia Eagles? Only One Can Reign Supreme!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-04",
+      "timestamp": "2026-07-04T08:31:26Z"
     },
     {
-      "id": "2026-07-03-tech-1fea4a31",
+      "id": "2026-07-04-tech-c6eae3d4",
       "category": "Tech",
-      "battle_title": "The $1 Trillion Question: iPhone or Android? Vote and Find Out!",
-      "option_a": "iPhone",
-      "option_b": "Android",
-      "voting_api_key": "battles/tech/iphone-vs-android/2026-07-03",
-      "timestamp": "2026-07-03T08:56:38Z"
+      "battle_title": "Digital Duel of the Day: ChatGPT or Google Gemini? One Click Decides!",
+      "option_a": "ChatGPT",
+      "option_b": "Google Gemini",
+      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-07-04",
+      "timestamp": "2026-07-04T08:31:26Z"
     },
     {
-      "id": "2026-07-03-economy-b254d9e8",
+      "id": "2026-07-04-economy-9e5b07cb",
       "category": "Economy",
-      "battle_title": "Market Battle: Real Estate vs Stock Market — Where Would You Put Your Money?",
-      "option_a": "Real Estate",
-      "option_b": "Stock Market",
-      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-07-03",
-      "timestamp": "2026-07-03T08:56:38Z"
+      "battle_title": "Oil vs Natural Gas: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Oil",
+      "option_b": "Natural Gas",
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-04",
+      "timestamp": "2026-07-04T08:31:26Z"
     }
   ]
 }
