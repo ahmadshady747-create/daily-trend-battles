@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-04T08:31:26Z",
-  "date": "2026-07-04",
+  "generated_at": "2026-07-05T08:47:28Z",
+  "date": "2026-07-05",
   "battles": [
     {
-      "id": "2026-07-04-sports-5c43f857",
+      "id": "2026-07-05-sports-9baa0de8",
       "category": "Sports",
-      "battle_title": "Fan Vote: Kansas City Chiefs or Philadelphia Eagles? Only One Can Reign Supreme!",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-04",
-      "timestamp": "2026-07-04T08:31:26Z"
+      "battle_title": "Head-to-Head: NFL vs NBA — The Internet Decides!",
+      "option_a": "NFL",
+      "option_b": "NBA",
+      "voting_api_key": "battles/sports/nfl-vs-nba/2026-07-05",
+      "timestamp": "2026-07-05T08:47:28Z"
     },
     {
-      "id": "2026-07-04-tech-c6eae3d4",
+      "id": "2026-07-05-tech-d6efd2dd",
       "category": "Tech",
-      "battle_title": "Digital Duel of the Day: ChatGPT or Google Gemini? One Click Decides!",
-      "option_a": "ChatGPT",
-      "option_b": "Google Gemini",
-      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-07-04",
-      "timestamp": "2026-07-04T08:31:26Z"
+      "battle_title": "Tech Showdown: macOS vs Windows 11 — Which Reigns Supreme?",
+      "option_a": "macOS",
+      "option_b": "Windows 11",
+      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-05",
+      "timestamp": "2026-07-05T08:47:28Z"
     },
     {
-      "id": "2026-07-04-economy-9e5b07cb",
+      "id": "2026-07-05-economy-866f5b5c",
       "category": "Economy",
-      "battle_title": "Oil vs Natural Gas: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Oil",
-      "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-04",
-      "timestamp": "2026-07-04T08:31:26Z"
+      "battle_title": "Financial Face-Off: Inflation Takes On Recession — Vote Now!",
+      "option_a": "Inflation",
+      "option_b": "Recession",
+      "voting_api_key": "battles/economy/inflation-vs-recession/2026-07-05",
+      "timestamp": "2026-07-05T08:47:28Z"
     }
   ]
 }
