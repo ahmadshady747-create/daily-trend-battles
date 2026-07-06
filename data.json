@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-05T08:47:28Z",
-  "date": "2026-07-05",
+  "generated_at": "2026-07-06T10:09:58Z",
+  "date": "2026-07-06",
   "battles": [
     {
-      "id": "2026-07-05-sports-9baa0de8",
+      "id": "2026-07-06-sports-b640cdb6",
       "category": "Sports",
-      "battle_title": "Head-to-Head: NFL vs NBA — The Internet Decides!",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-07-05",
-      "timestamp": "2026-07-05T08:47:28Z"
+      "battle_title": "Sports Battle of the Day: Iga Swiatek Takes On Aryna Sabalenka — Cast Your Vote!",
+      "option_a": "Iga Swiatek",
+      "option_b": "Aryna Sabalenka",
+      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-07-06",
+      "timestamp": "2026-07-06T10:09:58Z"
     },
     {
-      "id": "2026-07-05-tech-d6efd2dd",
+      "id": "2026-07-06-tech-00add05f",
       "category": "Tech",
-      "battle_title": "Tech Showdown: macOS vs Windows 11 — Which Reigns Supreme?",
-      "option_a": "macOS",
-      "option_b": "Windows 11",
-      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-05",
-      "timestamp": "2026-07-05T08:47:28Z"
+      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
+      "option_a": "Spotify",
+      "option_b": "Apple Music",
+      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-07-06",
+      "timestamp": "2026-07-06T10:09:58Z"
     },
     {
-      "id": "2026-07-05-economy-866f5b5c",
+      "id": "2026-07-06-economy-876007a0",
       "category": "Economy",
-      "battle_title": "Financial Face-Off: Inflation Takes On Recession — Vote Now!",
+      "battle_title": "Inflation vs Recession: The Big Money Question — What Does the World Think?",
       "option_a": "Inflation",
       "option_b": "Recession",
-      "voting_api_key": "battles/economy/inflation-vs-recession/2026-07-05",
-      "timestamp": "2026-07-05T08:47:28Z"
+      "voting_api_key": "battles/economy/inflation-vs-recession/2026-07-06",
+      "timestamp": "2026-07-06T10:09:58Z"
     }
   ]
 }
