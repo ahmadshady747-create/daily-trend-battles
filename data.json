@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-06T10:09:58Z",
-  "date": "2026-07-06",
+  "generated_at": "2026-07-07T09:34:20Z",
+  "date": "2026-07-07",
   "battles": [
     {
-      "id": "2026-07-06-sports-b640cdb6",
+      "id": "2026-07-07-sports-fff53c8c",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: Iga Swiatek Takes On Aryna Sabalenka — Cast Your Vote!",
-      "option_a": "Iga Swiatek",
-      "option_b": "Aryna Sabalenka",
-      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-07-06",
-      "timestamp": "2026-07-06T10:09:58Z"
+      "battle_title": "The Ultimate Sports Clash: Roger Federer vs Rafael Nadal — Who Wins Today?",
+      "option_a": "Roger Federer",
+      "option_b": "Rafael Nadal",
+      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-07",
+      "timestamp": "2026-07-07T09:34:20Z"
     },
     {
-      "id": "2026-07-06-tech-00add05f",
+      "id": "2026-07-07-tech-5abc56f3",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
-      "option_a": "Spotify",
-      "option_b": "Apple Music",
-      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-07-06",
-      "timestamp": "2026-07-06T10:09:58Z"
+      "battle_title": "Nvidia vs AMD: The Tech Question Everyone Is Arguing About!",
+      "option_a": "Nvidia",
+      "option_b": "AMD",
+      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-07",
+      "timestamp": "2026-07-07T09:34:20Z"
     },
     {
-      "id": "2026-07-06-economy-876007a0",
+      "id": "2026-07-07-economy-2e63c663",
       "category": "Economy",
-      "battle_title": "Inflation vs Recession: The Big Money Question — What Does the World Think?",
-      "option_a": "Inflation",
-      "option_b": "Recession",
-      "voting_api_key": "battles/economy/inflation-vs-recession/2026-07-06",
-      "timestamp": "2026-07-06T10:09:58Z"
+      "battle_title": "Market Battle: Dogecoin vs Ripple (XRP) — Where Would You Put Your Money?",
+      "option_a": "Dogecoin",
+      "option_b": "Ripple (XRP)",
+      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-07-07",
+      "timestamp": "2026-07-07T09:34:20Z"
     }
   ]
 }
