@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-07T09:34:20Z",
-  "date": "2026-07-07",
+  "generated_at": "2026-07-08T08:21:21Z",
+  "date": "2026-07-08",
   "battles": [
     {
-      "id": "2026-07-07-sports-fff53c8c",
+      "id": "2026-07-08-sports-b51a1a3f",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Roger Federer vs Rafael Nadal — Who Wins Today?",
-      "option_a": "Roger Federer",
-      "option_b": "Rafael Nadal",
-      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-07",
-      "timestamp": "2026-07-07T09:34:20Z"
+      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles — Who Would Win? The Numbers Will Shock You!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-08",
+      "timestamp": "2026-07-08T08:21:21Z"
     },
     {
-      "id": "2026-07-07-tech-5abc56f3",
+      "id": "2026-07-08-tech-6acb828c",
       "category": "Tech",
-      "battle_title": "Nvidia vs AMD: The Tech Question Everyone Is Arguing About!",
-      "option_a": "Nvidia",
-      "option_b": "AMD",
-      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-07",
-      "timestamp": "2026-07-07T09:34:20Z"
+      "battle_title": "Is macOS Really Better Than Windows 11? The Internet Weighs In!",
+      "option_a": "macOS",
+      "option_b": "Windows 11",
+      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-08",
+      "timestamp": "2026-07-08T08:21:21Z"
     },
     {
-      "id": "2026-07-07-economy-2e63c663",
+      "id": "2026-07-08-economy-9d9d7ce1",
       "category": "Economy",
-      "battle_title": "Market Battle: Dogecoin vs Ripple (XRP) — Where Would You Put Your Money?",
-      "option_a": "Dogecoin",
-      "option_b": "Ripple (XRP)",
-      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-07-07",
-      "timestamp": "2026-07-07T09:34:20Z"
+      "battle_title": "Economic Showdown: Solana vs Ethereum — Which Comes Out on Top?",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-08",
+      "timestamp": "2026-07-08T08:21:21Z"
     }
   ]
 }
