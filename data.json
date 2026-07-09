@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-08T08:21:21Z",
-  "date": "2026-07-08",
+  "generated_at": "2026-07-09T09:36:27Z",
+  "date": "2026-07-09",
   "battles": [
     {
-      "id": "2026-07-08-sports-b51a1a3f",
+      "id": "2026-07-09-sports-dafec78a",
       "category": "Sports",
-      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles — Who Would Win? The Numbers Will Shock You!",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-08",
-      "timestamp": "2026-07-08T08:21:21Z"
+      "battle_title": "Roger Federer vs Rafael Nadal: This Debate Just Got Heated — What's Your Take?",
+      "option_a": "Roger Federer",
+      "option_b": "Rafael Nadal",
+      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-09",
+      "timestamp": "2026-07-09T09:36:27Z"
     },
     {
-      "id": "2026-07-08-tech-6acb828c",
+      "id": "2026-07-09-tech-2d4bb1e3",
       "category": "Tech",
-      "battle_title": "Is macOS Really Better Than Windows 11? The Internet Weighs In!",
-      "option_a": "macOS",
-      "option_b": "Windows 11",
-      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-08",
-      "timestamp": "2026-07-08T08:21:21Z"
+      "battle_title": "The Big Tech Battle: PlayStation 5 vs Xbox Series X — You Decide the Winner!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-07-09",
+      "timestamp": "2026-07-09T09:36:27Z"
     },
     {
-      "id": "2026-07-08-economy-9d9d7ce1",
+      "id": "2026-07-09-economy-c316f84f",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Solana vs Ethereum — Which Comes Out on Top?",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-08",
-      "timestamp": "2026-07-08T08:21:21Z"
+      "battle_title": "Economic Showdown: Rate Hike vs Rate Cut — Which Comes Out on Top?",
+      "option_a": "Rate Hike",
+      "option_b": "Rate Cut",
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-09",
+      "timestamp": "2026-07-09T09:36:27Z"
     }
   ]
 }
