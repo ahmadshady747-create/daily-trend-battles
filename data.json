@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-09T09:36:27Z",
-  "date": "2026-07-09",
+  "generated_at": "2026-07-10T09:27:49Z",
+  "date": "2026-07-10",
   "battles": [
     {
-      "id": "2026-07-09-sports-dafec78a",
+      "id": "2026-07-10-sports-71c2eff8",
       "category": "Sports",
-      "battle_title": "Roger Federer vs Rafael Nadal: This Debate Just Got Heated — What's Your Take?",
-      "option_a": "Roger Federer",
-      "option_b": "Rafael Nadal",
-      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-09",
-      "timestamp": "2026-07-09T09:36:27Z"
+      "battle_title": "Fan Vote: NFL or NBA? Only One Can Reign Supreme!",
+      "option_a": "NFL",
+      "option_b": "NBA",
+      "voting_api_key": "battles/sports/nfl-vs-nba/2026-07-10",
+      "timestamp": "2026-07-10T09:27:49Z"
     },
     {
-      "id": "2026-07-09-tech-2d4bb1e3",
+      "id": "2026-07-10-tech-9cd306cd",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: PlayStation 5 vs Xbox Series X — You Decide the Winner!",
-      "option_a": "PlayStation 5",
-      "option_b": "Xbox Series X",
-      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-07-09",
-      "timestamp": "2026-07-09T09:36:27Z"
+      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
+      "option_a": "Spotify",
+      "option_b": "Apple Music",
+      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-07-10",
+      "timestamp": "2026-07-10T09:27:49Z"
     },
     {
-      "id": "2026-07-09-economy-c316f84f",
+      "id": "2026-07-10-economy-f58d1488",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Rate Hike vs Rate Cut — Which Comes Out on Top?",
-      "option_a": "Rate Hike",
-      "option_b": "Rate Cut",
-      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-09",
-      "timestamp": "2026-07-09T09:36:27Z"
+      "battle_title": "Market Battle: Bitcoin vs Gold — Where Would You Put Your Money?",
+      "option_a": "Bitcoin",
+      "option_b": "Gold",
+      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-07-10",
+      "timestamp": "2026-07-10T09:27:49Z"
     }
   ]
 }
