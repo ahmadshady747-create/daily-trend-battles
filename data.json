@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-10T09:27:49Z",
-  "date": "2026-07-10",
+  "generated_at": "2026-07-11T07:48:37Z",
+  "date": "2026-07-11",
   "battles": [
     {
-      "id": "2026-07-10-sports-71c2eff8",
+      "id": "2026-07-11-sports-322dd66f",
       "category": "Sports",
-      "battle_title": "Fan Vote: NFL or NBA? Only One Can Reign Supreme!",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-07-10",
-      "timestamp": "2026-07-10T09:27:49Z"
+      "battle_title": "The GOAT Question Returns: Max Verstappen or Lewis Hamilton? The World Weighs In!",
+      "option_a": "Max Verstappen",
+      "option_b": "Lewis Hamilton",
+      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-07-11",
+      "timestamp": "2026-07-11T07:48:37Z"
     },
     {
-      "id": "2026-07-10-tech-9cd306cd",
+      "id": "2026-07-11-tech-54da6945",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: Spotify vs Apple Music — You Decide the Winner!",
-      "option_a": "Spotify",
-      "option_b": "Apple Music",
-      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-07-10",
-      "timestamp": "2026-07-10T09:27:49Z"
+      "battle_title": "Netflix vs Disney+: The Tech Question Everyone Is Arguing About!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-07-11",
+      "timestamp": "2026-07-11T07:48:37Z"
     },
     {
-      "id": "2026-07-10-economy-f58d1488",
+      "id": "2026-07-11-economy-d2b98aca",
       "category": "Economy",
-      "battle_title": "Market Battle: Bitcoin vs Gold — Where Would You Put Your Money?",
-      "option_a": "Bitcoin",
-      "option_b": "Gold",
-      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-07-10",
-      "timestamp": "2026-07-10T09:27:49Z"
+      "battle_title": "Gold vs Silver: The Big Money Question — What Does the World Think?",
+      "option_a": "Gold",
+      "option_b": "Silver",
+      "voting_api_key": "battles/economy/gold-vs-silver/2026-07-11",
+      "timestamp": "2026-07-11T07:48:37Z"
     }
   ]
 }
