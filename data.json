@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-11T07:48:37Z",
-  "date": "2026-07-11",
+  "generated_at": "2026-07-12T08:10:18Z",
+  "date": "2026-07-12",
   "battles": [
     {
-      "id": "2026-07-11-sports-322dd66f",
+      "id": "2026-07-12-sports-ce5dcd82",
       "category": "Sports",
-      "battle_title": "The GOAT Question Returns: Max Verstappen or Lewis Hamilton? The World Weighs In!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-07-11",
-      "timestamp": "2026-07-11T07:48:37Z"
+      "battle_title": "Mbappé vs Erling Haaland — Who Would Win? The Numbers Will Shock You!",
+      "option_a": "Mbappé",
+      "option_b": "Erling Haaland",
+      "voting_api_key": "battles/sports/mbappé-vs-erling-haaland/2026-07-12",
+      "timestamp": "2026-07-12T08:10:18Z"
     },
     {
-      "id": "2026-07-11-tech-54da6945",
+      "id": "2026-07-12-tech-2270ac62",
       "category": "Tech",
-      "battle_title": "Netflix vs Disney+: The Tech Question Everyone Is Arguing About!",
+      "battle_title": "Innovation Clash: Netflix Takes On Disney+ — Cast Your Vote!",
       "option_a": "Netflix",
       "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-07-11",
-      "timestamp": "2026-07-11T07:48:37Z"
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-07-12",
+      "timestamp": "2026-07-12T08:10:18Z"
     },
     {
-      "id": "2026-07-11-economy-d2b98aca",
+      "id": "2026-07-12-economy-f1c0e8a4",
       "category": "Economy",
-      "battle_title": "Gold vs Silver: The Big Money Question — What Does the World Think?",
-      "option_a": "Gold",
-      "option_b": "Silver",
-      "voting_api_key": "battles/economy/gold-vs-silver/2026-07-11",
-      "timestamp": "2026-07-11T07:48:37Z"
+      "battle_title": "Financial Face-Off: Real Estate Takes On Stock Market — Vote Now!",
+      "option_a": "Real Estate",
+      "option_b": "Stock Market",
+      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-07-12",
+      "timestamp": "2026-07-12T08:10:18Z"
     }
   ]
 }
