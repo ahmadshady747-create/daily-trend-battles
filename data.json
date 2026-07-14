@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-13T09:17:43Z",
-  "date": "2026-07-13",
+  "generated_at": "2026-07-14T07:55:43Z",
+  "date": "2026-07-14",
   "battles": [
     {
-      "id": "2026-07-13-sports-9a7e6794",
+      "id": "2026-07-14-sports-029d31b9",
       "category": "Sports",
-      "battle_title": "Max Verstappen vs Lewis Hamilton: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-07-13",
-      "timestamp": "2026-07-13T09:17:43Z"
+      "battle_title": "Tyson Fury vs Oleksandr Usyk: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-07-14",
+      "timestamp": "2026-07-14T07:55:43Z"
     },
     {
-      "id": "2026-07-13-tech-caa3cf64",
+      "id": "2026-07-14-tech-5b65ca5d",
       "category": "Tech",
-      "battle_title": "The $1 Trillion Question: Tesla or Waymo? Vote and Find Out!",
-      "option_a": "Tesla",
-      "option_b": "Waymo",
-      "voting_api_key": "battles/tech/tesla-vs-waymo/2026-07-13",
-      "timestamp": "2026-07-13T09:17:43Z"
+      "battle_title": "Digital Duel of the Day: AWS or Microsoft Azure? One Click Decides!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-07-14",
+      "timestamp": "2026-07-14T07:55:43Z"
     },
     {
-      "id": "2026-07-13-economy-98cae0de",
+      "id": "2026-07-14-economy-b877276d",
       "category": "Economy",
-      "battle_title": "Financial Face-Off: Gold Takes On Silver — Vote Now!",
-      "option_a": "Gold",
-      "option_b": "Silver",
-      "voting_api_key": "battles/economy/gold-vs-silver/2026-07-13",
-      "timestamp": "2026-07-13T09:17:43Z"
+      "battle_title": "Trending in Finance: Federal Reserve or European Central Bank? The Answer Might Surprise You!",
+      "option_a": "Federal Reserve",
+      "option_b": "European Central Bank",
+      "voting_api_key": "battles/economy/federal-reserve-vs-european-central-bank/2026-07-14",
+      "timestamp": "2026-07-14T07:55:43Z"
     }
   ]
 }
