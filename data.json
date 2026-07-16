@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-15T08:01:03Z",
-  "date": "2026-07-15",
+  "generated_at": "2026-07-16T08:05:31Z",
+  "date": "2026-07-16",
   "battles": [
     {
-      "id": "2026-07-15-sports-0c2ed74c",
+      "id": "2026-07-16-sports-cadd3a7f",
       "category": "Sports",
-      "battle_title": "Scottie Scheffler vs Rory McIlroy: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Scottie Scheffler",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-15",
-      "timestamp": "2026-07-15T08:01:03Z"
+      "battle_title": "Fan Vote: Manchester City or Arsenal? Only One Can Reign Supreme!",
+      "option_a": "Manchester City",
+      "option_b": "Arsenal",
+      "voting_api_key": "battles/sports/manchester-city-vs-arsenal/2026-07-16",
+      "timestamp": "2026-07-16T08:05:31Z"
     },
     {
-      "id": "2026-07-15-tech-a8cbeadc",
+      "id": "2026-07-16-tech-8133572f",
       "category": "Tech",
-      "battle_title": "Twitter / X vs Threads: The Tech Question Everyone Is Arguing About!",
-      "option_a": "Twitter / X",
-      "option_b": "Threads",
-      "voting_api_key": "battles/tech/twitter-x-vs-threads/2026-07-15",
-      "timestamp": "2026-07-15T08:01:03Z"
+      "battle_title": "Apple vs Google — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "Apple",
+      "option_b": "Google",
+      "voting_api_key": "battles/tech/apple-vs-google/2026-07-16",
+      "timestamp": "2026-07-16T08:05:31Z"
     },
     {
-      "id": "2026-07-15-economy-e28d9a00",
+      "id": "2026-07-16-economy-a62cdc8b",
       "category": "Economy",
-      "battle_title": "Ethereum vs Bitcoin — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Ethereum",
-      "option_b": "Bitcoin",
-      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-07-15",
-      "timestamp": "2026-07-15T08:01:03Z"
+      "battle_title": "Where Are You Putting Your Money? Bitcoin vs Gold — Decide Now!",
+      "option_a": "Bitcoin",
+      "option_b": "Gold",
+      "voting_api_key": "battles/economy/bitcoin-vs-gold/2026-07-16",
+      "timestamp": "2026-07-16T08:05:31Z"
     }
   ]
 }
