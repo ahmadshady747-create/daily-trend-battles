@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-18T07:41:57Z",
-  "date": "2026-07-18",
+  "generated_at": "2026-07-19T08:09:33Z",
+  "date": "2026-07-19",
   "battles": [
     {
-      "id": "2026-07-18-sports-511e4a33",
+      "id": "2026-07-19-sports-b8aa2d3e",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: NFL vs NBA — Who Wins Today?",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-07-18",
-      "timestamp": "2026-07-18T07:41:57Z"
+      "battle_title": "LA Lakers vs Boston Celtics: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "LA Lakers",
+      "option_b": "Boston Celtics",
+      "voting_api_key": "battles/sports/la-lakers-vs-boston-celtics/2026-07-19",
+      "timestamp": "2026-07-19T08:09:33Z"
     },
     {
-      "id": "2026-07-18-tech-8c42d1a7",
+      "id": "2026-07-19-tech-4062eba5",
       "category": "Tech",
-      "battle_title": "OpenAI vs Anthropic — The Battle That's Breaking Tech Twitter Right Now!",
-      "option_a": "OpenAI",
-      "option_b": "Anthropic",
-      "voting_api_key": "battles/tech/openai-vs-anthropic/2026-07-18",
-      "timestamp": "2026-07-18T07:41:57Z"
+      "battle_title": "Spotify vs Apple Music: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "Spotify",
+      "option_b": "Apple Music",
+      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-07-19",
+      "timestamp": "2026-07-19T08:09:33Z"
     },
     {
-      "id": "2026-07-18-economy-a9e90c8c",
+      "id": "2026-07-19-economy-a24c7097",
       "category": "Economy",
-      "battle_title": "Dogecoin vs Ripple (XRP): Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Dogecoin",
-      "option_b": "Ripple (XRP)",
-      "voting_api_key": "battles/economy/dogecoin-vs-ripple-xrp/2026-07-18",
-      "timestamp": "2026-07-18T07:41:57Z"
+      "battle_title": "Federal Reserve vs European Central Bank: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Federal Reserve",
+      "option_b": "European Central Bank",
+      "voting_api_key": "battles/economy/federal-reserve-vs-european-central-bank/2026-07-19",
+      "timestamp": "2026-07-19T08:09:33Z"
     }
   ]
 }
