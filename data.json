@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-20T08:50:38Z",
-  "date": "2026-07-20",
+  "generated_at": "2026-07-21T08:20:57Z",
+  "date": "2026-07-21",
   "battles": [
     {
-      "id": "2026-07-20-sports-d63642a9",
+      "id": "2026-07-21-sports-e69f1ba0",
       "category": "Sports",
-      "battle_title": "Roger Federer vs Rafael Nadal: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "battle_title": "Sports Battle of the Day: Roger Federer Takes On Rafael Nadal — Cast Your Vote!",
       "option_a": "Roger Federer",
       "option_b": "Rafael Nadal",
-      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-20",
-      "timestamp": "2026-07-20T08:50:38Z"
+      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-21",
+      "timestamp": "2026-07-21T08:20:57Z"
     },
     {
-      "id": "2026-07-20-tech-990e57df",
+      "id": "2026-07-21-tech-8f752969",
       "category": "Tech",
-      "battle_title": "Samsung Galaxy vs Apple iPhone: The Tech Question Everyone Is Arguing About!",
-      "option_a": "Samsung Galaxy",
-      "option_b": "Apple iPhone",
-      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-07-20",
-      "timestamp": "2026-07-20T08:50:38Z"
+      "battle_title": "Digital Duel of the Day: Apple or Google? One Click Decides!",
+      "option_a": "Apple",
+      "option_b": "Google",
+      "voting_api_key": "battles/tech/apple-vs-google/2026-07-21",
+      "timestamp": "2026-07-21T08:20:57Z"
     },
     {
-      "id": "2026-07-20-economy-3556e78b",
+      "id": "2026-07-21-economy-c763110f",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Real Estate vs Stock Market — Which Comes Out on Top?",
-      "option_a": "Real Estate",
-      "option_b": "Stock Market",
-      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-07-20",
-      "timestamp": "2026-07-20T08:50:38Z"
+      "battle_title": "Trending in Finance: Solana or Ethereum? The Answer Might Surprise You!",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-21",
+      "timestamp": "2026-07-21T08:20:57Z"
     }
   ]
 }
