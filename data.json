@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-21T08:20:57Z",
-  "date": "2026-07-21",
+  "generated_at": "2026-07-22T08:21:14Z",
+  "date": "2026-07-22",
   "battles": [
     {
-      "id": "2026-07-21-sports-e69f1ba0",
+      "id": "2026-07-22-sports-968f0e4f",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: Roger Federer Takes On Rafael Nadal — Cast Your Vote!",
-      "option_a": "Roger Federer",
-      "option_b": "Rafael Nadal",
-      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-21",
-      "timestamp": "2026-07-21T08:20:57Z"
+      "battle_title": "Sports Battle of the Day: Max Verstappen Takes On Lewis Hamilton — Cast Your Vote!",
+      "option_a": "Max Verstappen",
+      "option_b": "Lewis Hamilton",
+      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-07-22",
+      "timestamp": "2026-07-22T08:21:14Z"
     },
     {
-      "id": "2026-07-21-tech-8f752969",
+      "id": "2026-07-22-tech-56d540c6",
       "category": "Tech",
-      "battle_title": "Digital Duel of the Day: Apple or Google? One Click Decides!",
-      "option_a": "Apple",
-      "option_b": "Google",
-      "voting_api_key": "battles/tech/apple-vs-google/2026-07-21",
-      "timestamp": "2026-07-21T08:20:57Z"
+      "battle_title": "Is AWS Really Better Than Microsoft Azure? The Internet Weighs In!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-07-22",
+      "timestamp": "2026-07-22T08:21:14Z"
     },
     {
-      "id": "2026-07-21-economy-c763110f",
+      "id": "2026-07-22-economy-a954482b",
       "category": "Economy",
       "battle_title": "Trending in Finance: Solana or Ethereum? The Answer Might Surprise You!",
       "option_a": "Solana",
       "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-21",
-      "timestamp": "2026-07-21T08:20:57Z"
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-22",
+      "timestamp": "2026-07-22T08:21:14Z"
     }
   ]
 }
