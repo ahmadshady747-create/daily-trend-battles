@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-22T08:21:14Z",
-  "date": "2026-07-22",
+  "generated_at": "2026-07-23T08:23:11Z",
+  "date": "2026-07-23",
   "battles": [
     {
-      "id": "2026-07-22-sports-968f0e4f",
+      "id": "2026-07-23-sports-5c4bcbdd",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: Max Verstappen Takes On Lewis Hamilton — Cast Your Vote!",
-      "option_a": "Max Verstappen",
-      "option_b": "Lewis Hamilton",
-      "voting_api_key": "battles/sports/max-verstappen-vs-lewis-hamilton/2026-07-22",
-      "timestamp": "2026-07-22T08:21:14Z"
+      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-23",
+      "timestamp": "2026-07-23T08:23:11Z"
     },
     {
-      "id": "2026-07-22-tech-56d540c6",
+      "id": "2026-07-23-tech-8218004a",
       "category": "Tech",
-      "battle_title": "Is AWS Really Better Than Microsoft Azure? The Internet Weighs In!",
-      "option_a": "AWS",
-      "option_b": "Microsoft Azure",
-      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-07-22",
-      "timestamp": "2026-07-22T08:21:14Z"
+      "battle_title": "Is Nvidia Really Better Than AMD? The Internet Weighs In!",
+      "option_a": "Nvidia",
+      "option_b": "AMD",
+      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-23",
+      "timestamp": "2026-07-23T08:23:11Z"
     },
     {
-      "id": "2026-07-22-economy-a954482b",
+      "id": "2026-07-23-economy-2149912f",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Solana or Ethereum? The Answer Might Surprise You!",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-22",
-      "timestamp": "2026-07-22T08:21:14Z"
+      "battle_title": "Rate Hike vs Rate Cut: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Rate Hike",
+      "option_b": "Rate Cut",
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-23",
+      "timestamp": "2026-07-23T08:23:11Z"
     }
   ]
 }
