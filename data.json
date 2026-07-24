@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-23T08:23:11Z",
-  "date": "2026-07-23",
+  "generated_at": "2026-07-24T08:19:41Z",
+  "date": "2026-07-24",
   "battles": [
     {
-      "id": "2026-07-23-sports-5c4bcbdd",
+      "id": "2026-07-24-sports-4d2dced0",
       "category": "Sports",
-      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Kansas City Chiefs",
-      "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-07-23",
-      "timestamp": "2026-07-23T08:23:11Z"
+      "battle_title": "Fan Vote: LA Lakers or Boston Celtics? Only One Can Reign Supreme!",
+      "option_a": "LA Lakers",
+      "option_b": "Boston Celtics",
+      "voting_api_key": "battles/sports/la-lakers-vs-boston-celtics/2026-07-24",
+      "timestamp": "2026-07-24T08:19:41Z"
     },
     {
-      "id": "2026-07-23-tech-8218004a",
+      "id": "2026-07-24-tech-f0799534",
       "category": "Tech",
-      "battle_title": "Is Nvidia Really Better Than AMD? The Internet Weighs In!",
-      "option_a": "Nvidia",
-      "option_b": "AMD",
-      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-23",
-      "timestamp": "2026-07-23T08:23:11Z"
+      "battle_title": "PlayStation 5 vs Xbox Series X — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-07-24",
+      "timestamp": "2026-07-24T08:19:41Z"
     },
     {
-      "id": "2026-07-23-economy-2149912f",
+      "id": "2026-07-24-economy-ff58bf41",
       "category": "Economy",
-      "battle_title": "Rate Hike vs Rate Cut: Wall Street Is Watching — Which Side Are You On?",
+      "battle_title": "Where Are You Putting Your Money? Rate Hike vs Rate Cut — Decide Now!",
       "option_a": "Rate Hike",
       "option_b": "Rate Cut",
-      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-23",
-      "timestamp": "2026-07-23T08:23:11Z"
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-24",
+      "timestamp": "2026-07-24T08:19:41Z"
     }
   ]
 }
