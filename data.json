@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-25T08:00:55Z",
-  "date": "2026-07-25",
+  "generated_at": "2026-07-26T08:20:30Z",
+  "date": "2026-07-26",
   "battles": [
     {
-      "id": "2026-07-25-sports-0fbbb6fc",
+      "id": "2026-07-26-sports-a46c82d3",
       "category": "Sports",
-      "battle_title": "Sports Battle of the Day: Iga Swiatek Takes On Aryna Sabalenka — Cast Your Vote!",
-      "option_a": "Iga Swiatek",
-      "option_b": "Aryna Sabalenka",
-      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-07-25",
-      "timestamp": "2026-07-25T08:00:55Z"
+      "battle_title": "The Ultimate Sports Clash: Scottie Scheffler vs Rory McIlroy — Who Wins Today?",
+      "option_a": "Scottie Scheffler",
+      "option_b": "Rory McIlroy",
+      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-26",
+      "timestamp": "2026-07-26T08:20:30Z"
     },
     {
-      "id": "2026-07-25-tech-f6ecf53e",
+      "id": "2026-07-26-tech-074ec213",
       "category": "Tech",
-      "battle_title": "Digital Duel of the Day: ChatGPT or Google Gemini? One Click Decides!",
-      "option_a": "ChatGPT",
-      "option_b": "Google Gemini",
-      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-07-25",
-      "timestamp": "2026-07-25T08:00:55Z"
+      "battle_title": "PlayStation 5 vs Xbox Series X: The Tech Question Everyone Is Arguing About!",
+      "option_a": "PlayStation 5",
+      "option_b": "Xbox Series X",
+      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-07-26",
+      "timestamp": "2026-07-26T08:20:30Z"
     },
     {
-      "id": "2026-07-25-economy-d5242e1b",
+      "id": "2026-07-26-economy-0dd7218b",
       "category": "Economy",
-      "battle_title": "Is Stock Market a Better Bet Than Crypto Market Right Now? Cast Your Vote!",
-      "option_a": "Stock Market",
-      "option_b": "Crypto Market",
-      "voting_api_key": "battles/economy/stock-market-vs-crypto-market/2026-07-25",
-      "timestamp": "2026-07-25T08:00:55Z"
+      "battle_title": "Solana vs Ethereum: The Big Money Question — What Does the World Think?",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-26",
+      "timestamp": "2026-07-26T08:20:30Z"
     }
   ]
 }
