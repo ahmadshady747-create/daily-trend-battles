@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-26T08:20:30Z",
-  "date": "2026-07-26",
+  "generated_at": "2026-07-27T09:42:11Z",
+  "date": "2026-07-27",
   "battles": [
     {
-      "id": "2026-07-26-sports-a46c82d3",
+      "id": "2026-07-27-sports-8c3d899c",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Scottie Scheffler vs Rory McIlroy — Who Wins Today?",
+      "battle_title": "Fan Vote: Scottie Scheffler or Rory McIlroy? Only One Can Reign Supreme!",
       "option_a": "Scottie Scheffler",
       "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-26",
-      "timestamp": "2026-07-26T08:20:30Z"
+      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-27",
+      "timestamp": "2026-07-27T09:42:11Z"
     },
     {
-      "id": "2026-07-26-tech-074ec213",
+      "id": "2026-07-27-tech-88fd4ca3",
       "category": "Tech",
-      "battle_title": "PlayStation 5 vs Xbox Series X: The Tech Question Everyone Is Arguing About!",
-      "option_a": "PlayStation 5",
-      "option_b": "Xbox Series X",
-      "voting_api_key": "battles/tech/playstation-5-vs-xbox-series-x/2026-07-26",
-      "timestamp": "2026-07-26T08:20:30Z"
+      "battle_title": "Tech Showdown: Samsung Galaxy vs Apple iPhone — Which Reigns Supreme?",
+      "option_a": "Samsung Galaxy",
+      "option_b": "Apple iPhone",
+      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-07-27",
+      "timestamp": "2026-07-27T09:42:11Z"
     },
     {
-      "id": "2026-07-26-economy-0dd7218b",
+      "id": "2026-07-27-economy-550ad1a1",
       "category": "Economy",
-      "battle_title": "Solana vs Ethereum: The Big Money Question — What Does the World Think?",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-26",
-      "timestamp": "2026-07-26T08:20:30Z"
+      "battle_title": "Economic Showdown: Bonds vs Equities — Which Comes Out on Top?",
+      "option_a": "Bonds",
+      "option_b": "Equities",
+      "voting_api_key": "battles/economy/bonds-vs-equities/2026-07-27",
+      "timestamp": "2026-07-27T09:42:11Z"
     }
   ]
 }
