@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-27T09:42:11Z",
-  "date": "2026-07-27",
+  "generated_at": "2026-07-28T08:26:54Z",
+  "date": "2026-07-28",
   "battles": [
     {
-      "id": "2026-07-27-sports-8c3d899c",
+      "id": "2026-07-28-sports-ff5593d5",
       "category": "Sports",
-      "battle_title": "Fan Vote: Scottie Scheffler or Rory McIlroy? Only One Can Reign Supreme!",
-      "option_a": "Scottie Scheffler",
+      "battle_title": "The Great Sports Debate: Is Tiger Woods Better Than Rory McIlroy? Vote Now!",
+      "option_a": "Tiger Woods",
       "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-27",
-      "timestamp": "2026-07-27T09:42:11Z"
+      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-07-28",
+      "timestamp": "2026-07-28T08:26:54Z"
     },
     {
-      "id": "2026-07-27-tech-88fd4ca3",
+      "id": "2026-07-28-tech-5e3eba39",
       "category": "Tech",
-      "battle_title": "Tech Showdown: Samsung Galaxy vs Apple iPhone — Which Reigns Supreme?",
-      "option_a": "Samsung Galaxy",
-      "option_b": "Apple iPhone",
-      "voting_api_key": "battles/tech/samsung-galaxy-vs-apple-iphone/2026-07-27",
-      "timestamp": "2026-07-27T09:42:11Z"
+      "battle_title": "Digital Duel of the Day: Netflix or Disney+? One Click Decides!",
+      "option_a": "Netflix",
+      "option_b": "Disney+",
+      "voting_api_key": "battles/tech/netflix-vs-disney/2026-07-28",
+      "timestamp": "2026-07-28T08:26:54Z"
     },
     {
-      "id": "2026-07-27-economy-550ad1a1",
+      "id": "2026-07-28-economy-80b8d0ba",
       "category": "Economy",
-      "battle_title": "Economic Showdown: Bonds vs Equities — Which Comes Out on Top?",
-      "option_a": "Bonds",
-      "option_b": "Equities",
-      "voting_api_key": "battles/economy/bonds-vs-equities/2026-07-27",
-      "timestamp": "2026-07-27T09:42:11Z"
+      "battle_title": "Is Rate Hike a Better Bet Than Rate Cut Right Now? Cast Your Vote!",
+      "option_a": "Rate Hike",
+      "option_b": "Rate Cut",
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-28",
+      "timestamp": "2026-07-28T08:26:54Z"
     }
   ]
 }
