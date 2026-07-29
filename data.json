@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-28T08:26:54Z",
-  "date": "2026-07-28",
+  "generated_at": "2026-07-29T08:32:57Z",
+  "date": "2026-07-29",
   "battles": [
     {
-      "id": "2026-07-28-sports-ff5593d5",
+      "id": "2026-07-29-sports-af8cbb1d",
       "category": "Sports",
-      "battle_title": "The Great Sports Debate: Is Tiger Woods Better Than Rory McIlroy? Vote Now!",
-      "option_a": "Tiger Woods",
+      "battle_title": "Scottie Scheffler vs Rory McIlroy: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Scottie Scheffler",
       "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-07-28",
-      "timestamp": "2026-07-28T08:26:54Z"
+      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-29",
+      "timestamp": "2026-07-29T08:32:57Z"
     },
     {
-      "id": "2026-07-28-tech-5e3eba39",
+      "id": "2026-07-29-tech-5972aa95",
       "category": "Tech",
-      "battle_title": "Digital Duel of the Day: Netflix or Disney+? One Click Decides!",
-      "option_a": "Netflix",
-      "option_b": "Disney+",
-      "voting_api_key": "battles/tech/netflix-vs-disney/2026-07-28",
-      "timestamp": "2026-07-28T08:26:54Z"
+      "battle_title": "Tech Showdown: macOS vs Windows 11 — Which Reigns Supreme?",
+      "option_a": "macOS",
+      "option_b": "Windows 11",
+      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-29",
+      "timestamp": "2026-07-29T08:32:57Z"
     },
     {
-      "id": "2026-07-28-economy-80b8d0ba",
+      "id": "2026-07-29-economy-2df4b34a",
       "category": "Economy",
-      "battle_title": "Is Rate Hike a Better Bet Than Rate Cut Right Now? Cast Your Vote!",
-      "option_a": "Rate Hike",
-      "option_b": "Rate Cut",
-      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-07-28",
-      "timestamp": "2026-07-28T08:26:54Z"
+      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-29",
+      "timestamp": "2026-07-29T08:32:57Z"
     }
   ]
 }
