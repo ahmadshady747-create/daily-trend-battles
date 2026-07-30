@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-29T08:32:57Z",
-  "date": "2026-07-29",
+  "generated_at": "2026-07-30T08:18:00Z",
+  "date": "2026-07-30",
   "battles": [
     {
-      "id": "2026-07-29-sports-af8cbb1d",
+      "id": "2026-07-30-sports-0727a981",
       "category": "Sports",
-      "battle_title": "Scottie Scheffler vs Rory McIlroy: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Scottie Scheffler",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/scottie-scheffler-vs-rory-mcilroy/2026-07-29",
-      "timestamp": "2026-07-29T08:32:57Z"
+      "battle_title": "Fan Vote: Roger Federer or Rafael Nadal? Only One Can Reign Supreme!",
+      "option_a": "Roger Federer",
+      "option_b": "Rafael Nadal",
+      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-30",
+      "timestamp": "2026-07-30T08:18:00Z"
     },
     {
-      "id": "2026-07-29-tech-5972aa95",
+      "id": "2026-07-30-tech-3a5e29fb",
       "category": "Tech",
-      "battle_title": "Tech Showdown: macOS vs Windows 11 — Which Reigns Supreme?",
-      "option_a": "macOS",
-      "option_b": "Windows 11",
-      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-29",
-      "timestamp": "2026-07-29T08:32:57Z"
+      "battle_title": "Is Nvidia Really Better Than AMD? The Internet Weighs In!",
+      "option_a": "Nvidia",
+      "option_b": "AMD",
+      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-30",
+      "timestamp": "2026-07-30T08:18:00Z"
     },
     {
-      "id": "2026-07-29-economy-2df4b34a",
+      "id": "2026-07-30-economy-75c00825",
       "category": "Economy",
-      "battle_title": "Solana vs Ethereum — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Solana",
-      "option_b": "Ethereum",
-      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-07-29",
-      "timestamp": "2026-07-29T08:32:57Z"
+      "battle_title": "Oil vs Natural Gas: The Big Money Question — What Does the World Think?",
+      "option_a": "Oil",
+      "option_b": "Natural Gas",
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-30",
+      "timestamp": "2026-07-30T08:18:00Z"
     }
   ]
 }
