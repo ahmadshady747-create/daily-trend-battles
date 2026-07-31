@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-30T08:18:00Z",
-  "date": "2026-07-30",
+  "generated_at": "2026-07-31T08:43:15Z",
+  "date": "2026-07-31",
   "battles": [
     {
-      "id": "2026-07-30-sports-0727a981",
+      "id": "2026-07-31-sports-eb999fd9",
       "category": "Sports",
-      "battle_title": "Fan Vote: Roger Federer or Rafael Nadal? Only One Can Reign Supreme!",
-      "option_a": "Roger Federer",
-      "option_b": "Rafael Nadal",
-      "voting_api_key": "battles/sports/roger-federer-vs-rafael-nadal/2026-07-30",
-      "timestamp": "2026-07-30T08:18:00Z"
+      "battle_title": "The GOAT Question Returns: Tyson Fury or Oleksandr Usyk? The World Weighs In!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-07-31",
+      "timestamp": "2026-07-31T08:43:15Z"
     },
     {
-      "id": "2026-07-30-tech-3a5e29fb",
+      "id": "2026-07-31-tech-4d58b34c",
       "category": "Tech",
-      "battle_title": "Is Nvidia Really Better Than AMD? The Internet Weighs In!",
-      "option_a": "Nvidia",
-      "option_b": "AMD",
-      "voting_api_key": "battles/tech/nvidia-vs-amd/2026-07-30",
-      "timestamp": "2026-07-30T08:18:00Z"
+      "battle_title": "macOS vs Windows 11: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "macOS",
+      "option_b": "Windows 11",
+      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-31",
+      "timestamp": "2026-07-31T08:43:15Z"
     },
     {
-      "id": "2026-07-30-economy-75c00825",
+      "id": "2026-07-31-economy-bc9731ef",
       "category": "Economy",
-      "battle_title": "Oil vs Natural Gas: The Big Money Question — What Does the World Think?",
+      "battle_title": "Trending in Finance: Oil or Natural Gas? The Answer Might Surprise You!",
       "option_a": "Oil",
       "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-30",
-      "timestamp": "2026-07-30T08:18:00Z"
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-31",
+      "timestamp": "2026-07-31T08:43:15Z"
     }
   ]
 }
