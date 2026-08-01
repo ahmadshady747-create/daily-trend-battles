@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-07-31T08:43:15Z",
-  "date": "2026-07-31",
+  "generated_at": "2026-08-01T08:13:25Z",
+  "date": "2026-08-01",
   "battles": [
     {
-      "id": "2026-07-31-sports-eb999fd9",
+      "id": "2026-08-01-sports-be58566f",
       "category": "Sports",
-      "battle_title": "The GOAT Question Returns: Tyson Fury or Oleksandr Usyk? The World Weighs In!",
+      "battle_title": "Fan Vote: Tyson Fury or Oleksandr Usyk? Only One Can Reign Supreme!",
       "option_a": "Tyson Fury",
       "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-07-31",
-      "timestamp": "2026-07-31T08:43:15Z"
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-08-01",
+      "timestamp": "2026-08-01T08:13:25Z"
     },
     {
-      "id": "2026-07-31-tech-4d58b34c",
+      "id": "2026-08-01-tech-53b1577d",
       "category": "Tech",
-      "battle_title": "macOS vs Windows 11: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "macOS",
-      "option_b": "Windows 11",
-      "voting_api_key": "battles/tech/macos-vs-windows-11/2026-07-31",
-      "timestamp": "2026-07-31T08:43:15Z"
+      "battle_title": "AWS vs Microsoft Azure — The Battle That's Breaking Tech Twitter Right Now!",
+      "option_a": "AWS",
+      "option_b": "Microsoft Azure",
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-08-01",
+      "timestamp": "2026-08-01T08:13:25Z"
     },
     {
-      "id": "2026-07-31-economy-bc9731ef",
+      "id": "2026-08-01-economy-a0d90835",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Oil or Natural Gas? The Answer Might Surprise You!",
-      "option_a": "Oil",
-      "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-07-31",
-      "timestamp": "2026-07-31T08:43:15Z"
+      "battle_title": "Ethereum vs Bitcoin: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Ethereum",
+      "option_b": "Bitcoin",
+      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-08-01",
+      "timestamp": "2026-08-01T08:13:25Z"
     }
   ]
 }
