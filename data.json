@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-01T08:13:25Z",
-  "date": "2026-08-01",
+  "generated_at": "2026-08-02T08:15:22Z",
+  "date": "2026-08-02",
   "battles": [
     {
-      "id": "2026-08-01-sports-be58566f",
+      "id": "2026-08-02-sports-c5c55200",
       "category": "Sports",
-      "battle_title": "Fan Vote: Tyson Fury or Oleksandr Usyk? Only One Can Reign Supreme!",
-      "option_a": "Tyson Fury",
-      "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-08-01",
-      "timestamp": "2026-08-01T08:13:25Z"
+      "battle_title": "Tiger Woods vs Rory McIlroy — Who Would Win? The Numbers Will Shock You!",
+      "option_a": "Tiger Woods",
+      "option_b": "Rory McIlroy",
+      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-08-02",
+      "timestamp": "2026-08-02T08:15:22Z"
     },
     {
-      "id": "2026-08-01-tech-53b1577d",
+      "id": "2026-08-02-tech-456c8018",
       "category": "Tech",
-      "battle_title": "AWS vs Microsoft Azure — The Battle That's Breaking Tech Twitter Right Now!",
+      "battle_title": "AWS vs Microsoft Azure: Which One Would You Choose? (No Wrong Answers)",
       "option_a": "AWS",
       "option_b": "Microsoft Azure",
-      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-08-01",
-      "timestamp": "2026-08-01T08:13:25Z"
+      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-08-02",
+      "timestamp": "2026-08-02T08:15:22Z"
     },
     {
-      "id": "2026-08-01-economy-a0d90835",
+      "id": "2026-08-02-economy-087b4cc8",
       "category": "Economy",
-      "battle_title": "Ethereum vs Bitcoin: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Ethereum",
-      "option_b": "Bitcoin",
-      "voting_api_key": "battles/economy/ethereum-vs-bitcoin/2026-08-01",
-      "timestamp": "2026-08-01T08:13:25Z"
+      "battle_title": "Is Real Estate a Better Bet Than Stock Market Right Now? Cast Your Vote!",
+      "option_a": "Real Estate",
+      "option_b": "Stock Market",
+      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-08-02",
+      "timestamp": "2026-08-02T08:15:22Z"
     }
   ]
 }
