@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-02T08:15:22Z",
-  "date": "2026-08-02",
+  "generated_at": "2026-08-03T09:35:18Z",
+  "date": "2026-08-03",
   "battles": [
     {
-      "id": "2026-08-02-sports-c5c55200",
+      "id": "2026-08-03-sports-3a23154a",
       "category": "Sports",
-      "battle_title": "Tiger Woods vs Rory McIlroy — Who Would Win? The Numbers Will Shock You!",
-      "option_a": "Tiger Woods",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-08-02",
-      "timestamp": "2026-08-02T08:15:22Z"
+      "battle_title": "Tyson Fury vs Oleksandr Usyk: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Tyson Fury",
+      "option_b": "Oleksandr Usyk",
+      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-08-03",
+      "timestamp": "2026-08-03T09:35:18Z"
     },
     {
-      "id": "2026-08-02-tech-456c8018",
+      "id": "2026-08-03-tech-82b5afb6",
       "category": "Tech",
-      "battle_title": "AWS vs Microsoft Azure: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "AWS",
-      "option_b": "Microsoft Azure",
-      "voting_api_key": "battles/tech/aws-vs-microsoft-azure/2026-08-02",
-      "timestamp": "2026-08-02T08:15:22Z"
+      "battle_title": "TikTok vs Instagram Reels: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "TikTok",
+      "option_b": "Instagram Reels",
+      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-08-03",
+      "timestamp": "2026-08-03T09:35:18Z"
     },
     {
-      "id": "2026-08-02-economy-087b4cc8",
+      "id": "2026-08-03-economy-bdbab2a5",
       "category": "Economy",
-      "battle_title": "Is Real Estate a Better Bet Than Stock Market Right Now? Cast Your Vote!",
-      "option_a": "Real Estate",
-      "option_b": "Stock Market",
-      "voting_api_key": "battles/economy/real-estate-vs-stock-market/2026-08-02",
-      "timestamp": "2026-08-02T08:15:22Z"
+      "battle_title": "Federal Reserve vs European Central Bank: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Federal Reserve",
+      "option_b": "European Central Bank",
+      "voting_api_key": "battles/economy/federal-reserve-vs-european-central-bank/2026-08-03",
+      "timestamp": "2026-08-03T09:35:18Z"
     }
   ]
 }
