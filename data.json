@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-03T09:35:18Z",
-  "date": "2026-08-03",
+  "generated_at": "2026-08-04T08:30:04Z",
+  "date": "2026-08-04",
   "battles": [
     {
-      "id": "2026-08-03-sports-3a23154a",
+      "id": "2026-08-04-sports-cc7a32c8",
       "category": "Sports",
-      "battle_title": "Tyson Fury vs Oleksandr Usyk: The Rivalry Everyone Is Talking About — Pick a Side!",
-      "option_a": "Tyson Fury",
-      "option_b": "Oleksandr Usyk",
-      "voting_api_key": "battles/sports/tyson-fury-vs-oleksandr-usyk/2026-08-03",
-      "timestamp": "2026-08-03T09:35:18Z"
+      "battle_title": "Fan Vote: Iga Swiatek or Aryna Sabalenka? Only One Can Reign Supreme!",
+      "option_a": "Iga Swiatek",
+      "option_b": "Aryna Sabalenka",
+      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-08-04",
+      "timestamp": "2026-08-04T08:30:04Z"
     },
     {
-      "id": "2026-08-03-tech-82b5afb6",
+      "id": "2026-08-04-tech-e38a8146",
       "category": "Tech",
-      "battle_title": "TikTok vs Instagram Reels: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-08-03",
-      "timestamp": "2026-08-03T09:35:18Z"
+      "battle_title": "Spotify vs Apple Music: Which One Would You Choose? (No Wrong Answers)",
+      "option_a": "Spotify",
+      "option_b": "Apple Music",
+      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-08-04",
+      "timestamp": "2026-08-04T08:30:04Z"
     },
     {
-      "id": "2026-08-03-economy-bdbab2a5",
+      "id": "2026-08-04-economy-598816bd",
       "category": "Economy",
-      "battle_title": "Federal Reserve vs European Central Bank: Wall Street Is Watching — Which Side Are You On?",
-      "option_a": "Federal Reserve",
-      "option_b": "European Central Bank",
-      "voting_api_key": "battles/economy/federal-reserve-vs-european-central-bank/2026-08-03",
-      "timestamp": "2026-08-03T09:35:18Z"
+      "battle_title": "Market Battle: Rate Hike vs Rate Cut — Where Would You Put Your Money?",
+      "option_a": "Rate Hike",
+      "option_b": "Rate Cut",
+      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-08-04",
+      "timestamp": "2026-08-04T08:30:04Z"
     }
   ]
 }
