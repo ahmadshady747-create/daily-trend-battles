@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-04T08:30:04Z",
-  "date": "2026-08-04",
+  "generated_at": "2026-08-05T08:28:39Z",
+  "date": "2026-08-05",
   "battles": [
     {
-      "id": "2026-08-04-sports-cc7a32c8",
+      "id": "2026-08-05-sports-72dee590",
       "category": "Sports",
-      "battle_title": "Fan Vote: Iga Swiatek or Aryna Sabalenka? Only One Can Reign Supreme!",
-      "option_a": "Iga Swiatek",
-      "option_b": "Aryna Sabalenka",
-      "voting_api_key": "battles/sports/iga-swiatek-vs-aryna-sabalenka/2026-08-04",
-      "timestamp": "2026-08-04T08:30:04Z"
+      "battle_title": "NFL vs NBA: This Debate Just Got Heated — What's Your Take?",
+      "option_a": "NFL",
+      "option_b": "NBA",
+      "voting_api_key": "battles/sports/nfl-vs-nba/2026-08-05",
+      "timestamp": "2026-08-05T08:28:39Z"
     },
     {
-      "id": "2026-08-04-tech-e38a8146",
+      "id": "2026-08-05-tech-a2cc5fce",
       "category": "Tech",
-      "battle_title": "Spotify vs Apple Music: Which One Would You Choose? (No Wrong Answers)",
-      "option_a": "Spotify",
-      "option_b": "Apple Music",
-      "voting_api_key": "battles/tech/spotify-vs-apple-music/2026-08-04",
-      "timestamp": "2026-08-04T08:30:04Z"
+      "battle_title": "The Big Tech Battle: TikTok vs Instagram Reels — You Decide the Winner!",
+      "option_a": "TikTok",
+      "option_b": "Instagram Reels",
+      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-08-05",
+      "timestamp": "2026-08-05T08:28:39Z"
     },
     {
-      "id": "2026-08-04-economy-598816bd",
+      "id": "2026-08-05-economy-ea4df592",
       "category": "Economy",
-      "battle_title": "Market Battle: Rate Hike vs Rate Cut — Where Would You Put Your Money?",
-      "option_a": "Rate Hike",
-      "option_b": "Rate Cut",
-      "voting_api_key": "battles/economy/rate-hike-vs-rate-cut/2026-08-04",
-      "timestamp": "2026-08-04T08:30:04Z"
+      "battle_title": "US Dollar vs Euro — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "US Dollar",
+      "option_b": "Euro",
+      "voting_api_key": "battles/economy/us-dollar-vs-euro/2026-08-05",
+      "timestamp": "2026-08-05T08:28:39Z"
     }
   ]
 }
