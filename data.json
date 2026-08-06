@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-05T08:28:39Z",
-  "date": "2026-08-05",
+  "generated_at": "2026-08-06T08:27:41Z",
+  "date": "2026-08-06",
   "battles": [
     {
-      "id": "2026-08-05-sports-72dee590",
+      "id": "2026-08-06-sports-672047dd",
       "category": "Sports",
-      "battle_title": "NFL vs NBA: This Debate Just Got Heated — What's Your Take?",
-      "option_a": "NFL",
-      "option_b": "NBA",
-      "voting_api_key": "battles/sports/nfl-vs-nba/2026-08-05",
-      "timestamp": "2026-08-05T08:28:39Z"
+      "battle_title": "The Ultimate Sports Clash: Tiger Woods vs Rory McIlroy — Who Wins Today?",
+      "option_a": "Tiger Woods",
+      "option_b": "Rory McIlroy",
+      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-08-06",
+      "timestamp": "2026-08-06T08:27:41Z"
     },
     {
-      "id": "2026-08-05-tech-a2cc5fce",
+      "id": "2026-08-06-tech-d1e77f56",
       "category": "Tech",
-      "battle_title": "The Big Tech Battle: TikTok vs Instagram Reels — You Decide the Winner!",
-      "option_a": "TikTok",
-      "option_b": "Instagram Reels",
-      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-08-05",
-      "timestamp": "2026-08-05T08:28:39Z"
+      "battle_title": "Innovation Clash: ChatGPT Takes On Google Gemini — Cast Your Vote!",
+      "option_a": "ChatGPT",
+      "option_b": "Google Gemini",
+      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-08-06",
+      "timestamp": "2026-08-06T08:27:41Z"
     },
     {
-      "id": "2026-08-05-economy-ea4df592",
+      "id": "2026-08-06-economy-1744f311",
       "category": "Economy",
-      "battle_title": "US Dollar vs Euro — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "US Dollar",
-      "option_b": "Euro",
-      "voting_api_key": "battles/economy/us-dollar-vs-euro/2026-08-05",
-      "timestamp": "2026-08-05T08:28:39Z"
+      "battle_title": "Nasdaq vs S&P 500 — The Economic Clash Everyone Is Debating Today!",
+      "option_a": "Nasdaq",
+      "option_b": "S&P 500",
+      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-08-06",
+      "timestamp": "2026-08-06T08:27:41Z"
     }
   ]
 }
