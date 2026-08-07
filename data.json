@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-06T08:27:41Z",
-  "date": "2026-08-06",
+  "generated_at": "2026-08-07T07:07:51Z",
+  "date": "2026-08-07",
   "battles": [
     {
-      "id": "2026-08-06-sports-672047dd",
+      "id": "2026-08-07-sports-a66922ae",
       "category": "Sports",
-      "battle_title": "The Ultimate Sports Clash: Tiger Woods vs Rory McIlroy — Who Wins Today?",
-      "option_a": "Tiger Woods",
-      "option_b": "Rory McIlroy",
-      "voting_api_key": "battles/sports/tiger-woods-vs-rory-mcilroy/2026-08-06",
-      "timestamp": "2026-08-06T08:27:41Z"
+      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "option_a": "Kansas City Chiefs",
+      "option_b": "Philadelphia Eagles",
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-08-07",
+      "timestamp": "2026-08-07T07:07:51Z"
     },
     {
-      "id": "2026-08-06-tech-d1e77f56",
+      "id": "2026-08-07-tech-69ab9688",
       "category": "Tech",
-      "battle_title": "Innovation Clash: ChatGPT Takes On Google Gemini — Cast Your Vote!",
-      "option_a": "ChatGPT",
-      "option_b": "Google Gemini",
-      "voting_api_key": "battles/tech/chatgpt-vs-google-gemini/2026-08-06",
-      "timestamp": "2026-08-06T08:27:41Z"
+      "battle_title": "Is Tesla Really Better Than Waymo? The Internet Weighs In!",
+      "option_a": "Tesla",
+      "option_b": "Waymo",
+      "voting_api_key": "battles/tech/tesla-vs-waymo/2026-08-07",
+      "timestamp": "2026-08-07T07:07:51Z"
     },
     {
-      "id": "2026-08-06-economy-1744f311",
+      "id": "2026-08-07-economy-2135fa2d",
       "category": "Economy",
-      "battle_title": "Nasdaq vs S&P 500 — The Economic Clash Everyone Is Debating Today!",
-      "option_a": "Nasdaq",
-      "option_b": "S&P 500",
-      "voting_api_key": "battles/economy/nasdaq-vs-sp-500/2026-08-06",
-      "timestamp": "2026-08-06T08:27:41Z"
+      "battle_title": "Trending in Finance: Oil or Natural Gas? The Answer Might Surprise You!",
+      "option_a": "Oil",
+      "option_b": "Natural Gas",
+      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-08-07",
+      "timestamp": "2026-08-07T07:07:51Z"
     }
   ]
 }
