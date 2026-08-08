@@ -1,33 +1,33 @@
 {
-  "generated_at": "2026-08-07T07:07:51Z",
-  "date": "2026-08-07",
+  "generated_at": "2026-08-08T06:43:12Z",
+  "date": "2026-08-08",
   "battles": [
     {
-      "id": "2026-08-07-sports-a66922ae",
+      "id": "2026-08-08-sports-1a973e28",
       "category": "Sports",
-      "battle_title": "Kansas City Chiefs vs Philadelphia Eagles: The Rivalry Everyone Is Talking About — Pick a Side!",
+      "battle_title": "Head-to-Head: Kansas City Chiefs vs Philadelphia Eagles — The Internet Decides!",
       "option_a": "Kansas City Chiefs",
       "option_b": "Philadelphia Eagles",
-      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-08-07",
-      "timestamp": "2026-08-07T07:07:51Z"
+      "voting_api_key": "battles/sports/kansas-city-chiefs-vs-philadelphia-eagles/2026-08-08",
+      "timestamp": "2026-08-08T06:43:12Z"
     },
     {
-      "id": "2026-08-07-tech-69ab9688",
+      "id": "2026-08-08-tech-a05e8b86",
       "category": "Tech",
-      "battle_title": "Is Tesla Really Better Than Waymo? The Internet Weighs In!",
-      "option_a": "Tesla",
-      "option_b": "Waymo",
-      "voting_api_key": "battles/tech/tesla-vs-waymo/2026-08-07",
-      "timestamp": "2026-08-07T07:07:51Z"
+      "battle_title": "TikTok vs Instagram Reels: The Tech Question Everyone Is Arguing About!",
+      "option_a": "TikTok",
+      "option_b": "Instagram Reels",
+      "voting_api_key": "battles/tech/tiktok-vs-instagram-reels/2026-08-08",
+      "timestamp": "2026-08-08T06:43:12Z"
     },
     {
-      "id": "2026-08-07-economy-2135fa2d",
+      "id": "2026-08-08-economy-231792c4",
       "category": "Economy",
-      "battle_title": "Trending in Finance: Oil or Natural Gas? The Answer Might Surprise You!",
-      "option_a": "Oil",
-      "option_b": "Natural Gas",
-      "voting_api_key": "battles/economy/oil-vs-natural-gas/2026-08-07",
-      "timestamp": "2026-08-07T07:07:51Z"
+      "battle_title": "Solana vs Ethereum: Wall Street Is Watching — Which Side Are You On?",
+      "option_a": "Solana",
+      "option_b": "Ethereum",
+      "voting_api_key": "battles/economy/solana-vs-ethereum/2026-08-08",
+      "timestamp": "2026-08-08T06:43:12Z"
     }
   ]
 }
